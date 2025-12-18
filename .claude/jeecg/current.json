@@ -16,12 +16,12 @@
     {
       "name": "Phase 2: 后端实体与 CRUD",
       "issues": [35, 36, 37],
-      "status": "ready"
+      "status": "done"
     },
     {
       "name": "Phase 3: 前端页面",
       "issues": [38, 39, 40, 41],
-      "status": "blocked"
+      "status": "in_progress"
     },
     {
       "name": "Phase 4: 菜单权限",
@@ -72,7 +72,7 @@
       "number": 38,
       "title": "创建怀疑药品配置列表页",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [35],
       "phase": 3
     },
