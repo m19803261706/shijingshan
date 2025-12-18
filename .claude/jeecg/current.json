@@ -2,7 +2,7 @@
   "project_id": "shijingshan",
   "feature": "药品常用配置管理",
   "prd": ".claude/jeecg/prds/药品常用配置管理/prd.md",
-  "status": "in_progress",
+  "status": "completed",
   "epic": {
     "number": 32,
     "url": "https://github.com/m19803261706/shijingshan/issues/32"
@@ -26,7 +26,7 @@
     {
       "name": "Phase 4: 菜单权限",
       "issues": [42],
-      "status": "ready"
+      "status": "done"
     }
   ],
   "issues": [
@@ -104,7 +104,7 @@
       "number": 42,
       "title": "创建药品常用配置菜单 SQL 和路由",
       "type": "jeecg-menu",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [38, 39],
       "phase": 4
     }
