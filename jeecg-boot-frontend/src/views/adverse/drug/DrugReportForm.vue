@@ -442,10 +442,144 @@ const [registerManufacturerInfoForm, { setFieldsValue: setManufacturerInfoFields
 
 // ========== 初始化 ==========
 
+/**
+ * 设置默认测试数据（方便测试）
+ */
+function setDefaultTestData() {
+  // 1. 报告基本信息
+  setReportBasicFields({
+    reportType: 'first',
+    severityType: 'general',
+    unitCategory: 'hospital',
+  });
+
+  // 2. 患者基本信息
+  setPatientInfoFields({
+    patientName: '张三',
+    patientGender: 'M',
+    patientBirthDate: '1990-01-15',
+    patientNationality: 'han',
+    patientWeight: 70,
+    patientPhone: '13800138000',
+    hospitalName: '北京市石景山医院',
+    medicalRecordNo: 'MR202512190001',
+    originalDisease: '高血压、糖尿病',
+    historyAdr: 'no',
+    familyAdr: 'unknown',
+  });
+
+  // 3. 相关重要信息（勾选项）
+  setRelatedInfoFields({
+    hasSmoking: false,
+    hasDrinking: false,
+    hasPregnancy: false,
+    hasLiverDisease: false,
+    hasKidneyDisease: false,
+  });
+
+  // 4. 不良反应基本信息
+  setReactionBasicFields({
+    reactionName: '皮疹、瘙痒',
+    reactionTime: new Date().toISOString().slice(0, 10) + ' 09:30:00',
+  });
+
+  // 5. 不良反应过程描述
+  setReactionProcessFields({
+    reactionProcess: '患者于2025年12月19日上午9点服用阿莫西林胶囊后约30分钟出现全身皮疹、瘙痒症状，无呼吸困难、胸闷等不适。立即停药并给予抗过敏治疗（氯雷他定片10mg口服），症状逐渐缓解。',
+  });
+
+  // 6. 不良反应结果
+  setReactionResultFields({
+    reactionResult: 'improved',
+    deathTime: undefined,
+    deathCause: '',
+  });
+
+  // 7. 停药/减量后反应
+  setStopDrugFields({
+    stopDrugReaction: 'yes',
+    rechallengeReaction: 'not_use',
+  });
+
+  // 8. 对原患疾病影响
+  setDiseaseImpactFields({
+    diseaseImpact: 'none',
+  });
+
+  // 9. 关联性评价
+  setEvaluationFields({
+    reporterEvaluation: 'probable',
+    unitEvaluation: 'possible',
+  });
+
+  // 10. 报告人信息
+  setReporterInfoFields({
+    reporterName: '李医生',
+    reporterPhone: '010-12345678',
+    reporterEmail: 'doctor.li@hospital.com',
+    reporterProfession: 'doctor',
+    reportDate: new Date().toISOString().slice(0, 10),
+  });
+
+  // 11. 报告单位信息
+  setReportUnitInfoFields({
+    reportUnitName: '北京市石景山医院',
+    reportUnitContact: '王主任',
+    reportUnitPhone: '010-88888888',
+  });
+
+  // 12. 生产企业信息（可选）
+  setManufacturerInfoFields({
+    manufacturerInfoSource: 'hospital',
+  });
+
+  // 13. 怀疑药品测试数据
+  suspectDrugDataSource.value = [
+    {
+      genericName: '阿莫西林胶囊',
+      tradeName: '阿莫仙',
+      manufacturer: '珠海联邦制药股份有限公司',
+      approvalNo: '国药准字H44021518',
+      batchNo: '20251201',
+      dosageForm: '胶囊剂',
+      specification: '0.5g*24粒',
+      route: 'oral',
+      dosePerTime: '0.5',
+      doseUnit: 'g',
+      frequency: '每日3次',
+      startDate: '2025-12-18',
+      endDate: '2025-12-19',
+      indication: '上呼吸道感染',
+    },
+  ];
+
+  // 14. 并用药品测试数据
+  concomitantDrugDataSource.value = [
+    {
+      genericName: '二甲双胍片',
+      tradeName: '格华止',
+      manufacturer: '中美上海施贵宝制药有限公司',
+      approvalNo: '国药准字H20023370',
+      batchNo: '20251101',
+      dosageForm: '片剂',
+      specification: '0.5g*20片',
+      route: 'oral',
+      dosePerTime: '0.5',
+      doseUnit: 'g',
+      frequency: '每日2次',
+      startDate: '2025-01-01',
+      indication: '糖尿病',
+    },
+  ];
+}
+
 onMounted(async () => {
   // 如果是编辑或查看模式，加载数据
   if (reportId.value) {
     await loadReportData();
+  } else {
+    // 新增模式：设置默认测试数据
+    setDefaultTestData();
   }
 
   // 查看模式设置表单只读
