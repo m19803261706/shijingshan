@@ -12,7 +12,7 @@
     {
       "name": "Phase 1: 基础设施搭建",
       "issues": [2],
-      "status": "ready"
+      "status": "done"
     },
     {
       "name": "Phase 2: 数据库设计",
@@ -36,7 +36,7 @@
     }
   ],
   "issues": [
-    {"number": 2, "title": "创建业务模块 jeecg-module-adverse-event", "type": "backend", "status": "tc-ready", "phase": 1},
+    {"number": 2, "title": "创建业务模块 jeecg-module-adverse-event", "type": "backend", "status": "tc-done", "phase": 1},
     {"number": 3, "title": "不良事件主表设计", "type": "database", "status": "tc-ready", "phase": 2},
     {"number": 4, "title": "事件流转记录表设计", "type": "database", "status": "tc-blocked", "phase": 2, "depends_on": [3]},
     {"number": 5, "title": "整改记录表设计", "type": "database", "status": "tc-blocked", "phase": 2, "depends_on": [3]},
