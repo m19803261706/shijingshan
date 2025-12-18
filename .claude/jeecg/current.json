@@ -57,7 +57,7 @@
       "number": 25,
       "title": "配置数据字典",
       "type": "jeecg-migration",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [22],
       "phase": 1
     },
