@@ -21,7 +21,7 @@
     {
       "name": "Phase 3: 前端页面",
       "issues": [38, 39, 40, 41],
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "name": "Phase 4: 菜单权限",
@@ -96,7 +96,7 @@
       "number": 41,
       "title": "集成选择弹窗到上报表单子表",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [40],
       "phase": 3
     },
