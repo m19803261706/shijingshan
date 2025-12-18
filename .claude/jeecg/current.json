@@ -2,7 +2,7 @@
   "project_id": "shijingshan",
   "feature": "药品不良反应上报",
   "prd": ".claude/jeecg/prds/药品不良反应上报/prd.md",
-  "status": "planned",
+  "status": "completed",
   "epic": {
     "number": 21,
     "url": "https://github.com/m19803261706/shijingshan/issues/21"
@@ -26,7 +26,7 @@
     {
       "name": "Phase 4: 菜单权限",
       "issues": [31],
-      "status": "in_progress"
+      "status": "done"
     }
   ],
   "issues": [
@@ -105,7 +105,7 @@
       "number": 31,
       "title": "创建药品不良反应菜单 SQL",
       "type": "jeecg-menu",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [30],
       "phase": 4
     }
