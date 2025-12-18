@@ -594,11 +594,11 @@ onMounted(async () => {
  * 加载报告数据
  */
 async function loadReportData() {
-  try {
-    loading.value = true;
-    suspectDrugLoading.value = true;
-    concomitantDrugLoading.value = true;
+  loading.value = true;
+  suspectDrugLoading.value = true;
+  concomitantDrugLoading.value = true;
 
+  try {
     const data = await queryDrugReportDetailById({ id: reportId.value });
 
     if (data) {
@@ -606,15 +606,29 @@ async function loadReportData() {
       // 提取主表数据（兼容两种数据结构）
       const reportData = data.report || data;
 
-      // 设置主表数据
-      await setAllFormFields(reportData);
-
-      // 设置子表数据（兼容两种字段名）
-      suspectDrugDataSource.value = data.suspectDrugs || data.suspectDrugList || [];
-      concomitantDrugDataSource.value = data.concomitantDrugs || data.concomitantDrugList || [];
+      // 设置子表数据（兼容两种字段名）- 放在主表数据设置之前，确保子表数据不受主表设置失败影响
+      const suspectDrugs = data.suspectDrugs || data.suspectDrugList || [];
+      const concomitantDrugs = data.concomitantDrugs || data.concomitantDrugList || [];
+      suspectDrugDataSource.value = suspectDrugs;
+      concomitantDrugDataSource.value = concomitantDrugs;
 
       // 根据报告单位类别显示生产企业信息区
       showManufacturerInfo.value = reportData.unitCategory === 'manufacture';
+
+      // 设置主表数据（可能因表单未渲染完成而失败，但不影响子表数据）
+      try {
+        await setAllFormFields(reportData);
+      } catch (formError) {
+        console.warn('部分表单设置失败，将在表单渲染后重试', formError);
+        // 延迟重试设置表单数据
+        setTimeout(async () => {
+          try {
+            await setAllFormFields(reportData);
+          } catch (retryError) {
+            console.error('重试设置表单数据失败', retryError);
+          }
+        }, 500);
+      }
     }
   } catch (e) {
     console.error('加载报告数据失败', e);
