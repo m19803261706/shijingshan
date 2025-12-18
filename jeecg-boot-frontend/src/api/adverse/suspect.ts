@@ -112,7 +112,7 @@ export const deleteSuspectBatch = (ids: string) => {
  * @returns 操作结果
  */
 export const updateSuspectUseCount = (id: string) => {
-  return defHttp.put({ url: Api.updateUseCount, params: { id } });
+  return defHttp.put({ url: `${Api.updateUseCount}?id=${id}` });
 };
 
 /**

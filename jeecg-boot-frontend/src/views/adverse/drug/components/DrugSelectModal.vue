@@ -200,7 +200,7 @@ async function handleSelect(record: any) {
     console.error('更新使用次数失败:', error);
   }
 
-  // 返回选中的药品信息
+  // 返回选中的药品信息（包含所有可用字段）
   emit('select', {
     genericName: record.genericName,
     tradeName: record.tradeName,
@@ -210,6 +210,12 @@ async function handleSelect(record: any) {
     dosageForm: record.dosageForm,
     specification: record.specification,
     dosage: record.dosage,
+    // 新增字段：生产批号、单次剂量、剂量单位、用药频次、用药原因
+    batchNo: record.batchNo,
+    dosePerTime: record.dosePerTime,
+    doseUnit: record.doseUnit,
+    frequency: record.frequency,
+    indication: record.indication,
   });
 
   // 关闭弹窗

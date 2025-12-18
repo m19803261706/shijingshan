@@ -285,7 +285,7 @@ function onSuspectSelect(drug: any) {
     // 获取当前行数据并更新
     const tableData = suspectDrugTableRef.value.getTableData();
     if (tableData && tableData[rowIndex]) {
-      // 将选择的药品信息填充到当前行
+      // 将选择的药品信息填充到当前行（包含所有可用字段）
       Object.assign(tableData[rowIndex], {
         approvalNo: drug.approvalNo,
         tradeName: drug.tradeName,
@@ -295,6 +295,12 @@ function onSuspectSelect(drug: any) {
         dosageForm: drug.dosageForm,
         specification: drug.specification,
         dosage: drug.dosage,
+        // 新增字段：生产批号、单次剂量、剂量单位、用药频次、用药原因
+        batchNo: drug.batchNo,
+        dosePerTime: drug.dosePerTime,
+        doseUnit: drug.doseUnit,
+        frequency: drug.frequency,
+        indication: drug.indication,
       });
       // 更新数据源触发重新渲染
       suspectDrugDataSource.value = [...tableData];
@@ -313,7 +319,7 @@ function onConcomitantSelect(drug: any) {
     // 获取当前行数据并更新
     const tableData = concomitantDrugTableRef.value.getTableData();
     if (tableData && tableData[rowIndex]) {
-      // 将选择的药品信息填充到当前行
+      // 将选择的药品信息填充到当前行（包含所有可用字段）
       Object.assign(tableData[rowIndex], {
         approvalNo: drug.approvalNo,
         tradeName: drug.tradeName,
@@ -323,6 +329,12 @@ function onConcomitantSelect(drug: any) {
         dosageForm: drug.dosageForm,
         specification: drug.specification,
         dosage: drug.dosage,
+        // 新增字段：生产批号、单次剂量、剂量单位、用药频次、用药原因
+        batchNo: drug.batchNo,
+        dosePerTime: drug.dosePerTime,
+        doseUnit: drug.doseUnit,
+        frequency: drug.frequency,
+        indication: drug.indication,
       });
       // 更新数据源触发重新渲染
       concomitantDrugDataSource.value = [...tableData];
