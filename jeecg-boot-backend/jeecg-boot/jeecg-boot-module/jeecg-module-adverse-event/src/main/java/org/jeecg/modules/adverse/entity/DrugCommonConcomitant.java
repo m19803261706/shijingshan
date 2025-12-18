@@ -107,6 +107,30 @@ public class DrugCommonConcomitant implements Serializable {
     private String route;
 
     /**
+     * 剂型
+     * <p>如：片剂、胶囊剂、注射剂等</p>
+     */
+    @Excel(name = "剂型", width = 12)
+    @Schema(description = "剂型")
+    private String dosageForm;
+
+    /**
+     * 规格
+     * <p>如：0.5g*24粒</p>
+     */
+    @Excel(name = "规格", width = 15)
+    @Schema(description = "规格")
+    private String specification;
+
+    /**
+     * 用法用量
+     * <p>如：一次0.5g，一日3次</p>
+     */
+    @Excel(name = "用法用量", width = 20)
+    @Schema(description = "用法用量")
+    private String dosage;
+
+    /**
      * 用药频次
      * <p>如：每日3次、每8小时一次等</p>
      */
