@@ -48,7 +48,7 @@
     {"number": 11, "title": "整改管理 API", "type": "backend", "status": "tc-done", "phase": 3, "depends_on": [5, 10]},
     {"number": 12, "title": "事件查询 API", "type": "backend", "status": "tc-done", "phase": 3, "depends_on": [8]},
     {"number": 13, "title": "统计分析 API", "type": "backend", "status": "tc-done", "phase": 3, "depends_on": [8]},
-    {"number": 14, "title": "事件上报页面", "type": "frontend", "status": "tc-ready", "phase": 4, "depends_on": [8]},
+    {"number": 14, "title": "事件上报页面", "type": "frontend", "status": "tc-done", "phase": 4, "depends_on": [8]},
     {"number": 15, "title": "审核处理页面", "type": "frontend", "status": "tc-ready", "phase": 4, "depends_on": [9, 10]},
     {"number": 16, "title": "整改管理页面", "type": "frontend", "status": "tc-ready", "phase": 4, "depends_on": [11]},
     {"number": 17, "title": "查询统计页面", "type": "frontend", "status": "tc-ready", "phase": 4, "depends_on": [12, 13]},
