@@ -41,6 +41,7 @@ public class AdverseEventServiceImpl extends ServiceImpl<AdverseEventMapper, Adv
     private static final String STATUS_DRAFT = "draft";
     private static final String STATUS_PENDING_AUDIT = "pending_audit";
     private static final String STATUS_RETURNED = "returned";
+    private static final String STATUS_PENDING_PROCESS = "pending_process";
 
     @Autowired
     private IAdverseEventFlowService flowService;
@@ -188,5 +189,91 @@ public class AdverseEventServiceImpl extends ServiceImpl<AdverseEventMapper, Adv
             return false;
         }
         return true;
+    }
+
+    // ==================== 科室审核相关方法实现 ====================
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean auditPass(String id, String comment) {
+        // 1. 获取事件
+        AdverseEvent event = this.getById(id);
+        if (event == null) {
+            log.error("事件不存在，ID: {}", id);
+            return false;
+        }
+
+        // 2. 校验状态（仅待审核状态可审核）
+        String currentStatus = event.getStatus();
+        if (!STATUS_PENDING_AUDIT.equals(currentStatus)) {
+            log.error("事件状态不允许审核，当前状态: {}", currentStatus);
+            return false;
+        }
+
+        // 3. 更新事件状态为待处理
+        event.setStatus(STATUS_PENDING_PROCESS);
+        event.setUpdateTime(new Date());
+        // 获取当前登录用户设置更新人
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        if (loginUser != null) {
+            event.setUpdateBy(loginUser.getUsername());
+        }
+        this.updateById(event);
+
+        // 4. 记录流转日志
+        String auditComment = oConvertUtils.isEmpty(comment) ? "审核通过" : comment;
+        flowService.logFlow(id, currentStatus, STATUS_PENDING_PROCESS, "approve", auditComment);
+
+        log.info("事件审核通过，ID: {}, 编号: {}", id, event.getEventCode());
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean auditReject(String id, String comment) {
+        // 1. 获取事件
+        AdverseEvent event = this.getById(id);
+        if (event == null) {
+            log.error("事件不存在，ID: {}", id);
+            return false;
+        }
+
+        // 2. 校验状态（仅待审核状态可审核）
+        String currentStatus = event.getStatus();
+        if (!STATUS_PENDING_AUDIT.equals(currentStatus)) {
+            log.error("事件状态不允许审核，当前状态: {}", currentStatus);
+            return false;
+        }
+
+        // 3. 校验退回原因（必填）
+        if (oConvertUtils.isEmpty(comment)) {
+            log.error("退回原因不能为空");
+            return false;
+        }
+
+        // 4. 更新事件状态为已退回
+        event.setStatus(STATUS_RETURNED);
+        event.setUpdateTime(new Date());
+        // 获取当前登录用户设置更新人
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        if (loginUser != null) {
+            event.setUpdateBy(loginUser.getUsername());
+        }
+        this.updateById(event);
+
+        // 5. 记录流转日志
+        flowService.logFlow(id, currentStatus, STATUS_RETURNED, "reject", comment);
+
+        log.info("事件审核退回，ID: {}, 编号: {}, 原因: {}", id, event.getEventCode(), comment);
+        return true;
+    }
+
+    @Override
+    public boolean canAudit(String id) {
+        AdverseEvent event = this.getById(id);
+        if (event == null) {
+            return false;
+        }
+        return STATUS_PENDING_AUDIT.equals(event.getStatus());
     }
 }

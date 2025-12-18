@@ -68,4 +68,41 @@ public interface IAdverseEventService extends IService<AdverseEvent> {
      * @return 是否可编辑
      */
     boolean canEdit(String id);
+
+    // ==================== 科室审核相关方法 ====================
+
+    /**
+     * 审核通过
+     * <p>
+     * 将事件状态从待审核改为待处理，流转至职能科室
+     * </p>
+     *
+     * @param id      事件ID
+     * @param comment 审核意见
+     * @return 是否操作成功
+     */
+    boolean auditPass(String id, String comment);
+
+    /**
+     * 审核退回
+     * <p>
+     * 将事件状态从待审核改为已退回，需填写退回原因
+     * </p>
+     *
+     * @param id      事件ID
+     * @param comment 退回原因（必填）
+     * @return 是否操作成功
+     */
+    boolean auditReject(String id, String comment);
+
+    /**
+     * 校验是否可以审核
+     * <p>
+     * 仅待审核状态可以审核
+     * </p>
+     *
+     * @param id 事件ID
+     * @return 是否可审核
+     */
+    boolean canAudit(String id);
 }
