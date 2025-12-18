@@ -1124,6 +1124,15 @@ export const manufacturerInfoFormSchema: FormSchema[] = [
  */
 export const suspectDrugColumns: JVxeColumn[] = [
   {
+    title: '快速选择',
+    key: 'action',
+    width: 90,
+    type: JVxeTypes.slot,
+    slotName: 'action_suspect',
+    align: 'center',
+    fixed: 'left',
+  },
+  {
     title: '批准文号',
     key: 'approvalNo',
     width: 140,
@@ -1217,6 +1226,15 @@ export const suspectDrugColumns: JVxeColumn[] = [
  * 结构与怀疑药品相同
  */
 export const concomitantDrugColumns: JVxeColumn[] = [
+  {
+    title: '快速选择',
+    key: 'action',
+    width: 90,
+    type: JVxeTypes.slot,
+    slotName: 'action_concomitant',
+    align: 'center',
+    fixed: 'left',
+  },
   {
     title: '批准文号',
     key: 'approvalNo',

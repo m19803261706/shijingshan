@@ -50,7 +50,19 @@
           :dataSource="suspectDrugDataSource"
           :disabled="isView"
           :toolbarConfig="{ btns: isView ? [] : ['add', 'remove'] }"
-        />
+        >
+          <!-- 快速选择按钮插槽 -->
+          <template #action_suspect="{ row, rowIndex }">
+            <a-button
+              type="link"
+              size="small"
+              :disabled="isView"
+              @click="openSuspectSelect(row, rowIndex)"
+            >
+              选择
+            </a-button>
+          </template>
+        </JVxeTable>
       </a-card>
 
       <!-- 5. 并用药品区 -->
@@ -66,7 +78,19 @@
           :dataSource="concomitantDrugDataSource"
           :disabled="isView"
           :toolbarConfig="{ btns: isView ? [] : ['add', 'remove'] }"
-        />
+        >
+          <!-- 快速选择按钮插槽 -->
+          <template #action_concomitant="{ row, rowIndex }">
+            <a-button
+              type="link"
+              size="small"
+              :disabled="isView"
+              @click="openConcomitantSelect(row, rowIndex)"
+            >
+              选择
+            </a-button>
+          </template>
+        </JVxeTable>
       </a-card>
 
       <!-- 6. 不良反应/事件信息区 -->
@@ -129,6 +153,20 @@
         </a-button>
       </a-space>
     </div>
+
+    <!-- 怀疑药品选择弹窗 -->
+    <DrugSelectModal
+      @register="registerSuspectModal"
+      type="suspect"
+      @select="onSuspectSelect"
+    />
+
+    <!-- 并用药品选择弹窗 -->
+    <DrugSelectModal
+      @register="registerConcomitantModal"
+      type="concomitant"
+      @select="onConcomitantSelect"
+    />
   </div>
 </template>
 
@@ -143,7 +181,9 @@ import { ref, computed, onMounted, unref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { BasicForm, useForm } from '/@/components/Form';
 import { JVxeTable } from '/@/components/jeecg/JVxeTable';
+import { useModal } from '/@/components/Modal';
 import { useMessage } from '/@/hooks/web/useMessage';
+import DrugSelectModal from './components/DrugSelectModal.vue';
 import {
   reportBasicFormSchema,
   patientInfoFormSchema,
@@ -203,6 +243,93 @@ const pageTitle = computed(() => {
 
 // 是否显示生产企业信息区（仅生产企业类型显示）
 const showManufacturerInfo = ref(false);
+
+// ========== 药品选择弹窗 ==========
+
+// 怀疑药品选择弹窗
+const [registerSuspectModal, { openModal: openSuspectModal }] = useModal();
+// 并用药品选择弹窗
+const [registerConcomitantModal, { openModal: openConcomitantModal }] = useModal();
+
+// 当前选择的行索引
+const currentSuspectRowIndex = ref<number>(-1);
+const currentConcomitantRowIndex = ref<number>(-1);
+
+/**
+ * 打开怀疑药品选择弹窗
+ * @param row 当前行数据
+ * @param rowIndex 当前行索引
+ */
+function openSuspectSelect(row: any, rowIndex: number) {
+  currentSuspectRowIndex.value = rowIndex;
+  openSuspectModal(true, {});
+}
+
+/**
+ * 打开并用药品选择弹窗
+ * @param row 当前行数据
+ * @param rowIndex 当前行索引
+ */
+function openConcomitantSelect(row: any, rowIndex: number) {
+  currentConcomitantRowIndex.value = rowIndex;
+  openConcomitantModal(true, {});
+}
+
+/**
+ * 怀疑药品选择回调
+ * @param drug 选择的药品信息
+ */
+function onSuspectSelect(drug: any) {
+  const rowIndex = currentSuspectRowIndex.value;
+  if (rowIndex >= 0 && suspectDrugTableRef.value) {
+    // 获取当前行数据并更新
+    const tableData = suspectDrugTableRef.value.getTableData();
+    if (tableData && tableData[rowIndex]) {
+      // 将选择的药品信息填充到当前行
+      Object.assign(tableData[rowIndex], {
+        approvalNo: drug.approvalNo,
+        tradeName: drug.tradeName,
+        genericName: drug.genericName,
+        manufacturer: drug.manufacturer,
+        route: drug.route,
+        dosageForm: drug.dosageForm,
+        specification: drug.specification,
+        dosage: drug.dosage,
+      });
+      // 更新数据源触发重新渲染
+      suspectDrugDataSource.value = [...tableData];
+    }
+  }
+  currentSuspectRowIndex.value = -1;
+}
+
+/**
+ * 并用药品选择回调
+ * @param drug 选择的药品信息
+ */
+function onConcomitantSelect(drug: any) {
+  const rowIndex = currentConcomitantRowIndex.value;
+  if (rowIndex >= 0 && concomitantDrugTableRef.value) {
+    // 获取当前行数据并更新
+    const tableData = concomitantDrugTableRef.value.getTableData();
+    if (tableData && tableData[rowIndex]) {
+      // 将选择的药品信息填充到当前行
+      Object.assign(tableData[rowIndex], {
+        approvalNo: drug.approvalNo,
+        tradeName: drug.tradeName,
+        genericName: drug.genericName,
+        manufacturer: drug.manufacturer,
+        route: drug.route,
+        dosageForm: drug.dosageForm,
+        specification: drug.specification,
+        dosage: drug.dosage,
+      });
+      // 更新数据源触发重新渲染
+      concomitantDrugDataSource.value = [...tableData];
+    }
+  }
+  currentConcomitantRowIndex.value = -1;
+}
 
 // ========== 表单注册 ==========
 
