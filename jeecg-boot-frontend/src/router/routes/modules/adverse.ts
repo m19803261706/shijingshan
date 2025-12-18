@@ -94,6 +94,27 @@ const adverse: AppRouteModule = {
         },
       ],
     },
+
+    // ========== 整改管理 ==========
+    {
+      path: 'rectify',
+      name: 'AdverseRectify',
+      redirect: '/adverse/rectify/pending',
+      meta: {
+        title: '整改管理',
+        icon: 'ant-design:tool-outlined',
+      },
+      children: [
+        {
+          path: 'pending',
+          name: 'AdverseRectifyPending',
+          component: () => import('/@/views/adverse/rectify/PendingList.vue'),
+          meta: {
+            title: '待整改',
+          },
+        },
+      ],
+    },
   ],
 };
 
