@@ -16,12 +16,12 @@
     {
       "name": "Phase 2: 实体与 CRUD",
       "issues": [26, 27],
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "name": "Phase 3: 前端页面",
       "issues": [28, 29, 30],
-      "status": "blocked"
+      "status": "in_progress"
     },
     {
       "name": "Phase 4: 菜单权限",
@@ -73,7 +73,7 @@
       "number": 27,
       "title": "创建 Mapper/Service/Controller",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [26],
       "phase": 2
     },
@@ -81,7 +81,7 @@
       "number": 28,
       "title": "创建药品不良反应列表页",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [27],
       "phase": 3
     },
