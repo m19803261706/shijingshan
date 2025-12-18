@@ -489,4 +489,67 @@ public class AdverseEventServiceImpl extends ServiceImpl<AdverseEventMapper, Adv
         AdverseEventRectify rectify = rectifyService.getCurrentRectify(id);
         return rectify != null && RECTIFY_STATUS_SUBMITTED.equals(rectify.getStatus());
     }
+
+    // ==================== 科室整改提交相关方法实现 ====================
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean submitRectifyByDepartment(String eventId, String measures, String result, String attachments) {
+        // 1. 获取事件
+        AdverseEvent event = this.getById(eventId);
+        if (event == null) {
+            log.error("事件不存在，ID: {}", eventId);
+            return false;
+        }
+
+        // 2. 校验状态（仅待整改状态可提交）
+        String currentStatus = event.getStatus();
+        if (!STATUS_PENDING_RECTIFY.equals(currentStatus)) {
+            log.error("事件状态不允许提交整改，当前状态: {}", currentStatus);
+            return false;
+        }
+
+        // 3. 获取当前整改记录并提交
+        AdverseEventRectify rectify = rectifyService.getCurrentRectify(eventId);
+        if (rectify == null) {
+            log.error("没有待处理的整改记录");
+            return false;
+        }
+
+        boolean submitSuccess = rectifyService.submitRectify(rectify.getId(), measures, result, attachments);
+        if (!submitSuccess) {
+            log.error("提交整改记录失败");
+            return false;
+        }
+
+        // 4. 更新事件状态为整改中
+        event.setStatus(STATUS_RECTIFYING);
+        event.setUpdateTime(new Date());
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        if (loginUser != null) {
+            event.setUpdateBy(loginUser.getUsername());
+        }
+        this.updateById(event);
+
+        // 5. 记录流转日志
+        flowService.logFlow(eventId, currentStatus, STATUS_RECTIFYING, "submit_rectify", "提交整改");
+
+        log.info("科室提交整改成功，事件ID: {}, 编号: {}", eventId, event.getEventCode());
+        return true;
+    }
+
+    @Override
+    public boolean canSubmitRectify(String eventId) {
+        AdverseEvent event = this.getById(eventId);
+        if (event == null) {
+            return false;
+        }
+        // 检查事件状态是否为待整改
+        if (!STATUS_PENDING_RECTIFY.equals(event.getStatus())) {
+            return false;
+        }
+        // 检查是否有待处理的整改记录
+        AdverseEventRectify rectify = rectifyService.getCurrentRectify(eventId);
+        return rectify != null && rectifyService.canFillRectify(rectify.getId());
+    }
 }

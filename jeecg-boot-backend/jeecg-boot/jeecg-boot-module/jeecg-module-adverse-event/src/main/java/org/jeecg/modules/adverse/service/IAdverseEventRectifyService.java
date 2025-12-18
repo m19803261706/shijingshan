@@ -83,4 +83,39 @@ public interface IAdverseEventRectifyService extends IService<AdverseEventRectif
      * @return 当前整改记录
      */
     AdverseEventRectify getCurrentRectify(String eventId);
+
+    // ==================== 科室端整改方法 ====================
+
+    /**
+     * 保存整改草稿
+     * <p>
+     * 科室保存整改措施草稿，不提交
+     * </p>
+     *
+     * @param rectifyId   整改记录ID
+     * @param measures    整改措施
+     * @param result      整改结果
+     * @param attachments 整改附件
+     * @return 是否保存成功
+     */
+    boolean saveRectifyDraft(String rectifyId, String measures, String result, String attachments);
+
+    /**
+     * 校验是否可以填写整改
+     * <p>
+     * 仅待整改或被退回状态可填写
+     * </p>
+     *
+     * @param rectifyId 整改记录ID
+     * @return 是否可填写
+     */
+    boolean canFillRectify(String rectifyId);
+
+    /**
+     * 获取整改详情
+     *
+     * @param rectifyId 整改记录ID
+     * @return 整改记录详情
+     */
+    AdverseEventRectify getRectifyDetail(String rectifyId);
 }

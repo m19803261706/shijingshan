@@ -179,4 +179,53 @@ public class AdverseEventRectifyServiceImpl extends ServiceImpl<AdverseEventRect
     public AdverseEventRectify getCurrentRectify(String eventId) {
         return baseMapper.getCurrentRectify(eventId);
     }
+
+    // ==================== 科室端整改方法实现 ====================
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean saveRectifyDraft(String rectifyId, String measures, String result, String attachments) {
+        AdverseEventRectify rectify = this.getById(rectifyId);
+        if (rectify == null) {
+            log.error("整改记录不存在，ID: {}", rectifyId);
+            return false;
+        }
+
+        // 校验状态（仅待整改或被退回状态可保存）
+        String status = rectify.getStatus();
+        if (!RECTIFY_STATUS_PENDING.equals(status) && !RECTIFY_STATUS_REJECTED.equals(status)) {
+            log.error("整改状态不允许保存，当前状态: {}", status);
+            return false;
+        }
+
+        // 获取当前登录用户
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
+        // 更新整改记录（仅保存，不改变状态）
+        rectify.setMeasures(measures);
+        rectify.setResult(result);
+        rectify.setAttachments(attachments);
+        rectify.setUpdateBy(loginUser.getUsername());
+        rectify.setUpdateTime(new Date());
+
+        this.updateById(rectify);
+
+        log.info("保存整改草稿，ID: {}, 轮次: {}", rectifyId, rectify.getRectifyNo());
+        return true;
+    }
+
+    @Override
+    public boolean canFillRectify(String rectifyId) {
+        AdverseEventRectify rectify = this.getById(rectifyId);
+        if (rectify == null) {
+            return false;
+        }
+        String status = rectify.getStatus();
+        return RECTIFY_STATUS_PENDING.equals(status) || RECTIFY_STATUS_REJECTED.equals(status);
+    }
+
+    @Override
+    public AdverseEventRectify getRectifyDetail(String rectifyId) {
+        return this.getById(rectifyId);
+    }
 }

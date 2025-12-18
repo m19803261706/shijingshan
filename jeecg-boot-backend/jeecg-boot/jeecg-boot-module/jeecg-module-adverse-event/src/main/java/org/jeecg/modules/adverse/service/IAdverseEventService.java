@@ -180,4 +180,31 @@ public interface IAdverseEventService extends IService<AdverseEvent> {
      * @return 是否可确认整改
      */
     boolean canConfirmRectify(String id);
+
+    // ==================== 科室整改提交相关方法 ====================
+
+    /**
+     * 科室提交整改
+     * <p>
+     * 科室完成整改后提交，事件状态从待整改变为整改中
+     * </p>
+     *
+     * @param eventId     事件ID
+     * @param measures    整改措施
+     * @param result      整改结果
+     * @param attachments 整改附件
+     * @return 是否操作成功
+     */
+    boolean submitRectifyByDepartment(String eventId, String measures, String result, String attachments);
+
+    /**
+     * 校验是否可以提交整改
+     * <p>
+     * 仅待整改状态可以提交整改
+     * </p>
+     *
+     * @param eventId 事件ID
+     * @return 是否可提交整改
+     */
+    boolean canSubmitRectify(String eventId);
 }
