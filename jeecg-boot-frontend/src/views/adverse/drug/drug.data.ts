@@ -532,7 +532,306 @@ export const relatedInfoFormSchema: FormSchema[] = [
 ];
 
 /**
- * 4. 不良反应/事件信息区
+ * 给药途径选项（用于事件过程描述）
+ */
+export const routeTypeOptions = [
+  { label: '静滴', value: 'iv_drip' },
+  { label: '肌注', value: 'im' },
+  { label: '口服', value: 'oral' },
+  { label: '外用', value: 'topical' },
+];
+
+/**
+ * 剂量单位选项（用于事件过程描述）
+ */
+export const doseTypeOptions = [
+  { label: 'g', value: 'g' },
+  { label: 'mg', value: 'mg' },
+  { label: 'μg', value: 'ug' },
+  { label: 'ml', value: 'ml' },
+  { label: 'IU', value: 'IU' },
+];
+
+/**
+ * 时间单位选项
+ */
+export const timeUnitOptions = [
+  { label: '天', value: 'day' },
+  { label: '小时', value: 'hour' },
+  { label: '分钟', value: 'minute' },
+];
+
+/**
+ * 症状转归选项
+ */
+export const symptomOutcomeOptions = [
+  { label: '逐渐有所好转', value: 'improved' },
+  { label: '无明显好转', value: 'no_change' },
+  { label: '进一步加重', value: 'worsened' },
+];
+
+/**
+ * 后续用药选项
+ */
+export const subsequentUsageOptions = [
+  { label: '未再继续使用该药', value: 'discontinued' },
+  { label: '继续使用该药', value: 'continued' },
+];
+
+/**
+ * 4. 不良反应/事件信息区 - 基本信息
+ */
+export const reactionBasicFormSchema: FormSchema[] = [
+  {
+    label: '不良反应/事件名称',
+    field: 'reactionName',
+    component: 'Input',
+    required: true,
+    componentProps: {
+      placeholder: '请输入不良反应/事件名称',
+    },
+    colProps: { span: 12 },
+  },
+  {
+    label: '不良反应/事件发生时间',
+    field: 'reactionTime',
+    component: 'DatePicker',
+    required: true,
+    componentProps: {
+      placeholder: '请选择发生时间',
+      valueFormat: 'YYYY-MM-DD',
+      style: { width: '100%' },
+    },
+    colProps: { span: 12 },
+  },
+];
+
+/**
+ * 4. 不良反应/事件信息区 - 过程描述（1:1复刻国标表单格式）
+ * 格式：患者因____病于____年__月__日__时（静滴□、肌注□、口服□或外用□）____药____
+ * （g□、mg□、ug□、□、ml□或IU□）+____溶媒____ml，约____（天、小时、分钟）输入____ml后，出现____等症状。
+ * 经____等治疗后，约____（天、小时、分钟）后，症状（逐渐有所好转□、无明显好转□或进一步加重□）。
+ * 此后（未再继续使用该药□、继续使用该药□）。
+ */
+export const reactionProcessFormSchema: FormSchema[] = [
+  // 第一行：患者因____病于____年__月__日__时
+  {
+    label: '患者因',
+    field: 'patientReason',
+    component: 'Input',
+    componentProps: {
+      placeholder: '病因/原因',
+    },
+    colProps: { span: 4 },
+  },
+  {
+    label: '病于',
+    field: 'onsetYear',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: '年',
+      min: 1900,
+      max: 2100,
+      style: { width: '100%' },
+    },
+    colProps: { span: 2 },
+  },
+  {
+    label: '年',
+    field: 'onsetMonth',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: '月',
+      min: 1,
+      max: 12,
+      style: { width: '100%' },
+    },
+    colProps: { span: 2 },
+  },
+  {
+    label: '月',
+    field: 'onsetDay',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: '日',
+      min: 1,
+      max: 31,
+      style: { width: '100%' },
+    },
+    colProps: { span: 2 },
+  },
+  {
+    label: '日',
+    field: 'onsetHour',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: '时',
+      min: 0,
+      max: 23,
+      style: { width: '100%' },
+    },
+    colProps: { span: 2 },
+  },
+  {
+    label: '时',
+    field: 'routeType',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: routeTypeOptions,
+    },
+    colProps: { span: 12 },
+  },
+
+  // 第二行：____药____（g□、mg□...）+____溶媒____ml
+  {
+    label: '药物名称',
+    field: 'drugNameDesc',
+    component: 'Input',
+    componentProps: {
+      placeholder: '药物名称',
+    },
+    colProps: { span: 6 },
+  },
+  {
+    label: '剂量',
+    field: 'doseAmount',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: '剂量数值',
+      min: 0,
+      style: { width: '100%' },
+    },
+    colProps: { span: 3 },
+  },
+  {
+    label: '单位',
+    field: 'doseType',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: doseTypeOptions,
+    },
+    colProps: { span: 9 },
+  },
+  {
+    label: '溶媒',
+    field: 'solventName',
+    component: 'Input',
+    componentProps: {
+      placeholder: '溶媒名称',
+    },
+    colProps: { span: 3 },
+  },
+  {
+    label: '溶媒量(ml)',
+    field: 'solventVolume',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: 'ml',
+      min: 0,
+      style: { width: '100%' },
+    },
+    colProps: { span: 3 },
+  },
+
+  // 第三行：约____（天、小时、分钟）输入____ml后，出现____等症状
+  {
+    label: '约',
+    field: 'infusionDuration',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: '时长',
+      min: 0,
+      style: { width: '100%' },
+    },
+    colProps: { span: 3 },
+  },
+  {
+    label: '时间单位',
+    field: 'infusionTimeUnit',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: timeUnitOptions,
+    },
+    colProps: { span: 6 },
+  },
+  {
+    label: '输入',
+    field: 'infusedVolume',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: 'ml',
+      min: 0,
+      style: { width: '100%' },
+    },
+    colProps: { span: 3 },
+  },
+  {
+    label: 'ml后，出现',
+    field: 'symptoms',
+    component: 'Input',
+    componentProps: {
+      placeholder: '症状描述',
+    },
+    colProps: { span: 12 },
+  },
+
+  // 第四行：经____等治疗后
+  {
+    label: '经',
+    field: 'treatmentMethods',
+    component: 'Input',
+    componentProps: {
+      placeholder: '治疗方法',
+    },
+    colProps: { span: 24 },
+    suffix: '等治疗后，',
+  },
+
+  // 第五行：约____（天、小时、分钟）后，症状（...）
+  {
+    label: '约',
+    field: 'recoveryDuration',
+    component: 'InputNumber',
+    componentProps: {
+      placeholder: '时长',
+      min: 0,
+      style: { width: '100%' },
+    },
+    colProps: { span: 3 },
+  },
+  {
+    label: '后',
+    field: 'recoveryTimeUnit',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: timeUnitOptions,
+    },
+    colProps: { span: 6 },
+  },
+  {
+    label: '症状',
+    field: 'symptomOutcome',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: symptomOutcomeOptions,
+    },
+    colProps: { span: 15 },
+  },
+
+  // 第六行：此后（未再继续使用该药□、继续使用该药□）
+  {
+    label: '此后',
+    field: 'subsequentUsage',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: subsequentUsageOptions,
+    },
+    colProps: { span: 24 },
+  },
+];
+
+/**
+ * 4. 不良反应/事件信息区 - 原始文本框（保留给需要自由描述的场景）
  */
 export const reactionInfoFormSchema: FormSchema[] = [
   {

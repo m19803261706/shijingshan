@@ -71,7 +71,14 @@
 
       <!-- 6. 不良反应/事件信息区 -->
       <a-card title="六、不良反应/事件信息" class="mb-4" :bordered="false">
-        <BasicForm @register="registerReactionInfoForm" />
+        <!-- 基本信息：事件名称和发生时间 -->
+        <BasicForm @register="registerReactionBasicForm" />
+
+        <!-- 事件过程描述（1:1复刻国标表单格式） -->
+        <a-divider orientation="left" style="margin: 16px 0 8px 0; font-size: 13px;">
+          不良反应/事件过程描述（包括症状、体征、临床检验等）及处理情况（可附页）：
+        </a-divider>
+        <BasicForm @register="registerReactionProcessForm" />
       </a-card>
 
       <!-- 7. 不良反应/事件结果区 -->
@@ -141,7 +148,8 @@ import {
   reportBasicFormSchema,
   patientInfoFormSchema,
   relatedInfoFormSchema,
-  reactionInfoFormSchema,
+  reactionBasicFormSchema,
+  reactionProcessFormSchema,
   reactionResultFormSchema,
   stopDrugFormSchema,
   diseaseImpactFormSchema,
@@ -222,12 +230,20 @@ const [registerRelatedInfoForm, { setFieldsValue: setRelatedInfoFields, validate
   baseColProps: { span: 4 },
 });
 
-// 4. 不良反应/事件信息表单
-const [registerReactionInfoForm, { setFieldsValue: setReactionInfoFields, validate: validateReactionInfo, getFieldsValue: getReactionInfoFields, setProps: setReactionInfoProps }] = useForm({
-  labelWidth: 160,
-  schemas: reactionInfoFormSchema,
+// 4. 不良反应/事件基本信息表单
+const [registerReactionBasicForm, { setFieldsValue: setReactionBasicFields, validate: validateReactionBasic, getFieldsValue: getReactionBasicFields, setProps: setReactionBasicProps }] = useForm({
+  labelWidth: 180,
+  schemas: reactionBasicFormSchema,
   showActionButtonGroup: false,
   baseColProps: { span: 12 },
+});
+
+// 4.5 不良反应/事件过程描述表单（1:1复刻国标格式）
+const [registerReactionProcessForm, { setFieldsValue: setReactionProcessFields, validate: validateReactionProcess, getFieldsValue: getReactionProcessFields, setProps: setReactionProcessProps }] = useForm({
+  labelWidth: 90,
+  schemas: reactionProcessFormSchema,
+  showActionButtonGroup: false,
+  baseColProps: { span: 24 },
 });
 
 // 5. 不良反应/事件结果表单
@@ -339,7 +355,8 @@ async function setAllFormFields(data: any) {
   await setReportBasicFields(data);
   await setPatientInfoFields(data);
   await setRelatedInfoFields(data);
-  await setReactionInfoFields(data);
+  await setReactionBasicFields(data);
+  await setReactionProcessFields(data);
   await setReactionResultFields(data);
   await setStopDrugFields(data);
   await setDiseaseImpactFields(data);
@@ -356,7 +373,8 @@ function setFormsDisabled(disabled: boolean) {
   setReportBasicProps({ disabled });
   setPatientInfoProps({ disabled });
   setRelatedInfoProps({ disabled });
-  setReactionInfoProps({ disabled });
+  setReactionBasicProps({ disabled });
+  setReactionProcessProps({ disabled });
   setReactionResultProps({ disabled });
   setStopDrugProps({ disabled });
   setDiseaseImpactProps({ disabled });
@@ -372,14 +390,15 @@ function setFormsDisabled(disabled: boolean) {
 async function getAllFormData(): Promise<any> {
   // 验证所有必填表单
   await validateReportBasic();
-  await validateReactionInfo();
+  await validateReactionBasic();
 
   // 合并所有表单数据
   const formData = {
     ...getReportBasicFields(),
     ...getPatientInfoFields(),
     ...getRelatedInfoFields(),
-    ...getReactionInfoFields(),
+    ...getReactionBasicFields(),
+    ...getReactionProcessFields(),
     ...getReactionResultFields(),
     ...getStopDrugFields(),
     ...getDiseaseImpactFields(),

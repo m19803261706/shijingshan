@@ -256,6 +256,134 @@ public class DrugAdverseReport implements Serializable {
     @Schema(description = "不良反应/事件过程描述（包括症状、体征、临床检验等）及处理情况")
     private String reactionDescription;
 
+    // ==================== 事件过程描述结构化字段（1:1复刻国标表单） ====================
+
+    /**
+     * 患者病因/原因
+     */
+    @Schema(description = "患者病因/原因")
+    private String patientReason;
+
+    /**
+     * 发病年份
+     */
+    @Schema(description = "发病年份")
+    private Integer onsetYear;
+
+    /**
+     * 发病月份
+     */
+    @Schema(description = "发病月份")
+    private Integer onsetMonth;
+
+    /**
+     * 发病日期
+     */
+    @Schema(description = "发病日期")
+    private Integer onsetDay;
+
+    /**
+     * 发病小时
+     */
+    @Schema(description = "发病小时")
+    private Integer onsetHour;
+
+    /**
+     * 给药途径
+     * <p>多选JSON：iv_drip-静滴, im-肌注, oral-口服, topical-外用</p>
+     */
+    @Schema(description = "给药途径（多选JSON）")
+    private String routeType;
+
+    /**
+     * 药物名称（事件描述用）
+     */
+    @Schema(description = "药物名称（事件描述用）")
+    private String drugNameDesc;
+
+    /**
+     * 剂量数值
+     */
+    @Schema(description = "剂量数值")
+    private BigDecimal doseAmount;
+
+    /**
+     * 剂量单位
+     * <p>多选JSON：g, mg, ug, ml, IU</p>
+     */
+    @Schema(description = "剂量单位（多选JSON）")
+    private String doseType;
+
+    /**
+     * 溶媒名称
+     */
+    @Schema(description = "溶媒名称")
+    private String solventName;
+
+    /**
+     * 溶媒量(ml)
+     */
+    @Schema(description = "溶媒量(ml)")
+    private BigDecimal solventVolume;
+
+    /**
+     * 输液时长数值
+     */
+    @Schema(description = "输液时长数值")
+    private Integer infusionDuration;
+
+    /**
+     * 输液时长单位
+     * <p>多选JSON：day-天, hour-小时, minute-分钟</p>
+     */
+    @Schema(description = "输液时长单位（多选JSON）")
+    private String infusionTimeUnit;
+
+    /**
+     * 已输入量(ml)
+     */
+    @Schema(description = "已输入量(ml)")
+    private BigDecimal infusedVolume;
+
+    /**
+     * 出现的症状
+     */
+    @Schema(description = "出现的症状")
+    private String symptoms;
+
+    /**
+     * 治疗方法
+     */
+    @Schema(description = "治疗方法")
+    private String treatmentMethods;
+
+    /**
+     * 恢复时长数值
+     */
+    @Schema(description = "恢复时长数值")
+    private Integer recoveryDuration;
+
+    /**
+     * 恢复时长单位
+     * <p>多选JSON：day-天, hour-小时, minute-分钟</p>
+     */
+    @Schema(description = "恢复时长单位（多选JSON）")
+    private String recoveryTimeUnit;
+
+    /**
+     * 症状转归
+     * <p>多选JSON：improved-逐渐有所好转, no_change-无明显好转, worsened-进一步加重</p>
+     */
+    @Schema(description = "症状转归（多选JSON）")
+    private String symptomOutcome;
+
+    /**
+     * 后续用药
+     * <p>多选JSON：discontinued-未再继续使用该药, continued-继续使用该药</p>
+     */
+    @Schema(description = "后续用药（多选JSON）")
+    private String subsequentUsage;
+
     // ==================== 不良反应/事件结果 ====================
 
     /**
