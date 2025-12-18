@@ -2,7 +2,7 @@
   "project_id": "shijingshan",
   "feature": "药品常用配置管理",
   "prd": ".claude/jeecg/prds/药品常用配置管理/prd.md",
-  "status": "planned",
+  "status": "in_progress",
   "epic": {
     "number": 32,
     "url": "https://github.com/m19803261706/shijingshan/issues/32"
@@ -34,7 +34,7 @@
       "number": 33,
       "title": "创建常用怀疑药品配置表 drug_common_suspect",
       "type": "jeecg-migration",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "phase": 1
     },
     {
@@ -48,7 +48,7 @@
       "number": 35,
       "title": "创建 DrugCommonSuspect 实体类和 CRUD",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [33],
       "phase": 2
     },
