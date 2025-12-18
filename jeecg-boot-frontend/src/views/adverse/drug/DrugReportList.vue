@@ -109,7 +109,7 @@ async function handleSubmit(record: Recordable) {
     title: '确认提交',
     content: '确定要提交此报告吗？提交后将进入审核流程。',
     onOk: async () => {
-      await submitDrugReport({ id: record.id });
+      await submitDrugReport(record.id);
       createMessage.success('提交成功');
       reload();
     },
@@ -120,7 +120,7 @@ async function handleSubmit(record: Recordable) {
  * 删除报告
  */
 async function handleDelete(record: Recordable) {
-  await deleteDrugReport({ id: record.id });
+  await deleteDrugReport(record.id);
   createMessage.success('删除成功');
   reload();
 }
@@ -134,7 +134,7 @@ async function batchHandleDelete() {
     title: '确认删除',
     content: '确定要删除选中的报告吗？仅草稿状态的报告可以删除。',
     onOk: async () => {
-      await batchDeleteDrugReport({ ids: selectedRowKeys.value.join(',') });
+      await batchDeleteDrugReport(selectedRowKeys.value.join(','));
       createMessage.success('删除成功');
       selectedRowKeys.value = [];
       reload();

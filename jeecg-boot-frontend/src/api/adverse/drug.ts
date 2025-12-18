@@ -79,50 +79,50 @@ export const getConcomitantDrugs = (params) => {
 
 /**
  * 新增报告（含子表）
- * @param params 报告数据
+ * @param data 报告数据（请求体）
  */
-export const addDrugReport = (params) => {
-  return defHttp.post({ url: Api.add, params });
+export const addDrugReport = (data) => {
+  return defHttp.post({ url: Api.add, data });
 };
 
 /**
  * 编辑报告（含子表）
- * @param params 报告数据
+ * @param data 报告数据（请求体）
  */
-export const editDrugReport = (params) => {
-  return defHttp.post({ url: Api.edit, params });
+export const editDrugReport = (data) => {
+  return defHttp.post({ url: Api.edit, data });
 };
 
 /**
  * 保存草稿（含子表）
- * @param params 报告数据
+ * @param data 报告数据（请求体）
  */
-export const saveDrugReportDraft = (params) => {
-  return defHttp.post({ url: Api.saveDraft, params });
+export const saveDrugReportDraft = (data) => {
+  return defHttp.post({ url: Api.saveDraft, data });
 };
 
 /**
  * 提交报告
- * @param params { id: string }
+ * @param id 报告ID
  */
-export const submitDrugReport = (params) => {
-  return defHttp.post({ url: Api.submit, params });
+export const submitDrugReport = (id: string) => {
+  return defHttp.post({ url: `${Api.submit}?id=${id}` });
 };
 
 /**
  * 删除报告
- * @param params { id: string }
+ * @param id 报告ID
  */
-export const deleteDrugReport = (params) => {
-  return defHttp.delete({ url: Api.delete, params });
+export const deleteDrugReport = (id: string) => {
+  return defHttp.delete({ url: `${Api.delete}?id=${id}` });
 };
 
 /**
  * 批量删除报告
- * @param params { ids: string }
+ * @param ids 报告ID列表，逗号分隔
  */
-export const batchDeleteDrugReport = (params) => {
-  return defHttp.delete({ url: Api.deleteBatch, params });
+export const batchDeleteDrugReport = (ids: string) => {
+  return defHttp.delete({ url: `${Api.deleteBatch}?ids=${ids}` });
 };
 
 /**

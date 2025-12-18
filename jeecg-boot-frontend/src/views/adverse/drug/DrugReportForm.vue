@@ -599,12 +599,12 @@ async function handleSubmit() {
           formData.id = reportId.value;
           await editDrugReport(formData);
           // 编辑后提交
-          await submitDrugReport({ id: reportId.value });
+          await submitDrugReport(reportId.value);
         } else {
           // 新增并提交
           const result = await addDrugReport(formData);
           if (result?.id) {
-            await submitDrugReport({ id: result.id });
+            await submitDrugReport(result.id);
           }
         }
 
