@@ -1,0 +1,60 @@
+{
+  "project_id": "shijingshan",
+  "feature": "不良事件上报系统",
+  "prd": ".claude/tc/prds/不良事件上报系统/prd.md",
+  "created_at": "2025-01-18",
+  "epic": {
+    "number": 1,
+    "title": "[Epic] 北京市石景山医院不良事件上报系统",
+    "url": "https://github.com/m19803261706/shijingshan/issues/1"
+  },
+  "phases": [
+    {
+      "name": "Phase 1: 基础设施搭建",
+      "issues": [2],
+      "status": "ready"
+    },
+    {
+      "name": "Phase 2: 数据库设计",
+      "issues": [3, 4, 5, 6, 7],
+      "status": "ready"
+    },
+    {
+      "name": "Phase 3: 后端开发",
+      "issues": [8, 9, 10, 11, 12, 13],
+      "status": "blocked"
+    },
+    {
+      "name": "Phase 4: 前端开发",
+      "issues": [14, 15, 16, 17, 18],
+      "status": "blocked"
+    },
+    {
+      "name": "Phase 5: 菜单与权限",
+      "issues": [19, 20],
+      "status": "blocked"
+    }
+  ],
+  "issues": [
+    {"number": 2, "title": "创建业务模块 jeecg-module-adverse-event", "type": "backend", "status": "tc-ready", "phase": 1},
+    {"number": 3, "title": "不良事件主表设计", "type": "database", "status": "tc-ready", "phase": 2},
+    {"number": 4, "title": "事件流转记录表设计", "type": "database", "status": "tc-blocked", "phase": 2, "depends_on": [3]},
+    {"number": 5, "title": "整改记录表设计", "type": "database", "status": "tc-blocked", "phase": 2, "depends_on": [3]},
+    {"number": 6, "title": "事件分类表设计", "type": "database", "status": "tc-ready", "phase": 2},
+    {"number": 7, "title": "数据字典配置", "type": "database", "status": "tc-ready", "phase": 2},
+    {"number": 8, "title": "事件上报 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [3, 6, 7]},
+    {"number": 9, "title": "科室审核 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [8]},
+    {"number": 10, "title": "职能处理 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [9]},
+    {"number": 11, "title": "整改管理 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [5, 10]},
+    {"number": 12, "title": "事件查询 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [8]},
+    {"number": 13, "title": "统计分析 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [8]},
+    {"number": 14, "title": "事件上报页面", "type": "frontend", "status": "tc-blocked", "phase": 4, "depends_on": [8]},
+    {"number": 15, "title": "审核处理页面", "type": "frontend", "status": "tc-blocked", "phase": 4, "depends_on": [9, 10]},
+    {"number": 16, "title": "整改管理页面", "type": "frontend", "status": "tc-blocked", "phase": 4, "depends_on": [11]},
+    {"number": 17, "title": "查询统计页面", "type": "frontend", "status": "tc-blocked", "phase": 4, "depends_on": [12, 13]},
+    {"number": 18, "title": "系统配置页面", "type": "frontend", "status": "tc-blocked", "phase": 4, "depends_on": [6]},
+    {"number": 19, "title": "创建菜单 SQL", "type": "database", "status": "tc-blocked", "phase": 5, "depends_on": [14, 15, 16, 17, 18]},
+    {"number": 20, "title": "配置角色权限", "type": "backend", "status": "tc-blocked", "phase": 5, "depends_on": [19]}
+  ],
+  "execution_order": [2, 3, 6, 7, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+}
