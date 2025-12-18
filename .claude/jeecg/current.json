@@ -34,14 +34,14 @@
       "number": 22,
       "title": "创建药品不良反应主表 drug_adverse_report",
       "type": "jeecg-migration",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "phase": 1
     },
     {
       "number": 23,
       "title": "创建怀疑药品子表 drug_adverse_suspect_drug",
       "type": "jeecg-migration",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [22],
       "phase": 1
     },
@@ -49,7 +49,7 @@
       "number": 24,
       "title": "创建并用药品子表 drug_adverse_concomitant_drug",
       "type": "jeecg-migration",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [22],
       "phase": 1
     },
@@ -57,7 +57,7 @@
       "number": 25,
       "title": "配置数据字典",
       "type": "jeecg-migration",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [22],
       "phase": 1
     },
