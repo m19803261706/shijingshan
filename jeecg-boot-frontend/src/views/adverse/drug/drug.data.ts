@@ -614,7 +614,7 @@ export const reactionBasicFormSchema: FormSchema[] = [
  * 此后（未再继续使用该药□、继续使用该药□）。
  */
 export const reactionProcessFormSchema: FormSchema[] = [
-  // 第一行：患者因____病于____年__月__日__时
+  // ========== 第一行：患者因____病于____年__月__日__时 ==========
   {
     label: '患者因',
     field: 'patientReason',
@@ -622,7 +622,7 @@ export const reactionProcessFormSchema: FormSchema[] = [
     componentProps: {
       placeholder: '病因/原因',
     },
-    colProps: { span: 4 },
+    colProps: { span: 8 },
   },
   {
     label: '病于',
@@ -633,11 +633,12 @@ export const reactionProcessFormSchema: FormSchema[] = [
       min: 1900,
       max: 2100,
       style: { width: '100%' },
+      addonAfter: '年',
     },
-    colProps: { span: 2 },
+    colProps: { span: 4 },
   },
   {
-    label: '年',
+    label: '',
     field: 'onsetMonth',
     component: 'InputNumber',
     componentProps: {
@@ -645,11 +646,12 @@ export const reactionProcessFormSchema: FormSchema[] = [
       min: 1,
       max: 12,
       style: { width: '100%' },
+      addonAfter: '月',
     },
-    colProps: { span: 2 },
+    colProps: { span: 4 },
   },
   {
-    label: '月',
+    label: '',
     field: 'onsetDay',
     component: 'InputNumber',
     componentProps: {
@@ -657,11 +659,12 @@ export const reactionProcessFormSchema: FormSchema[] = [
       min: 1,
       max: 31,
       style: { width: '100%' },
+      addonAfter: '日',
     },
-    colProps: { span: 2 },
+    colProps: { span: 4 },
   },
   {
-    label: '日',
+    label: '',
     field: 'onsetHour',
     component: 'InputNumber',
     componentProps: {
@@ -669,28 +672,31 @@ export const reactionProcessFormSchema: FormSchema[] = [
       min: 0,
       max: 23,
       style: { width: '100%' },
+      addonAfter: '时',
     },
-    colProps: { span: 2 },
+    colProps: { span: 4 },
   },
+
+  // ========== 第二行：给药途径 ==========
   {
-    label: '时',
+    label: '给药途径',
     field: 'routeType',
     component: 'CheckboxGroup',
     componentProps: {
       options: routeTypeOptions,
     },
-    colProps: { span: 12 },
+    colProps: { span: 24 },
   },
 
-  // 第二行：____药____（g□、mg□...）+____溶媒____ml
+  // ========== 第三行：药物名称、剂量、单位 ==========
   {
     label: '药物名称',
     field: 'drugNameDesc',
     component: 'Input',
     componentProps: {
-      placeholder: '药物名称',
+      placeholder: '请输入药物名称',
     },
-    colProps: { span: 6 },
+    colProps: { span: 8 },
   },
   {
     label: '剂量',
@@ -701,7 +707,7 @@ export const reactionProcessFormSchema: FormSchema[] = [
       min: 0,
       style: { width: '100%' },
     },
-    colProps: { span: 3 },
+    colProps: { span: 4 },
   },
   {
     label: '单位',
@@ -710,30 +716,33 @@ export const reactionProcessFormSchema: FormSchema[] = [
     componentProps: {
       options: doseTypeOptions,
     },
-    colProps: { span: 9 },
+    colProps: { span: 12 },
   },
+
+  // ========== 第四行：溶媒信息 ==========
   {
-    label: '溶媒',
+    label: '溶媒名称',
     field: 'solventName',
     component: 'Input',
     componentProps: {
-      placeholder: '溶媒名称',
+      placeholder: '请输入溶媒名称',
     },
-    colProps: { span: 3 },
+    colProps: { span: 12 },
   },
   {
-    label: '溶媒量(ml)',
+    label: '溶媒量',
     field: 'solventVolume',
     component: 'InputNumber',
     componentProps: {
-      placeholder: 'ml',
+      placeholder: '请输入溶媒量',
       min: 0,
       style: { width: '100%' },
+      addonAfter: 'ml',
     },
-    colProps: { span: 3 },
+    colProps: { span: 12 },
   },
 
-  // 第三行：约____（天、小时、分钟）输入____ml后，出现____等症状
+  // ========== 第五行：输液时长、输入量、症状 ==========
   {
     label: '约',
     field: 'infusionDuration',
@@ -743,16 +752,16 @@ export const reactionProcessFormSchema: FormSchema[] = [
       min: 0,
       style: { width: '100%' },
     },
-    colProps: { span: 3 },
+    colProps: { span: 4 },
   },
   {
-    label: '时间单位',
+    label: '',
     field: 'infusionTimeUnit',
     component: 'CheckboxGroup',
     componentProps: {
       options: timeUnitOptions,
     },
-    colProps: { span: 6 },
+    colProps: { span: 8 },
   },
   {
     label: '输入',
@@ -762,32 +771,33 @@ export const reactionProcessFormSchema: FormSchema[] = [
       placeholder: 'ml',
       min: 0,
       style: { width: '100%' },
+      addonAfter: 'ml后',
     },
-    colProps: { span: 3 },
+    colProps: { span: 6 },
   },
   {
-    label: 'ml后，出现',
+    label: '出现症状',
     field: 'symptoms',
     component: 'Input',
     componentProps: {
-      placeholder: '症状描述',
+      placeholder: '请输入出现的症状',
     },
-    colProps: { span: 12 },
+    colProps: { span: 6 },
   },
 
-  // 第四行：经____等治疗后
+  // ========== 第六行：治疗方法 ==========
   {
     label: '经',
     field: 'treatmentMethods',
     component: 'Input',
     componentProps: {
-      placeholder: '治疗方法',
+      placeholder: '请输入治疗方法',
+      addonAfter: '等治疗后',
     },
     colProps: { span: 24 },
-    suffix: '等治疗后，',
   },
 
-  // 第五行：约____（天、小时、分钟）后，症状（...）
+  // ========== 第七行：恢复时长、症状转归 ==========
   {
     label: '约',
     field: 'recoveryDuration',
@@ -797,28 +807,28 @@ export const reactionProcessFormSchema: FormSchema[] = [
       min: 0,
       style: { width: '100%' },
     },
-    colProps: { span: 3 },
+    colProps: { span: 4 },
   },
   {
-    label: '后',
+    label: '',
     field: 'recoveryTimeUnit',
     component: 'CheckboxGroup',
     componentProps: {
       options: timeUnitOptions,
     },
-    colProps: { span: 6 },
+    colProps: { span: 8 },
   },
   {
-    label: '症状',
+    label: '后，症状',
     field: 'symptomOutcome',
     component: 'CheckboxGroup',
     componentProps: {
       options: symptomOutcomeOptions,
     },
-    colProps: { span: 15 },
+    colProps: { span: 12 },
   },
 
-  // 第六行：此后（未再继续使用该药□、继续使用该药□）
+  // ========== 第八行：后续用药 ==========
   {
     label: '此后',
     field: 'subsequentUsage',

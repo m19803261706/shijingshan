@@ -240,10 +240,9 @@ const [registerReactionBasicForm, { setFieldsValue: setReactionBasicFields, vali
 
 // 4.5 不良反应/事件过程描述表单（1:1复刻国标格式）
 const [registerReactionProcessForm, { setFieldsValue: setReactionProcessFields, validate: validateReactionProcess, getFieldsValue: getReactionProcessFields, setProps: setReactionProcessProps }] = useForm({
-  labelWidth: 90,
+  labelWidth: 70,
   schemas: reactionProcessFormSchema,
   showActionButtonGroup: false,
-  baseColProps: { span: 24 },
 });
 
 // 5. 不良反应/事件结果表单
