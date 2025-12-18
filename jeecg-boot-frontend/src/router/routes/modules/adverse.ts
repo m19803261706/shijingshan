@@ -115,6 +115,28 @@ const adverse: AppRouteModule = {
         },
       ],
     },
+
+    // ========== 综合查询 ==========
+    {
+      path: 'query',
+      name: 'AdverseQuery',
+      component: () => import('/@/views/adverse/query/index.vue'),
+      meta: {
+        title: '综合查询',
+        icon: 'ant-design:search-outlined',
+      },
+    },
+
+    // ========== 统计分析 ==========
+    {
+      path: 'stat',
+      name: 'AdverseStat',
+      component: () => import('/@/views/adverse/stat/Dashboard.vue'),
+      meta: {
+        title: '统计分析',
+        icon: 'ant-design:bar-chart-outlined',
+      },
+    },
   ],
 };
 
