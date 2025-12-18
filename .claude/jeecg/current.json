@@ -1,115 +1,114 @@
 {
   "project_id": "shijingshan",
-  "feature": "药品不良反应上报",
-  "prd": ".claude/jeecg/prds/药品不良反应上报/prd.md",
-  "status": "completed",
+  "feature": "药品常用配置管理",
+  "prd": ".claude/jeecg/prds/药品常用配置管理/prd.md",
+  "status": "planned",
   "epic": {
-    "number": 21,
-    "url": "https://github.com/m19803261706/shijingshan/issues/21"
+    "number": 32,
+    "url": "https://github.com/m19803261706/shijingshan/issues/32"
   },
   "phases": [
     {
       "name": "Phase 1: 数据库设计",
-      "issues": [22, 23, 24, 25],
-      "status": "done"
+      "issues": [33, 34],
+      "status": "ready"
     },
     {
-      "name": "Phase 2: 实体与 CRUD",
-      "issues": [26, 27],
-      "status": "done"
+      "name": "Phase 2: 后端实体与 CRUD",
+      "issues": [35, 36, 37],
+      "status": "blocked"
     },
     {
       "name": "Phase 3: 前端页面",
-      "issues": [28, 29, 30],
-      "status": "done"
+      "issues": [38, 39, 40, 41],
+      "status": "blocked"
     },
     {
       "name": "Phase 4: 菜单权限",
-      "issues": [31],
-      "status": "done"
+      "issues": [42],
+      "status": "blocked"
     }
   ],
   "issues": [
     {
-      "number": 22,
-      "title": "创建药品不良反应主表 drug_adverse_report",
+      "number": 33,
+      "title": "创建常用怀疑药品配置表 drug_common_suspect",
       "type": "jeecg-migration",
-      "status": "jeecg-done",
+      "status": "jeecg-ready",
       "phase": 1
     },
     {
-      "number": 23,
-      "title": "创建怀疑药品子表 drug_adverse_suspect_drug",
+      "number": 34,
+      "title": "创建常用并用药品配置表 drug_common_concomitant",
       "type": "jeecg-migration",
-      "status": "jeecg-done",
-      "depends_on": [22],
+      "status": "jeecg-ready",
       "phase": 1
     },
     {
-      "number": 24,
-      "title": "创建并用药品子表 drug_adverse_concomitant_drug",
-      "type": "jeecg-migration",
-      "status": "jeecg-done",
-      "depends_on": [22],
-      "phase": 1
-    },
-    {
-      "number": 25,
-      "title": "配置数据字典",
-      "type": "jeecg-migration",
-      "status": "jeecg-done",
-      "depends_on": [22],
-      "phase": 1
-    },
-    {
-      "number": 26,
-      "title": "创建 Entity 实体类",
+      "number": 35,
+      "title": "创建 DrugCommonSuspect 实体类和 CRUD",
       "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [22, 23, 24],
+      "status": "jeecg-blocked",
+      "depends_on": [33],
       "phase": 2
     },
     {
-      "number": 27,
-      "title": "创建 Mapper/Service/Controller",
+      "number": 36,
+      "title": "创建 DrugCommonConcomitant 实体类和 CRUD",
       "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [26],
+      "status": "jeecg-blocked",
+      "depends_on": [34],
       "phase": 2
     },
     {
-      "number": 28,
-      "title": "创建药品不良反应列表页",
+      "number": 37,
+      "title": "实现药品自动保存逻辑（saveIfNotExists）",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [35, 36],
+      "phase": 2
+    },
+    {
+      "number": 38,
+      "title": "创建怀疑药品配置列表页",
       "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [27],
+      "status": "jeecg-blocked",
+      "depends_on": [35],
       "phase": 3
     },
     {
-      "number": 29,
-      "title": "创建药品不良反应表单页（1:1复刻）",
+      "number": 39,
+      "title": "创建并用药品配置列表页",
       "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [28],
+      "status": "jeecg-blocked",
+      "depends_on": [36],
       "phase": 3
     },
     {
-      "number": 30,
-      "title": "添加前端路由和菜单配置",
+      "number": 40,
+      "title": "创建药品选择弹窗组件",
       "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [28],
+      "status": "jeecg-blocked",
+      "depends_on": [38, 39],
       "phase": 3
     },
     {
-      "number": 31,
-      "title": "创建药品不良反应菜单 SQL",
+      "number": 41,
+      "title": "集成选择弹窗到上报表单子表",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [40],
+      "phase": 3
+    },
+    {
+      "number": 42,
+      "title": "创建药品常用配置菜单 SQL 和路由",
       "type": "jeecg-menu",
-      "status": "jeecg-done",
-      "depends_on": [30],
+      "status": "jeecg-blocked",
+      "depends_on": [38, 39],
       "phase": 4
     }
   ],
-  "execution_order": [22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+  "execution_order": [33, 34, 35, 36, 37, 38, 39, 40, 41, 42],
   "created_at": "2025-12-19"
 }
