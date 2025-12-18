@@ -8,10 +8,15 @@ import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.adverse.entity.DrugAdverseConcomitantDrug;
 import org.jeecg.modules.adverse.entity.DrugAdverseReport;
 import org.jeecg.modules.adverse.entity.DrugAdverseSuspectDrug;
+import org.jeecg.modules.adverse.entity.DrugCommonConcomitant;
+import org.jeecg.modules.adverse.entity.DrugCommonSuspect;
 import org.jeecg.modules.adverse.mapper.DrugAdverseReportMapper;
 import org.jeecg.modules.adverse.service.IDrugAdverseConcomitantDrugService;
 import org.jeecg.modules.adverse.service.IDrugAdverseReportService;
 import org.jeecg.modules.adverse.service.IDrugAdverseSuspectDrugService;
+import org.jeecg.modules.adverse.service.IDrugCommonConcomitantService;
+import org.jeecg.modules.adverse.service.IDrugCommonSuspectService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +58,12 @@ public class DrugAdverseReportServiceImpl extends ServiceImpl<DrugAdverseReportM
     @Autowired
     private IDrugAdverseConcomitantDrugService concomitantDrugService;
 
+    @Autowired
+    private IDrugCommonSuspectService drugCommonSuspectService;
+
+    @Autowired
+    private IDrugCommonConcomitantService drugCommonConcomitantService;
+
     @Override
     public String generateReportCode() {
         // 获取当前日期，格式：yyyyMMdd
@@ -93,6 +104,9 @@ public class DrugAdverseReportServiceImpl extends ServiceImpl<DrugAdverseReportM
         // 保存并用药品子表
         concomitantDrugService.saveBatchByReportId(reportId, concomitantDrugs);
 
+        // 自动保存药品到常用配置库（新增时触发）
+        saveToCommonDrugConfig(suspectDrugs, concomitantDrugs);
+
         log.info("新建药品不良反应报告，ID: {}, 编号: {}", reportId, report.getReportCode());
         return report;
     }
@@ -120,8 +134,72 @@ public class DrugAdverseReportServiceImpl extends ServiceImpl<DrugAdverseReportM
         suspectDrugService.saveBatchByReportId(reportId, suspectDrugs);
         concomitantDrugService.saveBatchByReportId(reportId, concomitantDrugs);
 
+        // 自动保存药品到常用配置库（更新时也触发，处理新增的药品）
+        saveToCommonDrugConfig(suspectDrugs, concomitantDrugs);
+
         log.info("更新药品不良反应报告，ID: {}", reportId);
         return report;
+    }
+
+    /**
+     * 自动保存药品到常用配置库
+     * <p>
+     * 当用户在子表中录入药品信息时，自动检测是否为新药品，
+     * 如果不存在于配置库则自动保存，方便后续复用
+     * </p>
+     *
+     * @param suspectDrugs     怀疑药品列表
+     * @param concomitantDrugs 并用药品列表
+     */
+    private void saveToCommonDrugConfig(List<DrugAdverseSuspectDrug> suspectDrugs,
+                                         List<DrugAdverseConcomitantDrug> concomitantDrugs) {
+        int suspectSavedCount = 0;
+        int concomitantSavedCount = 0;
+
+        // 保存怀疑药品到常用配置库
+        if (suspectDrugs != null && !suspectDrugs.isEmpty()) {
+            for (DrugAdverseSuspectDrug suspectDrug : suspectDrugs) {
+                // 跳过通用名称为空的记录
+                if (oConvertUtils.isEmpty(suspectDrug.getGenericName())) {
+                    continue;
+                }
+
+                // 转换为常用配置实体
+                DrugCommonSuspect commonSuspect = new DrugCommonSuspect();
+                BeanUtils.copyProperties(suspectDrug, commonSuspect, "id", "reportId", "sortOrder",
+                        "startDate", "endDate", "createBy", "createTime", "updateBy", "updateTime");
+
+                // 调用 saveIfNotExists，自动去重
+                if (drugCommonSuspectService.saveIfNotExists(commonSuspect)) {
+                    suspectSavedCount++;
+                }
+            }
+        }
+
+        // 保存并用药品到常用配置库
+        if (concomitantDrugs != null && !concomitantDrugs.isEmpty()) {
+            for (DrugAdverseConcomitantDrug concomitantDrug : concomitantDrugs) {
+                // 跳过通用名称为空的记录
+                if (oConvertUtils.isEmpty(concomitantDrug.getGenericName())) {
+                    continue;
+                }
+
+                // 转换为常用配置实体
+                DrugCommonConcomitant commonConcomitant = new DrugCommonConcomitant();
+                BeanUtils.copyProperties(concomitantDrug, commonConcomitant, "id", "reportId", "sortOrder",
+                        "startDate", "endDate", "createBy", "createTime", "updateBy", "updateTime");
+
+                // 调用 saveIfNotExists，自动去重
+                if (drugCommonConcomitantService.saveIfNotExists(commonConcomitant)) {
+                    concomitantSavedCount++;
+                }
+            }
+        }
+
+        if (suspectSavedCount > 0 || concomitantSavedCount > 0) {
+            log.info("自动保存药品到常用配置库: 怀疑药品 {} 条, 并用药品 {} 条",
+                    suspectSavedCount, concomitantSavedCount);
+        }
     }
 
     @Override
