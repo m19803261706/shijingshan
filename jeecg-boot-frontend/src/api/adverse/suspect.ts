@@ -92,7 +92,7 @@ export const editSuspect = (params) => {
  * @returns 操作结果
  */
 export const deleteSuspect = (id: string) => {
-  return defHttp.delete({ url: Api.delete, params: { id } });
+  return defHttp.delete({ url: `${Api.delete}?id=${id}` });
 };
 
 /**
@@ -102,7 +102,7 @@ export const deleteSuspect = (id: string) => {
  * @returns 操作结果
  */
 export const deleteSuspectBatch = (ids: string) => {
-  return defHttp.delete({ url: Api.deleteBatch, params: { ids } });
+  return defHttp.delete({ url: `${Api.deleteBatch}?ids=${ids}` });
 };
 
 /**

@@ -92,7 +92,7 @@ export const editConcomitant = (params) => {
  * @returns 操作结果
  */
 export const deleteConcomitant = (id: string) => {
-  return defHttp.delete({ url: Api.delete, params: { id } });
+  return defHttp.delete({ url: `${Api.delete}?id=${id}` });
 };
 
 /**
@@ -102,7 +102,7 @@ export const deleteConcomitant = (id: string) => {
  * @returns 操作结果
  */
 export const deleteConcomitantBatch = (ids: string) => {
-  return defHttp.delete({ url: Api.deleteBatch, params: { ids } });
+  return defHttp.delete({ url: `${Api.deleteBatch}?ids=${ids}` });
 };
 
 /**
