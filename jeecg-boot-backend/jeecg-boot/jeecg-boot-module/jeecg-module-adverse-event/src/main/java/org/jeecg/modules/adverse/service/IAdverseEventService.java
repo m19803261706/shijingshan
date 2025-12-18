@@ -105,4 +105,79 @@ public interface IAdverseEventService extends IService<AdverseEvent> {
      * @return 是否可审核
      */
     boolean canAudit(String id);
+
+    // ==================== 职能处理相关方法 ====================
+
+    /**
+     * 要求整改
+     * <p>
+     * 职能科室要求科室进行整改，创建整改记录
+     * 事件状态变更为待整改
+     * </p>
+     *
+     * @param id          事件ID
+     * @param requirement 整改要求
+     * @param deadline    整改期限
+     * @return 是否操作成功
+     */
+    boolean requireRectify(String id, String requirement, java.util.Date deadline);
+
+    /**
+     * 直接结案
+     * <p>
+     * 职能科室判定无需整改，直接结案
+     * 适用于已妥善处理或无需进一步处理的事件
+     * </p>
+     *
+     * @param id      事件ID
+     * @param comment 结案说明
+     * @return 是否操作成功
+     */
+    boolean closeDirectly(String id, String comment);
+
+    /**
+     * 确认整改完成
+     * <p>
+     * 职能科室确认科室的整改措施有效，结案
+     * </p>
+     *
+     * @param id      事件ID
+     * @param comment 确认意见
+     * @return 是否操作成功
+     */
+    boolean confirmRectify(String id, String comment);
+
+    /**
+     * 退回整改
+     * <p>
+     * 职能科室判定整改措施不足，退回重新整改
+     * </p>
+     *
+     * @param id      事件ID
+     * @param comment 退回原因
+     * @return 是否操作成功
+     */
+    boolean rejectRectifyResult(String id, String comment);
+
+    /**
+     * 校验是否可以职能处理
+     * <p>
+     * 仅待处理状态可以进行职能处理（要求整改或直接结案）
+     * </p>
+     *
+     * @param id 事件ID
+     * @return 是否可处理
+     */
+    boolean canProcess(String id);
+
+    /**
+     * 校验是否可以确认/退回整改
+     * <p>
+     * 仅整改中状态且整改已提交时可操作
+     * </p>
+     *
+     * @param id 事件ID
+     * @return 是否可确认整改
+     */
+    boolean canConfirmRectify(String id);
 }
