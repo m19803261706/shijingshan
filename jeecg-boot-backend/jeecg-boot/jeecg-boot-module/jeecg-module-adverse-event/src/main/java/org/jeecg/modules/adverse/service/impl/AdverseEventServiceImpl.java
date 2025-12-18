@@ -1,0 +1,192 @@
+package org.jeecg.modules.adverse.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.common.util.oConvertUtils;
+import org.jeecg.modules.adverse.entity.AdverseEvent;
+import org.jeecg.modules.adverse.mapper.AdverseEventMapper;
+import org.jeecg.modules.adverse.service.IAdverseEventFlowService;
+import org.jeecg.modules.adverse.service.IAdverseEventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+/**
+ * 不良事件主表 服务实现类
+ * <p>
+ * 实现不良事件的核心业务逻辑
+ * </p>
+ *
+ * @author TC Agent
+ * @since 2025-01-18
+ */
+@Slf4j
+@Service
+public class AdverseEventServiceImpl extends ServiceImpl<AdverseEventMapper, AdverseEvent> implements IAdverseEventService {
+
+    /**
+     * 事件编号前缀
+     */
+    private static final String EVENT_CODE_PREFIX = "AE";
+
+    /**
+     * 事件状态常量
+     */
+    private static final String STATUS_DRAFT = "draft";
+    private static final String STATUS_PENDING_AUDIT = "pending_audit";
+    private static final String STATUS_RETURNED = "returned";
+
+    @Autowired
+    private IAdverseEventFlowService flowService;
+
+    @Override
+    public String generateEventCode() {
+        // 获取当前日期，格式：yyyyMMdd
+        String dateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String prefix = EVENT_CODE_PREFIX + dateStr;
+
+        // 获取今日最大序号
+        Integer maxSeq = baseMapper.getMaxEventCodeSeq(prefix);
+        int nextSeq = (maxSeq == null) ? 1 : maxSeq + 1;
+
+        // 生成事件编号：AE + 日期 + 4位序号
+        return String.format("%s%04d", prefix, nextSeq);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean submitEvent(String id) {
+        // 1. 获取事件
+        AdverseEvent event = this.getById(id);
+        if (event == null) {
+            log.error("事件不存在，ID: {}", id);
+            return false;
+        }
+
+        // 2. 校验状态（仅 draft 和 returned 状态可提交）
+        String currentStatus = event.getStatus();
+        if (!STATUS_DRAFT.equals(currentStatus) && !STATUS_RETURNED.equals(currentStatus)) {
+            log.error("事件状态不允许提交，当前状态: {}", currentStatus);
+            return false;
+        }
+
+        // 3. 校验必填字段
+        if (!validateRequiredFields(event)) {
+            log.error("事件必填字段校验失败，ID: {}", id);
+            return false;
+        }
+
+        // 4. 更新事件状态
+        event.setStatus(STATUS_PENDING_AUDIT);
+        event.setSubmitTime(new Date());
+        this.updateById(event);
+
+        // 5. 记录流转日志
+        flowService.logFlow(id, currentStatus, STATUS_PENDING_AUDIT, "submit", "提交上报");
+
+        log.info("事件提交成功，ID: {}, 编号: {}", id, event.getEventCode());
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AdverseEvent saveDraft(AdverseEvent event) {
+        // 获取当前登录用户
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
+        if (oConvertUtils.isEmpty(event.getId())) {
+            // 新增草稿
+            event.setEventCode(generateEventCode());
+            event.setStatus(STATUS_DRAFT);
+            event.setReporterId(loginUser.getId());
+            event.setReporterName(loginUser.getRealname());
+            event.setDepartmentId(loginUser.getOrgCode());
+            event.setDepartmentName(loginUser.getOrgCodeTxt());
+            event.setCreateBy(loginUser.getUsername());
+            event.setCreateTime(new Date());
+            this.save(event);
+            log.info("新建事件草稿，ID: {}, 编号: {}", event.getId(), event.getEventCode());
+        } else {
+            // 更新草稿
+            AdverseEvent existEvent = this.getById(event.getId());
+            if (existEvent != null && canEdit(event.getId())) {
+                event.setUpdateBy(loginUser.getUsername());
+                event.setUpdateTime(new Date());
+                this.updateById(event);
+                log.info("更新事件草稿，ID: {}", event.getId());
+            }
+        }
+
+        return event;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEvent(String id) {
+        AdverseEvent event = this.getById(id);
+        if (event == null) {
+            log.error("事件不存在，ID: {}", id);
+            return false;
+        }
+
+        // 仅草稿状态可删除
+        if (!STATUS_DRAFT.equals(event.getStatus())) {
+            log.error("仅草稿状态可删除，当前状态: {}", event.getStatus());
+            return false;
+        }
+
+        // 逻辑删除
+        return this.removeById(id);
+    }
+
+    @Override
+    public boolean canEdit(String id) {
+        AdverseEvent event = this.getById(id);
+        if (event == null) {
+            return false;
+        }
+        String status = event.getStatus();
+        return STATUS_DRAFT.equals(status) || STATUS_RETURNED.equals(status);
+    }
+
+    /**
+     * 校验必填字段
+     *
+     * @param event 事件信息
+     * @return 是否校验通过
+     */
+    private boolean validateRequiredFields(AdverseEvent event) {
+        // 校验事件标题
+        if (oConvertUtils.isEmpty(event.getTitle())) {
+            log.warn("事件标题不能为空");
+            return false;
+        }
+        // 校验事件分类
+        if (oConvertUtils.isEmpty(event.getCategoryId())) {
+            log.warn("事件分类不能为空");
+            return false;
+        }
+        // 校验事件级别
+        if (oConvertUtils.isEmpty(event.getLevel())) {
+            log.warn("事件级别不能为空");
+            return false;
+        }
+        // 校验发生时间
+        if (event.getOccurTime() == null) {
+            log.warn("发生时间不能为空");
+            return false;
+        }
+        // 校验事件经过
+        if (oConvertUtils.isEmpty(event.getDescription())) {
+            log.warn("事件经过不能为空");
+            return false;
+        }
+        return true;
+    }
+}
