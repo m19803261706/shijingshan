@@ -524,14 +524,15 @@ function setFormsDisabled(disabled: boolean) {
 
 /**
  * 获取所有表单数据
+ * 返回符合后端 DrugAdverseReportVO 结构的数据
  */
 async function getAllFormData(): Promise<any> {
   // 验证所有必填表单
   await validateReportBasic();
   await validateReactionBasic();
 
-  // 合并所有表单数据
-  const formData = {
+  // 合并所有报告主表数据
+  const report = {
     ...getReportBasicFields(),
     ...getPatientInfoFields(),
     ...getRelatedInfoFields(),
@@ -547,13 +548,14 @@ async function getAllFormData(): Promise<any> {
   };
 
   // 获取子表数据
-  const suspectDrugList = suspectDrugTableRef.value?.getTableData() || [];
-  const concomitantDrugList = concomitantDrugTableRef.value?.getTableData() || [];
+  const suspectDrugs = suspectDrugTableRef.value?.getTableData() || [];
+  const concomitantDrugs = concomitantDrugTableRef.value?.getTableData() || [];
 
+  // 返回符合后端 VO 结构的数据
   return {
-    ...formData,
-    suspectDrugList,
-    concomitantDrugList,
+    report,
+    suspectDrugs,
+    concomitantDrugs,
   };
 }
 
@@ -567,7 +569,8 @@ async function handleSaveDraft() {
     const formData = await getAllFormData();
 
     if (isEdit.value) {
-      formData.id = reportId.value;
+      // 编辑模式：设置报告ID
+      formData.report.id = reportId.value;
       await editDrugReport(formData);
     } else {
       await saveDrugReportDraft(formData);
@@ -602,18 +605,19 @@ async function handleSubmit() {
         const formData = await getAllFormData();
 
         // 验证怀疑药品至少有一条
-        if (!formData.suspectDrugList || formData.suspectDrugList.length === 0) {
+        if (!formData.suspectDrugs || formData.suspectDrugs.length === 0) {
           createMessage.warning('请至少添加一条怀疑药品');
           return;
         }
 
         if (isEdit.value) {
-          formData.id = reportId.value;
+          // 编辑模式：设置报告ID
+          formData.report.id = reportId.value;
           await editDrugReport(formData);
           // 编辑后提交
           await submitDrugReport(reportId.value);
         } else {
-          // 新增并提交
+          // 新增并提交（后端返回 DrugAdverseReport 对象）
           const result = await addDrugReport(formData);
           if (result?.id) {
             await submitDrugReport(result.id);

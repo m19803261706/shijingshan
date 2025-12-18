@@ -207,6 +207,11 @@ public class DrugAdverseReportServiceImpl extends ServiceImpl<DrugAdverseReportM
     public DrugAdverseReport saveDraft(DrugAdverseReport report,
                                         List<DrugAdverseSuspectDrug> suspectDrugs,
                                         List<DrugAdverseConcomitantDrug> concomitantDrugs) {
+        // 空值检查
+        if (report == null) {
+            log.error("保存草稿失败：report 参数为空");
+            throw new IllegalArgumentException("报告数据不能为空");
+        }
         if (oConvertUtils.isEmpty(report.getId())) {
             // 新增草稿
             return saveReportWithDetails(report, suspectDrugs, concomitantDrugs);
