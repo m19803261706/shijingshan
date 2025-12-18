@@ -146,9 +146,9 @@ export const eventFormSchema: FormSchema[] = [
     componentProps: {
       placeholder: '请选择事件分类',
       fieldNames: {
-        label: 'title',
-        key: 'key',
-        value: 'key',
+        label: 'name',
+        value: 'id',
+        children: 'children',
       },
       getPopupContainer: () => document.body,
     },
