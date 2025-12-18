@@ -137,6 +137,27 @@ const adverse: AppRouteModule = {
         icon: 'ant-design:bar-chart-outlined',
       },
     },
+
+    // ========== 系统配置 ==========
+    {
+      path: 'config',
+      name: 'AdverseConfig',
+      redirect: '/adverse/config/category',
+      meta: {
+        title: '系统配置',
+        icon: 'ant-design:setting-outlined',
+      },
+      children: [
+        {
+          path: 'category',
+          name: 'AdverseCategory',
+          component: () => import('/@/views/adverse/category/index.vue'),
+          meta: {
+            title: '事件分类管理',
+          },
+        },
+      ],
+    },
   ],
 };
 
