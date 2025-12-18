@@ -57,6 +57,25 @@ const adverse: AppRouteModule = {
             currentActiveMenu: '/adverse/drug/report',
           },
         },
+        // ========== 药品常用配置 ==========
+        {
+          path: 'suspect',
+          name: 'DrugCommonSuspect',
+          component: () => import('/@/views/adverse/drug/suspect/index.vue'),
+          meta: {
+            title: '怀疑药品配置',
+            icon: 'ant-design:database-outlined',
+          },
+        },
+        {
+          path: 'concomitant',
+          name: 'DrugCommonConcomitant',
+          component: () => import('/@/views/adverse/drug/concomitant/index.vue'),
+          meta: {
+            title: '并用药品配置',
+            icon: 'ant-design:cluster-outlined',
+          },
+        },
       ],
     },
 
