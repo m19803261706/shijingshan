@@ -1,4 +1,4 @@
-import type { UserConfig, ConfigEnv } from 'vite';
+import type { UserConfig, ConfigEnv, PluginOption } from 'vite';
 import pkg from './package.json';
 import dayjs from 'dayjs';
 import { loadEnv } from 'vite';
@@ -11,6 +11,36 @@ import { OUTPUT_DIR } from './build/constant';
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
+}
+
+/**
+ * SPA History Fallback 插件
+ * 确保刷新页面时返回 index.html，支持 Vue Router History 模式
+ */
+function spaFallbackPlugin(): PluginOption {
+  return {
+    name: 'spa-fallback',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const url = req.url || '';
+        // 跳过静态资源、API 请求和已有文件
+        if (
+          url.startsWith('/jeecgboot') ||
+          url.startsWith('/upload') ||
+          url.startsWith('/@') ||
+          url.startsWith('/src') ||
+          url.startsWith('/node_modules') ||
+          url.includes('.') ||
+          url.startsWith('/__')
+        ) {
+          return next();
+        }
+        // 对于其他请求，重写为 index.html
+        req.url = '/index.html';
+        next();
+      });
+    },
+  };
 }
 
 const { dependencies, devDependencies, name, version } = pkg;
@@ -32,6 +62,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   const isBuild = command === 'build';
 
   return {
+    // 显式指定为 SPA 应用，确保刷新时正确回退到 index.html
+    appType: 'spa',
     base: VITE_PUBLIC_PATH,
     root,
     resolve: {
@@ -116,7 +148,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
 
     // The vite plugin used by the project. The quantity is large, so it is separately extracted and managed
-    plugins: createVitePlugins(viteEnv, isBuild),
+    plugins: [
+      // SPA History Fallback 插件，确保刷新页面时正确加载
+      spaFallbackPlugin(),
+      ...createVitePlugins(viteEnv, isBuild),
+    ],
     // 预加载构建配置（首屏性能)
     optimizeDeps: {
       esbuildOptions: {
