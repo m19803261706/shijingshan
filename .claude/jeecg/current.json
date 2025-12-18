@@ -64,7 +64,7 @@
       "number": 37,
       "title": "实现药品自动保存逻辑（saveIfNotExists）",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [35, 36],
       "phase": 2
     },
