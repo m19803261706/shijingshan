@@ -56,7 +56,7 @@
       "number": 36,
       "title": "创建 DrugCommonConcomitant 实体类和 CRUD",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [34],
       "phase": 2
     },
@@ -64,7 +64,7 @@
       "number": 37,
       "title": "实现药品自动保存逻辑（saveIfNotExists）",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [35, 36],
       "phase": 2
     },
@@ -80,7 +80,7 @@
       "number": 39,
       "title": "创建并用药品配置列表页",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [36],
       "phase": 3
     },
