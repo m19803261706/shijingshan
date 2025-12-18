@@ -29,6 +29,37 @@ const adverse: AppRouteModule = {
       },
     },
 
+    // ========== 药品不良反应上报 ==========
+    {
+      path: 'drug',
+      name: 'AdverseDrug',
+      redirect: '/adverse/drug/report',
+      meta: {
+        title: '药品不良反应',
+        icon: 'ant-design:medicine-box-outlined',
+      },
+      children: [
+        {
+          path: 'report',
+          name: 'AdverseDrugReport',
+          component: () => import('/@/views/adverse/drug/index.vue'),
+          meta: {
+            title: '我的上报',
+          },
+        },
+        {
+          path: 'form',
+          name: 'AdverseDrugForm',
+          component: () => import('/@/views/adverse/drug/DrugReportForm.vue'),
+          meta: {
+            title: '报告表单',
+            hideMenu: true,
+            currentActiveMenu: '/adverse/drug/report',
+          },
+        },
+      ],
+    },
+
     // ========== 科室审核 ==========
     {
       path: 'audit',

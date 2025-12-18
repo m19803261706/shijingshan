@@ -21,12 +21,12 @@
     {
       "name": "Phase 3: 前端页面",
       "issues": [28, 29, 30],
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "name": "Phase 4: 菜单权限",
       "issues": [31],
-      "status": "blocked"
+      "status": "in_progress"
     }
   ],
   "issues": [
@@ -97,7 +97,7 @@
       "number": 30,
       "title": "添加前端路由和菜单配置",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [28],
       "phase": 3
     },
@@ -105,7 +105,7 @@
       "number": 31,
       "title": "创建药品不良反应菜单 SQL",
       "type": "jeecg-menu",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [30],
       "phase": 4
     }
