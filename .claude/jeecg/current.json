@@ -89,7 +89,7 @@
       "number": 29,
       "title": "创建药品不良反应表单页（1:1复刻）",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [28],
       "phase": 3
     },
