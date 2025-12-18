@@ -45,7 +45,7 @@ public class AdverseEventFlowServiceImpl extends ServiceImpl<AdverseEventFlowMap
             flow.setOperatorId(loginUser.getId());
             flow.setOperatorName(loginUser.getRealname());
             flow.setOperatorDeptId(loginUser.getOrgCode());
-            flow.setOperatorDeptName(loginUser.getOrgCodeTxt());
+            // 部门名称需要通过其他方式查询，这里暂不设置
             flow.setCreateBy(loginUser.getUsername());
         }
         flow.setCreateTime(new Date());

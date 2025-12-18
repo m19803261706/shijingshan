@@ -254,7 +254,7 @@ public class AuditController {
     @Operation(summary = "获取事件流转历史")
     @GetMapping(value = "/flowHistory")
     public Result<List<AdverseEventFlow>> getFlowHistory(@RequestParam(name = "eventId") String eventId) {
-        List<AdverseEventFlow> flowList = flowService.getFlowHistory(eventId);
+        List<AdverseEventFlow> flowList = flowService.getFlowListByEventId(eventId);
         return Result.OK(flowList);
     }
 }

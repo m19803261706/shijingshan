@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LiteFlow 空规则文件
+  用途：提供最小的规则配置，避免启动时因找不到规则文件而报错
+  说明：当前项目不使用 LiteFlow 工作流，此文件仅为占位用
+  作者：TC Agent
+  创建时间：2025-01-18
+-->
+<flow>
+    <!-- 占位链路，不实际使用 -->
+    <chain name="placeholder">
+        THEN();
+    </chain>
+</flow>

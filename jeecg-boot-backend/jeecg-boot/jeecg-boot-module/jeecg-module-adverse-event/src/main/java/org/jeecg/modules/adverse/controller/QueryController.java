@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -115,7 +115,7 @@ public class QueryController {
         }
 
         // 获取流转记录
-        List<AdverseEventFlow> flowList = flowService.getFlowHistory(id);
+        List<AdverseEventFlow> flowList = flowService.getFlowListByEventId(id);
 
         // 获取整改记录
         List<AdverseEventRectify> rectifyList = rectifyService.getRectifyHistory(id);

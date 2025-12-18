@@ -1,0 +1,19 @@
+# LiteFlow 工作流引擎配置
+# 覆盖 jeecg-aiflow 模块的默认配置，允许空规则启动
+liteflow:
+  print-banner: false
+  # 首次执行时才解析规则，不在启动时解析
+  parse-mode: PARSE_ONE_ON_FIRST_EXEC
+  rule-source-ext-data-map:
+    applicationName: jeecg
+    # 关闭 SQL 日志
+    sqlLogEnabled: false
+    # 关闭轮询刷新
+    pollingEnabled: false
+    # chain 表配置
+    chainTableName: airag_flow
+    chainApplicationNameField: application_name
+    chainNameField: id
+    elDataField: chain
+    # 自定义 SQL - 添加条件避免空表报错
+    chainCustomSql: select id, application_name, chain from airag_flow where status = 'enable' and chain is not null and chain != ''

@@ -2,6 +2,8 @@ spring:
   application:
     name: jeecg-system
   config:
-    import: optional:classpath:config/application-liteflow.yml
+    # 临时禁用 LiteFlow SQL 配置（数据库表未初始化时会报错）
+    # import: optional:classpath:config/application-liteflow.yml
+    import: optional:classpath:config/application-empty.yml
   profiles:
     active: '@profile.name@'

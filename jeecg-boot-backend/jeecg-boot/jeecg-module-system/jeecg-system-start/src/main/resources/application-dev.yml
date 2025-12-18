@@ -24,7 +24,8 @@ spring:
 #    # 启动加速 (建议开发环境，开启后flyway自动升级失效)
 #    lazy-initialization: true
   flyway:
-    # 是否启用flyway
+    # 是否启用flyway（需要先导入 JeecgBoot 完整数据库才能开启）
+    # 临时禁用，等数据库确认正常后再启用
     enabled: false
     # 迁移sql脚本存放路径
     locations: classpath:flyway/sql/mysql
@@ -52,8 +53,8 @@ spring:
     job-store-type: jdbc
     jdbc:
       initialize-schema: embedded
-    #定时任务启动开关，true-开  false-关
-    auto-startup: true
+    #定时任务启动开关，true-开  false-关（需要先创建 QRTZ_* 表）
+    auto-startup: false
     #延迟1秒启动定时任务
     startup-delay: 1s
     #启动时更新己存在的Job
@@ -110,7 +111,6 @@ spring:
   autoconfigure:
     exclude:
       - com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure
-      - org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
   datasource:
     druid:
       stat-view-servlet:
@@ -306,6 +306,22 @@ jeecg:
     app-id: ??
     api-key: ??
     secret-key: ??
+# LiteFlow 工作流引擎配置
+# 允许 AI 模块在没有规则时正常启动
+liteflow:
+  # 启用 LiteFlow
+  enable: true
+  # 使用本地 XML 规则文件，避免 SQL 解析器连接数据库（解决 airag_flow 表不存在的问题）
+  rule-source: "liteflow/*.xml"
+  # 首次执行时才解析规则
+  parse-mode: PARSE_ONE_ON_FIRST_EXEC
+  # 关闭执行日志
+  print-execution-log: false
+  # 当规则文件不存在时不报错
+  when-source-not-exist-ignore: true
+  # 打印 banner
+  print-banner: false
+
 #cas单点登录
 cas:
   prefixUrl: http://cas.example.org:8443/cas
