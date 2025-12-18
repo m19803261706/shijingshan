@@ -468,13 +468,15 @@ function setDefaultTestData() {
     familyAdr: 'unknown',
   });
 
-  // 3. 相关重要信息（勾选项）
+  // 3. 相关重要信息（勾选项）- 后端字段类型为 Integer (0-否 1-是)
   setRelatedInfoFields({
-    hasSmoking: false,
-    hasDrinking: false,
-    hasPregnancy: false,
-    hasLiverDisease: false,
-    hasKidneyDisease: false,
+    hasSmoking: 0,
+    hasDrinking: 0,
+    isPregnant: 0,  // 注意：后端字段名是 isPregnant
+    hasLiverDisease: 0,
+    hasKidneyDisease: 0,
+    hasAllergy: 0,
+    otherHistory: '',
   });
 
   // 4. 不良反应基本信息
@@ -621,12 +623,31 @@ async function loadReportData() {
 }
 
 /**
+ * 将 Integer 值转换为 Boolean (用于 Checkbox 组件显示)
+ * @param value Integer 或 Boolean 值
+ * @returns Boolean
+ */
+function integerToBoolean(value: any): boolean {
+  return value === 1 || value === '1' || value === true;
+}
+
+/**
  * 设置所有表单字段值
  */
 async function setAllFormFields(data: any) {
   await setReportBasicFields(data);
   await setPatientInfoFields(data);
-  await setRelatedInfoFields(data);
+
+  // 转换 Integer → Boolean（用于 Checkbox 组件显示）
+  const relatedInfoData = { ...data };
+  const integerFields = ['hasSmoking', 'hasDrinking', 'isPregnant', 'hasLiverDisease', 'hasKidneyDisease', 'hasAllergy'];
+  integerFields.forEach((field) => {
+    if (relatedInfoData[field] !== undefined && relatedInfoData[field] !== null) {
+      relatedInfoData[field] = integerToBoolean(relatedInfoData[field]);
+    }
+  });
+  await setRelatedInfoFields(relatedInfoData);
+
   await setReactionBasicFields(data);
   await setReactionProcessFields(data);
   await setReactionResultFields(data);
@@ -657,6 +678,18 @@ function setFormsDisabled(disabled: boolean) {
 }
 
 /**
+ * 将 Boolean 值转换为 Integer (用于后端 Integer 类型字段)
+ * @param value Boolean 或 Integer 值
+ * @returns 0 或 1
+ */
+function booleanToInteger(value: any): number {
+  if (value === true || value === 1 || value === '1') {
+    return 1;
+  }
+  return 0;
+}
+
+/**
  * 获取所有表单数据
  * 返回符合后端 DrugAdverseReportVO 结构的数据
  */
@@ -680,6 +713,14 @@ async function getAllFormData(): Promise<any> {
     ...getReportUnitInfoFields(),
     ...getManufacturerInfoFields(),
   };
+
+  // 转换 Checkbox 字段：Boolean → Integer（后端 Integer 类型字段）
+  const integerFields = ['hasSmoking', 'hasDrinking', 'isPregnant', 'hasLiverDisease', 'hasKidneyDisease', 'hasAllergy'];
+  integerFields.forEach((field) => {
+    if (report[field] !== undefined && report[field] !== null) {
+      report[field] = booleanToInteger(report[field]);
+    }
+  });
 
   // 获取子表数据
   const suspectDrugs = suspectDrugTableRef.value?.getTableData() || [];
