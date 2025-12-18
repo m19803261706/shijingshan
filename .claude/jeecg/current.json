@@ -26,7 +26,7 @@
     {
       "name": "Phase 4: 菜单权限",
       "issues": [42],
-      "status": "blocked"
+      "status": "ready"
     }
   ],
   "issues": [
@@ -80,7 +80,7 @@
       "number": 39,
       "title": "创建并用药品配置列表页",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [36],
       "phase": 3
     },
@@ -88,7 +88,7 @@
       "number": 40,
       "title": "创建药品选择弹窗组件",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [38, 39],
       "phase": 3
     },
@@ -104,7 +104,7 @@
       "number": 42,
       "title": "创建药品常用配置菜单 SQL 和路由",
       "type": "jeecg-menu",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [38, 39],
       "phase": 4
     }
