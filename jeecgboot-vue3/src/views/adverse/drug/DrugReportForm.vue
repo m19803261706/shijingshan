@@ -602,15 +602,19 @@ async function loadReportData() {
     const data = await queryDrugReportDetailById({ id: reportId.value });
 
     if (data) {
-      // 设置主表数据
-      await setAllFormFields(data);
+      // 后端返回结构: { report: {...}, suspectDrugs: [...], concomitantDrugs: [...] }
+      // 提取主表数据（兼容两种数据结构）
+      const reportData = data.report || data;
 
-      // 设置子表数据
-      suspectDrugDataSource.value = data.suspectDrugList || [];
-      concomitantDrugDataSource.value = data.concomitantDrugList || [];
+      // 设置主表数据
+      await setAllFormFields(reportData);
+
+      // 设置子表数据（兼容两种字段名）
+      suspectDrugDataSource.value = data.suspectDrugs || data.suspectDrugList || [];
+      concomitantDrugDataSource.value = data.concomitantDrugs || data.concomitantDrugList || [];
 
       // 根据报告单位类别显示生产企业信息区
-      showManufacturerInfo.value = data.unitCategory === 'manufacture';
+      showManufacturerInfo.value = reportData.unitCategory === 'manufacture';
     }
   } catch (e) {
     console.error('加载报告数据失败', e);
