@@ -88,7 +88,7 @@
       "number": 40,
       "title": "创建药品选择弹窗组件",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [38, 39],
       "phase": 3
     },
@@ -96,7 +96,7 @@
       "number": 41,
       "title": "集成选择弹窗到上报表单子表",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [40],
       "phase": 3
     },
