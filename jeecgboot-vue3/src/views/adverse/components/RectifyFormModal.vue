@@ -68,7 +68,7 @@ import { ref, reactive, computed } from 'vue';
 import { BasicModal, useModalInner } from '/@/components/Modal';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { saveRectifyDraft, submitRectify, getRectifyDetail } from '/@/api/adverse/rectify';
-import JUpload from '/@/components/Form/src/jeecg/components/JUpload.vue';
+import JUpload from '/@/components/Form/src/jeecg/components/JUpload/JUpload.vue';
 import dayjs from 'dayjs';
 
 const emit = defineEmits(['success', 'register']);
