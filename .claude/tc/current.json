@@ -17,12 +17,12 @@
     {
       "name": "Phase 2: 数据库设计",
       "issues": [3, 4, 5, 6, 7],
-      "status": "ready"
+      "status": "done"
     },
     {
       "name": "Phase 3: 后端开发",
       "issues": [8, 9, 10, 11, 12, 13],
-      "status": "blocked"
+      "status": "ready"
     },
     {
       "name": "Phase 4: 前端开发",
@@ -41,8 +41,8 @@
     {"number": 4, "title": "事件流转记录表设计", "type": "database", "status": "tc-done", "phase": 2, "depends_on": [3]},
     {"number": 5, "title": "整改记录表设计", "type": "database", "status": "tc-done", "phase": 2, "depends_on": [3]},
     {"number": 6, "title": "事件分类表设计", "type": "database", "status": "tc-done", "phase": 2},
-    {"number": 7, "title": "数据字典配置", "type": "database", "status": "tc-ready", "phase": 2},
-    {"number": 8, "title": "事件上报 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [3, 6, 7]},
+    {"number": 7, "title": "数据字典配置", "type": "database", "status": "tc-done", "phase": 2},
+    {"number": 8, "title": "事件上报 API", "type": "backend", "status": "tc-ready", "phase": 3, "depends_on": [3, 6, 7]},
     {"number": 9, "title": "科室审核 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [8]},
     {"number": 10, "title": "职能处理 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [9]},
     {"number": 11, "title": "整改管理 API", "type": "backend", "status": "tc-blocked", "phase": 3, "depends_on": [5, 10]},
