@@ -81,7 +81,7 @@
       "number": 28,
       "title": "创建药品不良反应列表页",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [27],
       "phase": 3
     },
@@ -89,7 +89,7 @@
       "number": 29,
       "title": "创建药品不良反应表单页（1:1复刻）",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [28],
       "phase": 3
     },
@@ -97,7 +97,7 @@
       "number": 30,
       "title": "添加前端路由和菜单配置",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [28],
       "phase": 3
     },
