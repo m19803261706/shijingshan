@@ -1,0 +1,115 @@
+{
+  "project_id": "shijingshan",
+  "feature": "药品不良反应上报",
+  "prd": ".claude/jeecg/prds/药品不良反应上报/prd.md",
+  "status": "planned",
+  "epic": {
+    "number": 21,
+    "url": "https://github.com/m19803261706/shijingshan/issues/21"
+  },
+  "phases": [
+    {
+      "name": "Phase 1: 数据库设计",
+      "issues": [22, 23, 24, 25],
+      "status": "ready"
+    },
+    {
+      "name": "Phase 2: 实体与 CRUD",
+      "issues": [26, 27],
+      "status": "blocked"
+    },
+    {
+      "name": "Phase 3: 前端页面",
+      "issues": [28, 29, 30],
+      "status": "blocked"
+    },
+    {
+      "name": "Phase 4: 菜单权限",
+      "issues": [31],
+      "status": "blocked"
+    }
+  ],
+  "issues": [
+    {
+      "number": 22,
+      "title": "创建药品不良反应主表 drug_adverse_report",
+      "type": "jeecg-migration",
+      "status": "jeecg-ready",
+      "phase": 1
+    },
+    {
+      "number": 23,
+      "title": "创建怀疑药品子表 drug_adverse_suspect_drug",
+      "type": "jeecg-migration",
+      "status": "jeecg-blocked",
+      "depends_on": [22],
+      "phase": 1
+    },
+    {
+      "number": 24,
+      "title": "创建并用药品子表 drug_adverse_concomitant_drug",
+      "type": "jeecg-migration",
+      "status": "jeecg-blocked",
+      "depends_on": [22],
+      "phase": 1
+    },
+    {
+      "number": 25,
+      "title": "配置数据字典",
+      "type": "jeecg-migration",
+      "status": "jeecg-blocked",
+      "depends_on": [22],
+      "phase": 1
+    },
+    {
+      "number": 26,
+      "title": "创建 Entity 实体类",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [22, 23, 24],
+      "phase": 2
+    },
+    {
+      "number": 27,
+      "title": "创建 Mapper/Service/Controller",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [26],
+      "phase": 2
+    },
+    {
+      "number": 28,
+      "title": "创建药品不良反应列表页",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [27],
+      "phase": 3
+    },
+    {
+      "number": 29,
+      "title": "创建药品不良反应表单页（1:1复刻）",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [28],
+      "phase": 3
+    },
+    {
+      "number": 30,
+      "title": "添加前端路由和菜单配置",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [28],
+      "phase": 3
+    },
+    {
+      "number": 31,
+      "title": "创建药品不良反应菜单 SQL",
+      "type": "jeecg-menu",
+      "status": "jeecg-blocked",
+      "depends_on": [30],
+      "phase": 4
+    }
+  ],
+  "execution_order": [22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+  "created_at": "2025-12-19"
+}
