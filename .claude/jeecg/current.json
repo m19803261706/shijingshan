@@ -41,7 +41,7 @@
       "number": 23,
       "title": "创建怀疑药品子表 drug_adverse_suspect_drug",
       "type": "jeecg-migration",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [22],
       "phase": 1
     },
