@@ -11,12 +11,12 @@
     {
       "name": "Phase 1: 数据库设计",
       "issues": [22, 23, 24, 25],
-      "status": "ready"
+      "status": "done"
     },
     {
       "name": "Phase 2: 实体与 CRUD",
       "issues": [26, 27],
-      "status": "blocked"
+      "status": "in_progress"
     },
     {
       "name": "Phase 3: 前端页面",
@@ -65,7 +65,7 @@
       "number": 26,
       "title": "创建 Entity 实体类",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [22, 23, 24],
       "phase": 2
     },
@@ -73,7 +73,7 @@
       "number": 27,
       "title": "创建 Mapper/Service/Controller",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [26],
       "phase": 2
     },
