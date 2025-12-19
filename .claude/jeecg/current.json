@@ -1,12 +1,12 @@
 {
   "project_id": "shijingshan",
-  "feature": "医疗器械不良事件上报",
-  "prd": ".claude/jeecg/prds/医疗器械不良事件上报/prd.md",
+  "feature": "输血使用不良事件报告",
+  "prd": ".claude/tc/prds/blood-adverse-report.md",
   "status": "in_progress",
   "created_at": "2025-12-19",
   "epic": {
-    "number": 57,
-    "url": "https://github.com/m19803261706/shijingshan/issues/57"
+    "number": 73,
+    "url": "https://github.com/m19803261706/shijingshan/issues/73"
   },
   "reference": {
     "module": "药品不良反应上报",
@@ -14,165 +14,158 @@
   },
   "module": {
     "name": "jeecg-module-adverse-event",
-    "package": "org.jeecg.modules.adverse.device"
+    "package": "org.jeecg.modules.adverse.blood"
   },
   "tables": [
-    "device_adverse_report",
-    "device_adverse_flow",
-    "device_adverse_rectify"
+    "blood_adverse_report",
+    "blood_adverse_flow",
+    "blood_adverse_rectify"
   ],
   "phases": [
     {
       "name": "Phase 1: 数据库设计",
-      "issues": [58, 59, 60],
-      "status": "completed"
+      "issues": [74, 75, 76],
+      "status": "completed",
+      "completed": 3
     },
     {
-      "name": "Phase 2: 后端实体开发",
-      "issues": [61, 62, 63],
-      "status": "completed"
+      "name": "Phase 2: 后端开发",
+      "issues": [77, 78, 79, 80],
+      "status": "completed",
+      "completed": 4
     },
     {
-      "name": "Phase 3: 后端控制器开发",
-      "issues": [64, 65, 66, 67],
-      "status": "completed"
-    },
-    {
-      "name": "Phase 4: 前端开发",
-      "issues": [68, 69, 70, 71],
-      "status": "ready"
-    },
-    {
-      "name": "Phase 5: 菜单权限配置",
-      "issues": [72],
-      "status": "blocked"
+      "name": "Phase 3: 前端开发",
+      "issues": [81, 82, 83, 84, 85, 86, 87, 88],
+      "status": "ready",
+      "completed": 0
     }
   ],
   "issues": [
     {
-      "number": 58,
-      "title": "创建 device_adverse_report 主表 (V1024)",
+      "number": 74,
+      "title": "创建输血不良事件数据表 (V1029-V1030)",
       "type": "jeecg-migration",
       "status": "jeecg-done",
       "phase": 1
     },
     {
-      "number": 59,
-      "title": "创建 device_adverse_flow 流转表 (V1025)",
+      "number": 75,
+      "title": "创建输血不良事件字典数据",
       "type": "jeecg-migration",
       "status": "jeecg-done",
-      "depends_on": [58],
+      "depends_on": [74],
       "phase": 1
     },
     {
-      "number": 60,
-      "title": "创建 device_adverse_rectify 整改表 + 数据字典 (V1026)",
+      "number": 76,
+      "title": "创建输血不良事件菜单权限 SQL (V1031)",
       "type": "jeecg-migration",
       "status": "jeecg-done",
-      "depends_on": [59],
+      "depends_on": [75],
       "phase": 1
     },
     {
-      "number": 61,
-      "title": "创建 DeviceAdverseReport 实体、Mapper、Service",
+      "number": 77,
+      "title": "创建输血不良事件 Entity 实体类",
       "type": "jeecg-entity",
       "status": "jeecg-done",
-      "depends_on": [58],
+      "depends_on": [74],
       "phase": 2
     },
     {
-      "number": 62,
-      "title": "创建 DeviceAdverseFlow 实体、Mapper、Service",
+      "number": 78,
+      "title": "创建输血不良事件 Mapper 接口",
       "type": "jeecg-entity",
       "status": "jeecg-done",
-      "depends_on": [59],
+      "depends_on": [77],
       "phase": 2
     },
     {
-      "number": 63,
-      "title": "创建 DeviceAdverseRectify 实体、Mapper、Service",
+      "number": 79,
+      "title": "创建输血不良事件 Service 层",
       "type": "jeecg-entity",
       "status": "jeecg-done",
-      "depends_on": [60],
+      "depends_on": [78],
       "phase": 2
     },
     {
-      "number": 64,
-      "title": "创建 DeviceAdverseReportController（上报 CRUD）",
+      "number": 80,
+      "title": "创建输血不良事件 Controller",
       "type": "jeecg-entity",
       "status": "jeecg-done",
-      "depends_on": [61],
+      "depends_on": [79],
+      "phase": 2
+    },
+    {
+      "number": 81,
+      "title": "创建输血不良事件 API 接口文件",
+      "type": "jeecg-frontend",
+      "status": "jeecg-ready",
+      "depends_on": [80],
       "phase": 3
     },
     {
-      "number": 65,
-      "title": "创建 DeviceAuditController（临床科室审核）",
-      "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [62],
-      "phase": 3
-    },
-    {
-      "number": 66,
-      "title": "创建 DeviceProcessController（器械科处理）",
-      "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [63],
-      "phase": 3
-    },
-    {
-      "number": 67,
-      "title": "创建 DeviceClinicRectifyController（临床科室整改）",
-      "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [63],
-      "phase": 3
-    },
-    {
-      "number": 68,
-      "title": "创建医疗器械上报页面（1:1复刻国标表单）",
+      "number": 82,
+      "title": "创建输血不良事件数据配置文件 blood.data.ts",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
-      "depends_on": [64],
-      "phase": 4
-    },
-    {
-      "number": 69,
-      "title": "创建临床科室审核页面（器械）",
-      "type": "jeecg-frontend",
-      "status": "jeecg-ready",
-      "depends_on": [65],
-      "phase": 4
-    },
-    {
-      "number": 70,
-      "title": "创建器械科处理页面",
-      "type": "jeecg-frontend",
-      "status": "jeecg-ready",
-      "depends_on": [66],
-      "phase": 4
-    },
-    {
-      "number": 71,
-      "title": "创建临床科室整改页面（器械）",
-      "type": "jeecg-frontend",
-      "status": "jeecg-ready",
-      "depends_on": [67],
-      "phase": 4
-    },
-    {
-      "number": 72,
-      "title": "创建菜单 SQL、按钮权限、角色配置",
-      "type": "jeecg-menu",
       "status": "jeecg-blocked",
-      "depends_on": [68, 69, 70, 71],
-      "phase": 5
+      "depends_on": [81],
+      "phase": 3
+    },
+    {
+      "number": 83,
+      "title": "创建输血不良事件上报表单页面",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [82],
+      "phase": 3
+    },
+    {
+      "number": 84,
+      "title": "创建输血不良事件上报列表页面",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [83],
+      "phase": 3
+    },
+    {
+      "number": 85,
+      "title": "创建输血不良事件审核页面",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [84],
+      "phase": 3
+    },
+    {
+      "number": 86,
+      "title": "创建输血不良事件处理页面",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [85],
+      "phase": 3
+    },
+    {
+      "number": 87,
+      "title": "创建输血不良事件整改页面",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [86],
+      "phase": 3
+    },
+    {
+      "number": 88,
+      "title": "配置输血不良事件路由",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [87],
+      "phase": 3
     }
   ],
-  "execution_order": [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72],
+  "execution_order": [74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88],
   "previous_feature": {
-    "name": "临床科室整改提交",
-    "epic": 53,
+    "name": "医疗器械不良事件上报",
+    "epic": 57,
     "status": "completed"
   }
 }
