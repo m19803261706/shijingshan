@@ -18,13 +18,13 @@ enum Api {
   // 已结案列表
   closedList = '/adverse/device/process/closed',
   // 直接结案
-  close = '/adverse/device/process/close',
+  closeDirect = '/adverse/device/process/closeDirect',
   // 要求整改
   requireRectify = '/adverse/device/process/requireRectify',
   // 确认整改通过
-  confirmRectify = '/adverse/device/process/confirmRectify',
+  confirmApprove = '/adverse/device/process/confirmApprove',
   // 退回整改
-  rejectRectify = '/adverse/device/process/rejectRectify',
+  confirmReject = '/adverse/device/process/confirmReject',
   // 获取报告详情
   detail = '/adverse/device/process/detail',
   // 获取整改记录
@@ -66,7 +66,7 @@ export const getDeviceClosedList = (params: Record<string, any>) => {
  * @param params { id: string, comment?: string }
  */
 export const deviceProcessClose = (params: { id: string; comment?: string }) => {
-  return defHttp.post({ url: Api.close, params }, { joinParamsToUrl: true });
+  return defHttp.post({ url: Api.closeDirect, params }, { joinParamsToUrl: true });
 };
 
 /**
@@ -89,7 +89,7 @@ export const deviceProcessRequireRectify = (params: {
  * @param params { rectifyId: string, comment?: string }
  */
 export const deviceProcessConfirmRectify = (params: { rectifyId: string; comment?: string }) => {
-  return defHttp.post({ url: Api.confirmRectify, params }, { joinParamsToUrl: true });
+  return defHttp.post({ url: Api.confirmApprove, params }, { joinParamsToUrl: true });
 };
 
 /**
@@ -98,7 +98,7 @@ export const deviceProcessConfirmRectify = (params: { rectifyId: string; comment
  * @param params { rectifyId: string, comment: string }
  */
 export const deviceProcessRejectRectify = (params: { rectifyId: string; comment: string }) => {
-  return defHttp.post({ url: Api.rejectRectify, params }, { joinParamsToUrl: true });
+  return defHttp.post({ url: Api.confirmReject, params }, { joinParamsToUrl: true });
 };
 
 /**
