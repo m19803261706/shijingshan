@@ -114,7 +114,7 @@ export const pendingColumns: BasicColumn[] = [
   },
   {
     title: '上报人',
-    dataIndex: 'createBy',
+    dataIndex: 'createBy_dictText',
     width: 100,
   },
   {
