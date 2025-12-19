@@ -577,6 +577,72 @@ public class DrugAdverseReport implements Serializable {
     @Schema(description = "审核意见")
     private String auditComment;
 
+    // ==================== 处理相关字段 ====================
+
+    /**
+     * 处理人ID
+     */
+    @Schema(description = "处理人ID")
+    private String processUserId;
+
+    /**
+     * 处理人姓名
+     */
+    @Schema(description = "处理人姓名")
+    private String processUserName;
+
+    /**
+     * 处理时间
+     */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "处理时间")
+    private Date processTime;
+
+    /**
+     * 处理意见
+     */
+    @Schema(description = "处理意见")
+    private String processComment;
+
+    // ==================== 结案相关字段 ====================
+
+    /**
+     * 结案方式
+     * <p>direct-直接结案 / rectify-整改结案</p>
+     */
+    @Dict(dicCode = "drug_adr_close_type")
+    @Schema(description = "结案方式：direct-直接结案 / rectify-整改结案")
+    private String closeType;
+
+    /**
+     * 结案人ID
+     */
+    @Schema(description = "结案人ID")
+    private String closeUserId;
+
+    /**
+     * 结案人姓名
+     */
+    @Schema(description = "结案人姓名")
+    private String closeUserName;
+
+    /**
+     * 结案时间
+     */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "结案时间")
+    private Date closeTime;
+
+    /**
+     * 结案意见
+     */
+    @Schema(description = "结案意见")
+    private String closeComment;
+
+    // ==================== 科室相关字段 ====================
+
     /**
      * 上报科室ID
      * <p>关联 sys_depart 表</p>
