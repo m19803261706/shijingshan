@@ -117,6 +117,13 @@
 import { ref } from 'vue';
 import { BasicModal, useModalInner } from '/@/components/Modal';
 import { queryDeviceReportById } from '/@/api/adverse/device';
+import {
+  deviceUsePlaceOptions,
+  operatorTypeOptions,
+  reporterTypeOptions,
+  evalResultOptions,
+  deviceReportStatusOptions,
+} from '../../device/device.data';
 
 defineProps({
   title: {
@@ -135,57 +142,6 @@ const [registerModal] = useModalInner(async (data) => {
     reportData.value = data.record;
   }
 });
-
-/**
- * 器械使用场所选项
- */
-const deviceUsePlaceOptions = [
-  { label: '医疗机构', value: 'hospital' },
-  { label: '家庭', value: 'home' },
-  { label: '其它', value: 'other' },
-];
-
-/**
- * 操作人类型选项
- */
-const operatorTypeOptions = [
-  { label: '医务人员', value: 'medical_staff' },
-  { label: '患者', value: 'patient' },
-  { label: '其它', value: 'other' },
-];
-
-/**
- * 评价结果选项
- */
-const evalResultOptions = [
-  { label: '是', value: 'yes' },
-  { label: '否', value: 'no' },
-  { label: '无法确定', value: 'unknown' },
-];
-
-/**
- * 报告人类型选项
- */
-const reporterTypeOptions = [
-  { label: '医疗机构', value: 'hospital' },
-  { label: '经营企业', value: 'enterprise' },
-  { label: '生产企业', value: 'manufacturer' },
-  { label: '使用者', value: 'user' },
-  { label: '其他', value: 'other' },
-];
-
-/**
- * 报告状态选项
- */
-const deviceReportStatusOptions = [
-  { label: '草稿', value: 'draft', color: 'default' },
-  { label: '待审核', value: 'pending_audit', color: 'processing' },
-  { label: '已退回', value: 'returned', color: 'warning' },
-  { label: '待处理', value: 'pending_process', color: 'processing' },
-  { label: '待整改', value: 'pending_rectify', color: 'orange' },
-  { label: '整改中', value: 'rectifying', color: 'cyan' },
-  { label: '已结案', value: 'closed', color: 'success' },
-];
 
 /**
  * 获取器械使用场所文本
