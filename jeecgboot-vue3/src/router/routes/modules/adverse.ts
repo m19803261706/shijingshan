@@ -58,14 +58,35 @@ const adverse: AppRouteModule = {
         currentActiveMenu: '/adverse/drug',
       },
     },
-    // ========== 报告审核 ==========
+    // ========== 临床科室审核 ==========
+    {
+      path: 'clinic-audit',
+      name: 'AdverseClinicAudit',
+      redirect: '/adverse/clinic-audit/drug',
+      meta: {
+        title: '临床科室审核',
+        icon: 'ant-design:audit-outlined',
+      },
+      children: [
+        {
+          path: 'drug',
+          name: 'AdverseClinicAuditDrug',
+          component: () => import('/@/views/adverse/clinic-audit/drug/index.vue'),
+          meta: {
+            title: '药品不良反应审核',
+            icon: 'ant-design:medicine-box-outlined',
+          },
+        },
+      ],
+    },
+    // ========== 报告审核（职能科室） ==========
     {
       path: 'audit',
       name: 'AdverseAudit',
       component: () => import('/@/views/adverse/audit/index.vue'),
       meta: {
-        title: '报告审核',
-        icon: 'ant-design:audit-outlined',
+        title: '职能科室审核',
+        icon: 'ant-design:safety-certificate-outlined',
       },
     },
     // ========== 事件处理 ==========
