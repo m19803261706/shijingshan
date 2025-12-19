@@ -1,8 +1,9 @@
 /**
  * 不良事件管理模块路由配置
- * @description 药品不良反应和不良事件上报管理
+ * @description 药品不良反应、输血使用不良事件上报管理
  * @author TC Agent
  * @since 2025-12-19
+ * @updated 2025-12-20 添加输血使用不良事件路由
  */
 import type { AppRouteModule } from '/@/router/types';
 import { LAYOUT } from '/@/router/constant';
@@ -58,6 +59,26 @@ const adverse: AppRouteModule = {
         currentActiveMenu: '/adverse/drug',
       },
     },
+    // ========== 输血使用不良事件 ==========
+    {
+      path: 'blood',
+      name: 'AdverseBlood',
+      component: () => import('/@/views/adverse/blood/BloodReportList.vue'),
+      meta: {
+        title: '输血使用不良事件',
+        icon: 'ant-design:heart-outlined',
+      },
+    },
+    {
+      path: 'blood/form',
+      name: 'AdverseBloodForm',
+      component: () => import('/@/views/adverse/blood/BloodReportForm.vue'),
+      meta: {
+        title: '输血使用不良事件表单',
+        hideMenu: true,
+        currentActiveMenu: '/adverse/blood',
+      },
+    },
     // ========== 临床科室审核 ==========
     {
       path: 'clinic-audit',
@@ -75,6 +96,15 @@ const adverse: AppRouteModule = {
           meta: {
             title: '药品不良反应审核',
             icon: 'ant-design:medicine-box-outlined',
+          },
+        },
+        {
+          path: 'blood',
+          name: 'AdverseClinicAuditBlood',
+          component: () => import('/@/views/adverse/clinic-audit/blood/index.vue'),
+          meta: {
+            title: '输血使用不良事件审核',
+            icon: 'ant-design:heart-outlined',
           },
         },
       ],
@@ -99,15 +129,45 @@ const adverse: AppRouteModule = {
         icon: 'ant-design:experiment-outlined',
       },
     },
+    // ========== 输血科处理 ==========
+    {
+      path: 'blood-process',
+      name: 'AdverseBloodProcess',
+      component: () => import('/@/views/adverse/blood-process/index.vue'),
+      meta: {
+        title: '输血科处理',
+        icon: 'ant-design:heart-outlined',
+      },
+    },
     // ========== 临床科室整改 ==========
     {
       path: 'clinic-rectify',
       name: 'AdverseClinicRectify',
-      component: () => import('/@/views/adverse/clinic-rectify/index.vue'),
+      redirect: '/adverse/clinic-rectify/drug',
       meta: {
         title: '临床科室整改',
         icon: 'ant-design:edit-outlined',
       },
+      children: [
+        {
+          path: 'drug',
+          name: 'AdverseClinicRectifyDrug',
+          component: () => import('/@/views/adverse/clinic-rectify/index.vue'),
+          meta: {
+            title: '药品不良反应整改',
+            icon: 'ant-design:medicine-box-outlined',
+          },
+        },
+        {
+          path: 'blood',
+          name: 'AdverseClinicRectifyBlood',
+          component: () => import('/@/views/adverse/clinic-rectify/blood/index.vue'),
+          meta: {
+            title: '输血使用不良事件整改',
+            icon: 'ant-design:heart-outlined',
+          },
+        },
+      ],
     },
     // ========== 事件处理 ==========
     {
