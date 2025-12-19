@@ -6,6 +6,11 @@
         <DrugRectifyList ref="drugListRef" />
       </a-tab-pane>
 
+      <!-- 医疗器械不良事件整改 -->
+      <a-tab-pane key="device" tab="医疗器械">
+        <DeviceRectifyList ref="deviceListRef" />
+      </a-tab-pane>
+
       <!-- 护理部整改（预留） -->
       <a-tab-pane key="nursing" tab="护理部" disabled>
         <a-empty description="功能开发中..." />
@@ -26,15 +31,18 @@
  * @author TC Agent
  * @since 2025-12-19
  * @see https://github.com/m19803261706/shijingshan/issues/55
+ * @see Issue #71
  */
 import { ref } from 'vue';
 import DrugRectifyList from './components/DrugRectifyList.vue';
+import DeviceRectifyList from './components/DeviceRectifyList.vue';
 
 // 当前激活的 Tab
 const activeTab = ref('drug');
 
 // 列表组件引用
 const drugListRef = ref();
+const deviceListRef = ref();
 
 /**
  * Tab 切换处理
@@ -43,6 +51,8 @@ function handleTabChange(key: string) {
   // 切换时可刷新对应列表
   if (key === 'drug' && drugListRef.value) {
     drugListRef.value.reload?.();
+  } else if (key === 'device' && deviceListRef.value) {
+    deviceListRef.value.reload?.();
   }
 }
 </script>
