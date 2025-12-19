@@ -2,7 +2,7 @@
   "project_id": "shijingshan",
   "feature": "临床科室整改提交",
   "prd": ".claude/jeecg/prds/临床科室整改提交.md",
-  "status": "planned",
+  "status": "in_progress",
   "epic": {
     "number": 53,
     "url": "https://github.com/m19803261706/shijingshan/issues/53"
@@ -11,12 +11,12 @@
     {
       "name": "Phase 1: 后端开发",
       "issues": [54],
-      "status": "ready"
+      "status": "completed"
     },
     {
       "name": "Phase 2: 前端开发",
       "issues": [55],
-      "status": "blocked"
+      "status": "ready"
     },
     {
       "name": "Phase 3: 权限配置",
@@ -29,14 +29,14 @@
       "number": 54,
       "title": "创建 ClinicRectifyController 控制器和 API",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "phase": 1
     },
     {
       "number": 55,
       "title": "创建临床科室整改前端页面",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [54],
       "phase": 2
     },
