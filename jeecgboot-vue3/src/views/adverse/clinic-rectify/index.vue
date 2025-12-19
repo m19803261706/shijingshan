@@ -11,6 +11,11 @@
         <DeviceRectifyList ref="deviceListRef" />
       </a-tab-pane>
 
+      <!-- 输血使用不良事件整改 -->
+      <a-tab-pane key="blood" tab="输血不良事件">
+        <BloodRectifyList ref="bloodListRef" />
+      </a-tab-pane>
+
       <!-- 护理部整改（预留） -->
       <a-tab-pane key="nursing" tab="护理部" disabled>
         <a-empty description="功能开发中..." />
@@ -30,12 +35,14 @@
  * @description Tab 容器，分类展示不同科室类型的整改任务
  * @author TC Agent
  * @since 2025-12-19
+ * @updated 2025-12-20 添加输血使用不良事件整改 Tab
  * @see https://github.com/m19803261706/shijingshan/issues/55
  * @see Issue #71
  */
 import { ref } from 'vue';
 import DrugRectifyList from './components/DrugRectifyList.vue';
 import DeviceRectifyList from './components/DeviceRectifyList.vue';
+import BloodRectifyList from './blood/index.vue';
 
 // 当前激活的 Tab
 const activeTab = ref('drug');
@@ -43,6 +50,7 @@ const activeTab = ref('drug');
 // 列表组件引用
 const drugListRef = ref();
 const deviceListRef = ref();
+const bloodListRef = ref();
 
 /**
  * Tab 切换处理
@@ -53,6 +61,8 @@ function handleTabChange(key: string) {
     drugListRef.value.reload?.();
   } else if (key === 'device' && deviceListRef.value) {
     deviceListRef.value.reload?.();
+  } else if (key === 'blood' && bloodListRef.value) {
+    bloodListRef.value.reload?.();
   }
 }
 </script>

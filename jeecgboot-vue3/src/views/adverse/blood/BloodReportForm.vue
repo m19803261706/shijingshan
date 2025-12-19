@@ -491,7 +491,7 @@ async function handleSubmit() {
  * 返回列表页
  */
 function handleBack() {
-  router.push('/adverse/blood');
+  router.push('/adverse/blood/report');
 }
 </script>
 
