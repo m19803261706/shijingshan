@@ -1,114 +1,72 @@
 {
   "project_id": "shijingshan",
-  "feature": "药品常用配置管理",
-  "prd": ".claude/jeecg/prds/药品常用配置管理/prd.md",
-  "status": "completed",
+  "feature": "临床科室审核",
+  "prd": ".claude/jeecg/prds/临床科室审核.md",
+  "status": "planning",
   "epic": {
-    "number": 32,
-    "url": "https://github.com/m19803261706/shijingshan/issues/32"
+    "number": 43,
+    "url": "https://github.com/m19803261706/shijingshan/issues/43"
   },
   "phases": [
     {
       "name": "Phase 1: 数据库设计",
-      "issues": [33, 34],
-      "status": "done"
+      "issues": [44],
+      "status": "pending"
     },
     {
-      "name": "Phase 2: 后端实体与 CRUD",
-      "issues": [35, 36, 37],
-      "status": "done"
+      "name": "Phase 2: 后端开发",
+      "issues": [45],
+      "status": "pending"
     },
     {
-      "name": "Phase 3: 前端页面",
-      "issues": [38, 39, 40, 41],
-      "status": "done"
+      "name": "Phase 3: 前端开发",
+      "issues": [46],
+      "status": "pending"
     },
     {
-      "name": "Phase 4: 菜单权限",
-      "issues": [42],
-      "status": "done"
+      "name": "Phase 4: 权限配置",
+      "issues": [47],
+      "status": "pending"
     }
   ],
   "issues": [
     {
-      "number": 33,
-      "title": "创建常用怀疑药品配置表 drug_common_suspect",
+      "number": 44,
+      "title": "创建药品不良反应审核相关数据库对象",
       "type": "jeecg-migration",
-      "status": "jeecg-done",
+      "status": "jeecg-ready",
       "phase": 1
     },
     {
-      "number": 34,
-      "title": "创建常用并用药品配置表 drug_common_concomitant",
-      "type": "jeecg-migration",
-      "status": "jeecg-done",
-      "phase": 1
-    },
-    {
-      "number": 35,
-      "title": "创建 DrugCommonSuspect 实体类和 CRUD",
+      "number": 45,
+      "title": "创建药品不良反应审核 Controller 和 Service",
       "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [33],
+      "status": "jeecg-blocked",
+      "depends_on": [44],
       "phase": 2
     },
     {
-      "number": 36,
-      "title": "创建 DrugCommonConcomitant 实体类和 CRUD",
-      "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [34],
-      "phase": 2
-    },
-    {
-      "number": 37,
-      "title": "实现药品自动保存逻辑（saveIfNotExists）",
-      "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [35, 36],
-      "phase": 2
-    },
-    {
-      "number": 38,
-      "title": "创建怀疑药品配置列表页",
+      "number": 46,
+      "title": "创建临床科室审核前端页面",
       "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [35],
+      "status": "jeecg-blocked",
+      "depends_on": [45],
       "phase": 3
     },
     {
-      "number": 39,
-      "title": "创建并用药品配置列表页",
-      "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [36],
-      "phase": 3
-    },
-    {
-      "number": 40,
-      "title": "创建药品选择弹窗组件",
-      "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [38, 39],
-      "phase": 3
-    },
-    {
-      "number": 41,
-      "title": "集成选择弹窗到上报表单子表",
-      "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [40],
-      "phase": 3
-    },
-    {
-      "number": 42,
-      "title": "创建药品常用配置菜单 SQL 和路由",
+      "number": 47,
+      "title": "创建临床科室审核菜单和权限配置",
       "type": "jeecg-menu",
-      "status": "jeecg-done",
-      "depends_on": [38, 39],
+      "status": "jeecg-blocked",
+      "depends_on": [46],
       "phase": 4
     }
   ],
-  "execution_order": [33, 34, 35, 36, 37, 38, 39, 40, 41, 42],
-  "created_at": "2025-12-19"
+  "execution_order": [44, 45, 46, 47],
+  "created_at": "2025-12-19",
+  "previous_feature": {
+    "name": "药品常用配置管理",
+    "epic": 32,
+    "status": "completed"
+  }
 }
