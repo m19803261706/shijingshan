@@ -76,7 +76,7 @@
       "number": 61,
       "title": "创建 DeviceAdverseReport 实体、Mapper、Service",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [58],
       "phase": 2
     },
@@ -100,7 +100,7 @@
       "number": 64,
       "title": "创建 DeviceAdverseReportController（上报 CRUD）",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [61],
       "phase": 3
     },
