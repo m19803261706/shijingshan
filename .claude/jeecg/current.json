@@ -2,8 +2,9 @@
   "project_id": "shijingshan",
   "feature": "输血使用不良事件报告",
   "prd": ".claude/tc/prds/blood-adverse-report.md",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2025-12-19",
+  "completed_at": "2025-12-20",
   "epic": {
     "number": 73,
     "url": "https://github.com/m19803261706/shijingshan/issues/73"
@@ -37,7 +38,7 @@
     {
       "name": "Phase 3: 前端开发",
       "issues": [81, 82, 83, 84, 85, 86, 87, 88],
-      "status": "in_progress",
+      "status": "completed",
       "completed": 8
     }
   ],
@@ -171,9 +172,11 @@
       "number": 88,
       "title": "配置输血不良事件路由",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [87],
-      "phase": 3
+      "phase": 3,
+      "commit": "ae49474",
+      "completed_at": "2025-12-20"
     }
   ],
   "execution_order": [74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88],
