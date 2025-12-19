@@ -2,7 +2,7 @@
   "project_id": "shijingshan",
   "feature": "临床科室审核",
   "prd": ".claude/jeecg/prds/临床科室审核.md",
-  "status": "planning",
+  "status": "in_progress",
   "epic": {
     "number": 43,
     "url": "https://github.com/m19803261706/shijingshan/issues/43"
@@ -11,7 +11,7 @@
     {
       "name": "Phase 1: 数据库设计",
       "issues": [44],
-      "status": "pending"
+      "status": "done"
     },
     {
       "name": "Phase 2: 后端开发",
@@ -34,14 +34,14 @@
       "number": 44,
       "title": "创建药品不良反应审核相关数据库对象",
       "type": "jeecg-migration",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "phase": 1
     },
     {
       "number": 45,
       "title": "创建药品不良反应审核 Controller 和 Service",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [44],
       "phase": 2
     },

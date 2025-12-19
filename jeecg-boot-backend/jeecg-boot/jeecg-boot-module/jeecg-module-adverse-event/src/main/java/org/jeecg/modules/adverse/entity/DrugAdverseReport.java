@@ -552,6 +552,32 @@ public class DrugAdverseReport implements Serializable {
     private String status;
 
     /**
+     * 审核人ID
+     */
+    @Schema(description = "审核人ID")
+    private String auditUserId;
+
+    /**
+     * 审核人姓名
+     */
+    @Schema(description = "审核人姓名")
+    private String auditUserName;
+
+    /**
+     * 审核时间
+     */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "审核时间")
+    private Date auditTime;
+
+    /**
+     * 审核意见
+     */
+    @Schema(description = "审核意见")
+    private String auditComment;
+
+    /**
      * 上报科室ID
      * <p>关联 sys_depart 表</p>
      */
