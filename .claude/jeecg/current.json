@@ -16,12 +16,12 @@
     {
       "name": "Phase 2: 前端开发",
       "issues": [55],
-      "status": "ready"
+      "status": "completed"
     },
     {
       "name": "Phase 3: 权限配置",
       "issues": [56],
-      "status": "blocked"
+      "status": "ready"
     }
   ],
   "issues": [
@@ -36,7 +36,7 @@
       "number": 55,
       "title": "创建临床科室整改前端页面",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [54],
       "phase": 2
     },
@@ -44,7 +44,7 @@
       "number": 56,
       "title": "创建临床科室整改菜单和权限",
       "type": "jeecg-menu",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [55],
       "phase": 3
     }
