@@ -108,7 +108,7 @@
       "number": 65,
       "title": "创建 DeviceAuditController（临床科室审核）",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [62],
       "phase": 3
     },
@@ -140,7 +140,7 @@
       "number": 69,
       "title": "创建临床科室审核页面（器械）",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [65],
       "phase": 4
     },
