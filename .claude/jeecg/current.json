@@ -100,7 +100,7 @@
       "number": 64,
       "title": "创建 DeviceAdverseReportController（上报 CRUD）",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [61],
       "phase": 3
     },
@@ -132,7 +132,7 @@
       "number": 68,
       "title": "创建医疗器械上报页面（1:1复刻国标表单）",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [64],
       "phase": 4
     },
