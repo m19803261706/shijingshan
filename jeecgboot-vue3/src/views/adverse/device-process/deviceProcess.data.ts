@@ -67,11 +67,6 @@ export const pendingColumns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '上报科室',
-    dataIndex: 'departmentId_dictText',
-    width: 120,
-  },
-  {
     title: '审核通过时间',
     dataIndex: 'auditTime',
     width: 160,
