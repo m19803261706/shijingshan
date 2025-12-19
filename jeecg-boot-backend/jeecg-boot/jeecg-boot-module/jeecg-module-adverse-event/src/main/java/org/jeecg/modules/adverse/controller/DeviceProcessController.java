@@ -1,14 +1,17 @@
 package org.jeecg.modules.adverse.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.adverse.entity.DeviceAdverseFlow;
@@ -87,35 +90,27 @@ public class DeviceProcessController {
      * 查询待处理状态的医疗器械不良事件报告（status = pending_process）
      * </p>
      *
+     * @param report       查询条件
      * @param pageNo       页码
      * @param pageSize     每页条数
-     * @param reportCode   报告编号（模糊查询）
-     * @param patientName  患者姓名（模糊查询）
+     * @param req          请求对象（用于字典翻译）
      * @return 分页结果
      */
     @AutoLog(value = "器械处理-待处理列表")
     @Operation(summary = "获取待处理报告列表")
     @GetMapping(value = "/pending")
     public Result<IPage<DeviceAdverseReport>> getPendingList(
+            DeviceAdverseReport report,
             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-            @RequestParam(name = "reportCode", required = false) String reportCode,
-            @RequestParam(name = "patientName", required = false) String patientName) {
+            HttpServletRequest req) {
 
-        // 构建查询条件
-        LambdaQueryWrapper<DeviceAdverseReport> queryWrapper = new LambdaQueryWrapper<>();
+        // 使用 QueryGenerator 初始化查询（支持字典翻译）
+        QueryWrapper<DeviceAdverseReport> queryWrapper = QueryGenerator.initQueryWrapper(report, req.getParameterMap());
         // 只查询待处理状态
-        queryWrapper.eq(DeviceAdverseReport::getStatus, STATUS_PENDING_PROCESS);
-        // 报告编号模糊查询
-        if (oConvertUtils.isNotEmpty(reportCode)) {
-            queryWrapper.like(DeviceAdverseReport::getReportCode, reportCode);
-        }
-        // 患者姓名模糊查询
-        if (oConvertUtils.isNotEmpty(patientName)) {
-            queryWrapper.like(DeviceAdverseReport::getPatientName, patientName);
-        }
+        queryWrapper.eq("status", STATUS_PENDING_PROCESS);
         // 按创建时间倒序
-        queryWrapper.orderByDesc(DeviceAdverseReport::getCreateTime);
+        queryWrapper.orderByDesc("create_time");
 
         // 分页查询
         Page<DeviceAdverseReport> page = new Page<>(pageNo, pageSize);
@@ -130,35 +125,27 @@ public class DeviceProcessController {
      * 查询待整改确认状态的医疗器械不良事件报告（status = pending_rectify 或 rectifying）
      * </p>
      *
+     * @param report       查询条件
      * @param pageNo       页码
      * @param pageSize     每页条数
-     * @param reportCode   报告编号（模糊查询）
-     * @param patientName  患者姓名（模糊查询）
+     * @param req          请求对象（用于字典翻译）
      * @return 分页结果
      */
     @AutoLog(value = "器械处理-待确认列表")
     @Operation(summary = "获取待确认报告列表")
     @GetMapping(value = "/confirming")
     public Result<IPage<DeviceAdverseReport>> getConfirmingList(
+            DeviceAdverseReport report,
             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-            @RequestParam(name = "reportCode", required = false) String reportCode,
-            @RequestParam(name = "patientName", required = false) String patientName) {
+            HttpServletRequest req) {
 
-        // 构建查询条件
-        LambdaQueryWrapper<DeviceAdverseReport> queryWrapper = new LambdaQueryWrapper<>();
+        // 使用 QueryGenerator 初始化查询（支持字典翻译）
+        QueryWrapper<DeviceAdverseReport> queryWrapper = QueryGenerator.initQueryWrapper(report, req.getParameterMap());
         // 查询待整改和整改中状态
-        queryWrapper.in(DeviceAdverseReport::getStatus, STATUS_PENDING_RECTIFY, STATUS_RECTIFYING);
-        // 报告编号模糊查询
-        if (oConvertUtils.isNotEmpty(reportCode)) {
-            queryWrapper.like(DeviceAdverseReport::getReportCode, reportCode);
-        }
-        // 患者姓名模糊查询
-        if (oConvertUtils.isNotEmpty(patientName)) {
-            queryWrapper.like(DeviceAdverseReport::getPatientName, patientName);
-        }
+        queryWrapper.in("status", STATUS_PENDING_RECTIFY, STATUS_RECTIFYING);
         // 按创建时间倒序
-        queryWrapper.orderByDesc(DeviceAdverseReport::getCreateTime);
+        queryWrapper.orderByDesc("create_time");
 
         // 分页查询
         Page<DeviceAdverseReport> page = new Page<>(pageNo, pageSize);
@@ -173,41 +160,27 @@ public class DeviceProcessController {
      * 查询已结案状态的医疗器械不良事件报告（status = closed）
      * </p>
      *
+     * @param report       查询条件
      * @param pageNo       页码
      * @param pageSize     每页条数
-     * @param reportCode   报告编号（模糊查询）
-     * @param patientName  患者姓名（模糊查询）
-     * @param closeType    结案方式筛选（direct-直接结案，rectify-整改结案）
+     * @param req          请求对象（用于字典翻译）
      * @return 分页结果
      */
     @AutoLog(value = "器械处理-已结案列表")
     @Operation(summary = "获取已结案报告列表")
     @GetMapping(value = "/closed")
     public Result<IPage<DeviceAdverseReport>> getClosedList(
+            DeviceAdverseReport report,
             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-            @RequestParam(name = "reportCode", required = false) String reportCode,
-            @RequestParam(name = "patientName", required = false) String patientName,
-            @RequestParam(name = "closeType", required = false) String closeType) {
+            HttpServletRequest req) {
 
-        // 构建查询条件
-        LambdaQueryWrapper<DeviceAdverseReport> queryWrapper = new LambdaQueryWrapper<>();
+        // 使用 QueryGenerator 初始化查询（支持字典翻译）
+        QueryWrapper<DeviceAdverseReport> queryWrapper = QueryGenerator.initQueryWrapper(report, req.getParameterMap());
         // 只查询已结案状态
-        queryWrapper.eq(DeviceAdverseReport::getStatus, STATUS_CLOSED);
-        // 结案方式筛选
-        if (oConvertUtils.isNotEmpty(closeType)) {
-            queryWrapper.eq(DeviceAdverseReport::getCloseType, closeType);
-        }
-        // 报告编号模糊查询
-        if (oConvertUtils.isNotEmpty(reportCode)) {
-            queryWrapper.like(DeviceAdverseReport::getReportCode, reportCode);
-        }
-        // 患者姓名模糊查询
-        if (oConvertUtils.isNotEmpty(patientName)) {
-            queryWrapper.like(DeviceAdverseReport::getPatientName, patientName);
-        }
+        queryWrapper.eq("status", STATUS_CLOSED);
         // 按结案时间倒序
-        queryWrapper.orderByDesc(DeviceAdverseReport::getCloseTime);
+        queryWrapper.orderByDesc("close_time");
 
         // 分页查询
         Page<DeviceAdverseReport> page = new Page<>(pageNo, pageSize);
