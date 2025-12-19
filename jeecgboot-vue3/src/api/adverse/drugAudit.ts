@@ -60,7 +60,7 @@ export const getDrugCompletedAuditList = (params: Record<string, any>) => {
  * @param params.comment 审核意见（选填）
  */
 export const drugAuditPass = (params: { id: string; comment?: string }) => {
-  return defHttp.post({ url: Api.pass, params });
+  return defHttp.post({ url: Api.pass, params }, { joinParamsToUrl: true });
 };
 
 /**
@@ -71,7 +71,7 @@ export const drugAuditPass = (params: { id: string; comment?: string }) => {
  * @param params.comment 退回原因（必填）
  */
 export const drugAuditReject = (params: { id: string; comment: string }) => {
-  return defHttp.post({ url: Api.reject, params });
+  return defHttp.post({ url: Api.reject, params }, { joinParamsToUrl: true });
 };
 
 /**
