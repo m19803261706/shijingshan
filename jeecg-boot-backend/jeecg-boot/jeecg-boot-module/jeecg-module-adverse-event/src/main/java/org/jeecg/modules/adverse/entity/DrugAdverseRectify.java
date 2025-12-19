@@ -51,6 +51,18 @@ public class DrugAdverseRectify implements Serializable {
     @Schema(description = "关联报告ID")
     private String reportId;
 
+    /**
+     * 整改轮次（第几次整改）
+     */
+    @Schema(description = "整改轮次")
+    private Integer rectifyRound;
+
+    /**
+     * 上一轮整改记录ID（退回后创建新记录时关联）
+     */
+    @Schema(description = "上一轮整改记录ID")
+    private String prevRectifyId;
+
     // ==================== 整改要求（药剂科填写） ====================
 
     /**

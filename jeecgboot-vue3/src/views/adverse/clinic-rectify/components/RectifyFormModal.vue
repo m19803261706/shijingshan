@@ -36,8 +36,9 @@
         <a-descriptions-item label="整改要求" :span="2">
           <div style="white-space: pre-wrap;">{{ rectifyData.requirement || '请根据药品不良反应情况进行整改' }}</div>
         </a-descriptions-item>
-        <a-descriptions-item label="退回原因" :span="2" v-if="rectifyData.status === 'rejected'">
-          <a-alert type="warning" :message="rectifyData.confirmComment || '未填写退回原因'" show-icon />
+        <!-- 显示上一轮退回原因（新记录通过 prevRectifyId 关联上一轮，退回原因在 requireComment 中） -->
+        <a-descriptions-item label="上一轮退回原因" :span="2" v-if="rectifyData.prevRectifyId">
+          <a-alert type="warning" :message="rectifyData.requireComment || '未填写退回原因'" show-icon />
         </a-descriptions-item>
       </a-descriptions>
     </a-card>

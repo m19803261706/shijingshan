@@ -49,9 +49,10 @@ public class DrugAdverseRectifyServiceImpl extends ServiceImpl<DrugAdverseRectif
     @Transactional(rollbackFor = Exception.class)
     public DrugAdverseRectify createRectify(String reportId, String requirement, Date deadline,
                                              String requireUserId, String requireUserName, String requireComment) {
-        // 创建整改记录
+        // 创建整改记录（第1轮）
         DrugAdverseRectify rectify = new DrugAdverseRectify();
         rectify.setReportId(reportId);
+        rectify.setRectifyRound(1);  // 第1轮整改
         rectify.setRequirement(requirement);
         rectify.setDeadline(deadline);
         rectify.setRequireUserId(requireUserId);
@@ -64,7 +65,7 @@ public class DrugAdverseRectifyServiceImpl extends ServiceImpl<DrugAdverseRectif
 
         this.save(rectify);
 
-        log.info("创建整改要求，报告ID: {}, 整改记录ID: {}, 下发人: {}",
+        log.info("创建整改要求，报告ID: {}, 整改记录ID: {}, 轮次: 1, 下发人: {}",
                 reportId, rectify.getId(), requireUserName);
         return rectify;
     }
@@ -152,8 +153,9 @@ public class DrugAdverseRectifyServiceImpl extends ServiceImpl<DrugAdverseRectif
             return false;
         }
 
-        // 3. 更新整改记录
         Date now = new Date();
+
+        // 3. 更新当前整改记录为已退回
         rectify.setConfirmResult("rejected");
         rectify.setConfirmUserId(confirmUserId);
         rectify.setConfirmUserName(confirmUserName);
@@ -162,10 +164,27 @@ public class DrugAdverseRectifyServiceImpl extends ServiceImpl<DrugAdverseRectif
         rectify.setStatus(STATUS_REJECTED);
         rectify.setUpdateBy(confirmUserName);
         rectify.setUpdateTime(now);
-
         this.updateById(rectify);
 
-        log.info("退回整改，整改记录ID: {}, 确认人: {}, 原因: {}", rectifyId, confirmUserName, confirmComment);
+        // 4. 创建下一轮整改记录
+        int nextRound = (rectify.getRectifyRound() != null ? rectify.getRectifyRound() : 1) + 1;
+        DrugAdverseRectify nextRectify = new DrugAdverseRectify();
+        nextRectify.setReportId(rectify.getReportId());
+        nextRectify.setRectifyRound(nextRound);
+        nextRectify.setPrevRectifyId(rectifyId);  // 关联上一轮记录
+        nextRectify.setRequirement(rectify.getRequirement());  // 继承整改要求
+        nextRectify.setDeadline(rectify.getDeadline());  // 继承整改期限
+        nextRectify.setRequireUserId(confirmUserId);
+        nextRectify.setRequireUserName(confirmUserName);
+        nextRectify.setRequireTime(now);
+        nextRectify.setRequireComment("第" + (nextRound - 1) + "次整改被退回，原因：" + confirmComment);
+        nextRectify.setStatus(STATUS_PENDING);
+        nextRectify.setCreateBy(confirmUserName);
+        nextRectify.setCreateTime(now);
+        this.save(nextRectify);
+
+        log.info("退回整改，原记录ID: {}, 轮次: {}, 新记录ID: {}, 新轮次: {}, 确认人: {}, 原因: {}",
+                rectifyId, rectify.getRectifyRound(), nextRectify.getId(), nextRound, confirmUserName, confirmComment);
         return true;
     }
 
