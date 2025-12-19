@@ -588,6 +588,7 @@ public class DrugAdverseReport implements Serializable {
     /**
      * 创建人登录名
      */
+    @Dict(dictTable = "sys_user", dicCode = "username", dicText = "realname")
     @Schema(description = "创建人")
     private String createBy;
 
@@ -602,6 +603,7 @@ public class DrugAdverseReport implements Serializable {
     /**
      * 更新人登录名
      */
+    @Dict(dictTable = "sys_user", dicCode = "username", dicText = "realname")
     @Schema(description = "更新人")
     private String updateBy;
 
