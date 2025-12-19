@@ -116,7 +116,7 @@
       "number": 66,
       "title": "创建 DeviceProcessController（器械科处理）",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [63],
       "phase": 3
     },
@@ -148,7 +148,7 @@
       "number": 70,
       "title": "创建器械科处理页面",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [66],
       "phase": 4
     },
