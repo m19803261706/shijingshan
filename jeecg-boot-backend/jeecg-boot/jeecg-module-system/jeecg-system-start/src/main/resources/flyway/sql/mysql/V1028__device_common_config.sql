@@ -82,12 +82,12 @@ SELECT UUID(), 'f6817f48af4fb3af11b9e8bf', id FROM sys_permission WHERE id LIKE 
 -- ========================================
 -- 四、为临床科室角色添加查看和使用权限
 -- ========================================
-INSERT INTO sys_role_permission (id, role_id, permission_id)
-SELECT UUID(), 'ae_role_clinic', id FROM sys_permission WHERE id IN (
+INSERT IGNORE INTO sys_role_permission (id, role_id, permission_id)
+SELECT UUID(), 'ae_role_clinic', sp.id FROM sys_permission sp WHERE sp.id IN (
     'ae_device_config',
     'ae_device_config_view',
     'ae_device_config_add'
-) ON DUPLICATE KEY UPDATE id = id;
+);
 
 -- ========================================
 -- 菜单结构说明
