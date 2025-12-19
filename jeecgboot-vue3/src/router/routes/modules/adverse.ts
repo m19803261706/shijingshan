@@ -99,6 +99,16 @@ const adverse: AppRouteModule = {
         icon: 'ant-design:experiment-outlined',
       },
     },
+    // ========== 临床科室整改 ==========
+    {
+      path: 'clinic-rectify',
+      name: 'AdverseClinicRectify',
+      component: () => import('/@/views/adverse/clinic-rectify/index.vue'),
+      meta: {
+        title: '临床科室整改',
+        icon: 'ant-design:edit-outlined',
+      },
+    },
     // ========== 事件处理 ==========
     {
       path: 'process',
