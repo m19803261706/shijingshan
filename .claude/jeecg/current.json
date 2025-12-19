@@ -30,12 +30,12 @@
     {
       "name": "Phase 2: 后端实体开发",
       "issues": [61, 62, 63],
-      "status": "ready"
+      "status": "completed"
     },
     {
       "name": "Phase 3: 后端控制器开发",
       "issues": [64, 65, 66, 67],
-      "status": "blocked"
+      "status": "ready"
     },
     {
       "name": "Phase 4: 前端开发",
@@ -92,7 +92,7 @@
       "number": 63,
       "title": "创建 DeviceAdverseRectify 实体、Mapper、Service",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [60],
       "phase": 2
     },
@@ -116,7 +116,7 @@
       "number": 66,
       "title": "创建 DeviceProcessController（器械科处理）",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [63],
       "phase": 3
     },
@@ -124,7 +124,7 @@
       "number": 67,
       "title": "创建 DeviceClinicRectifyController（临床科室整改）",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [63],
       "phase": 3
     },
