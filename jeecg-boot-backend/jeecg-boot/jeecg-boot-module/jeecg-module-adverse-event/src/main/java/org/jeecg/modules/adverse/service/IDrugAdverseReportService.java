@@ -181,4 +181,28 @@ public interface IDrugAdverseReportService extends IService<DrugAdverseReport> {
      * @return 是否成功
      */
     boolean auditReject(String id, String auditUserId, String auditUserName, String comment);
+
+    // ==================== 处理相关方法 ====================
+
+    /**
+     * 判断报告是否可处理
+     * <p>
+     * 仅 pending_process 状态的报告可处理
+     * </p>
+     *
+     * @param id 报告ID
+     * @return 是否可处理
+     */
+    boolean canProcess(String id);
+
+    /**
+     * 判断报告是否可提交整改
+     * <p>
+     * 仅 pending_rectify 状态（待整改）的报告可提交整改
+     * </p>
+     *
+     * @param id 报告ID
+     * @return 是否可提交整改
+     */
+    boolean canSubmitRectify(String id);
 }

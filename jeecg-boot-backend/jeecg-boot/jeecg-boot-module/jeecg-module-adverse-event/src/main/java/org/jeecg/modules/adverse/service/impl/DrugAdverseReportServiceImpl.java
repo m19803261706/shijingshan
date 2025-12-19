@@ -454,4 +454,29 @@ public class DrugAdverseReportServiceImpl extends ServiceImpl<DrugAdverseReportM
                 id, report.getReportCode(), auditUserName, comment);
         return true;
     }
+
+    // ==================== 处理相关方法 ====================
+
+    /**
+     * 处理状态常量
+     */
+    private static final String STATUS_PENDING_RECTIFY = "pending_rectify";
+
+    @Override
+    public boolean canProcess(String id) {
+        DrugAdverseReport report = this.getById(id);
+        if (report == null) {
+            return false;
+        }
+        return STATUS_PENDING_PROCESS.equals(report.getStatus());
+    }
+
+    @Override
+    public boolean canSubmitRectify(String id) {
+        DrugAdverseReport report = this.getById(id);
+        if (report == null) {
+            return false;
+        }
+        return STATUS_PENDING_RECTIFY.equals(report.getStatus());
+    }
 }
