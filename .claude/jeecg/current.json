@@ -2,8 +2,12 @@
   "project_id": "shijingshan",
   "feature": "医疗器械不良事件上报",
   "prd": ".claude/jeecg/prds/医疗器械不良事件上报/prd.md",
-  "status": "prd_created",
+  "status": "planned",
   "created_at": "2025-12-19",
+  "epic": {
+    "number": 57,
+    "url": "https://github.com/m19803261706/shijingshan/issues/57"
+  },
   "reference": {
     "module": "药品不良反应上报",
     "note": "1:1 复刻流程，仅表单字段不同"
@@ -20,50 +24,152 @@
   "phases": [
     {
       "name": "Phase 1: 数据库设计",
-      "tasks": [
-        "创建 device_adverse_report 主表 (V1024)",
-        "创建 device_adverse_flow 流转表 (V1025)",
-        "创建 device_adverse_rectify 整改表 + 数据字典 (V1026)"
-      ],
-      "status": "pending"
+      "issues": [58, 59, 60],
+      "status": "ready"
     },
     {
       "name": "Phase 2: 后端实体开发",
-      "tasks": [
-        "创建 DeviceAdverseReport 实体、Mapper、Service",
-        "创建 DeviceAdverseFlow 实体、Mapper、Service",
-        "创建 DeviceAdverseRectify 实体、Mapper、Service"
-      ],
-      "status": "pending"
+      "issues": [61, 62, 63],
+      "status": "blocked"
     },
     {
       "name": "Phase 3: 后端控制器开发",
-      "tasks": [
-        "创建 DeviceAdverseReportController",
-        "创建 DeviceAuditController",
-        "创建 DeviceProcessController",
-        "创建 DeviceClinicRectifyController"
-      ],
-      "status": "pending"
+      "issues": [64, 65, 66, 67],
+      "status": "blocked"
     },
     {
       "name": "Phase 4: 前端开发",
-      "tasks": [
-        "创建医疗器械上报页面",
-        "创建临床科室审核页面",
-        "创建器械科处理页面",
-        "创建临床科室整改页面"
-      ],
-      "status": "pending"
+      "issues": [68, 69, 70, 71],
+      "status": "blocked"
     },
     {
       "name": "Phase 5: 菜单权限配置",
-      "tasks": [
-        "创建菜单 SQL、按钮权限、角色配置"
-      ],
-      "status": "pending"
+      "issues": [72],
+      "status": "blocked"
     }
   ],
+  "issues": [
+    {
+      "number": 58,
+      "title": "创建 device_adverse_report 主表 (V1024)",
+      "type": "jeecg-migration",
+      "status": "jeecg-ready",
+      "phase": 1
+    },
+    {
+      "number": 59,
+      "title": "创建 device_adverse_flow 流转表 (V1025)",
+      "type": "jeecg-migration",
+      "status": "jeecg-blocked",
+      "depends_on": [58],
+      "phase": 1
+    },
+    {
+      "number": 60,
+      "title": "创建 device_adverse_rectify 整改表 + 数据字典 (V1026)",
+      "type": "jeecg-migration",
+      "status": "jeecg-blocked",
+      "depends_on": [59],
+      "phase": 1
+    },
+    {
+      "number": 61,
+      "title": "创建 DeviceAdverseReport 实体、Mapper、Service",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [58],
+      "phase": 2
+    },
+    {
+      "number": 62,
+      "title": "创建 DeviceAdverseFlow 实体、Mapper、Service",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [59],
+      "phase": 2
+    },
+    {
+      "number": 63,
+      "title": "创建 DeviceAdverseRectify 实体、Mapper、Service",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [60],
+      "phase": 2
+    },
+    {
+      "number": 64,
+      "title": "创建 DeviceAdverseReportController（上报 CRUD）",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [61],
+      "phase": 3
+    },
+    {
+      "number": 65,
+      "title": "创建 DeviceAuditController（临床科室审核）",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [62],
+      "phase": 3
+    },
+    {
+      "number": 66,
+      "title": "创建 DeviceProcessController（器械科处理）",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [63],
+      "phase": 3
+    },
+    {
+      "number": 67,
+      "title": "创建 DeviceClinicRectifyController（临床科室整改）",
+      "type": "jeecg-entity",
+      "status": "jeecg-blocked",
+      "depends_on": [63],
+      "phase": 3
+    },
+    {
+      "number": 68,
+      "title": "创建医疗器械上报页面（1:1复刻国标表单）",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [64],
+      "phase": 4
+    },
+    {
+      "number": 69,
+      "title": "创建临床科室审核页面（器械）",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [65],
+      "phase": 4
+    },
+    {
+      "number": 70,
+      "title": "创建器械科处理页面",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [66],
+      "phase": 4
+    },
+    {
+      "number": 71,
+      "title": "创建临床科室整改页面（器械）",
+      "type": "jeecg-frontend",
+      "status": "jeecg-blocked",
+      "depends_on": [67],
+      "phase": 4
+    },
+    {
+      "number": 72,
+      "title": "创建菜单 SQL、按钮权限、角色配置",
+      "type": "jeecg-menu",
+      "status": "jeecg-blocked",
+      "depends_on": [68, 69, 70, 71],
+      "phase": 5
+    }
+  ],
+  "execution_order": [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72],
   "previous_feature": {
     "name": "临床科室整改提交",
     "epic": 53,
