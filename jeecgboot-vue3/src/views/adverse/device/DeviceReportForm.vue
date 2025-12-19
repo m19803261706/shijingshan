@@ -46,7 +46,21 @@
       </a-card>
 
       <!-- C. 医疗器械情况 -->
-      <a-card title="C. 医疗器械情况" class="mb-4" :bordered="false">
+      <a-card class="mb-4" :bordered="false">
+        <template #title>
+          <div class="card-title-with-action">
+            <span>C. 医疗器械情况</span>
+            <a-button
+              type="primary"
+              size="small"
+              preIcon="ant-design:search-outlined"
+              @click="handleSelectDevice"
+              v-if="!isView"
+            >
+              选择常用器械
+            </a-button>
+          </div>
+        </template>
         <BasicForm @register="registerDeviceInfoForm" />
 
         <!-- 21-22. 原因分析和处理情况 -->
@@ -77,6 +91,9 @@
       </a-card>
     </a-spin>
 
+    <!-- 器械选择弹窗 -->
+    <DeviceSelectModal @register="registerDeviceSelectModal" @select="handleDeviceSelected" />
+
     <!-- 底部操作栏 -->
     <div class="form-footer">
       <a-space>
@@ -103,7 +120,9 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { BasicForm, useForm } from '/@/components/Form';
+import { useModal } from '/@/components/Modal';
 import { useMessage } from '/@/hooks/web/useMessage';
+import DeviceSelectModal from './components/DeviceSelectModal.vue';
 import {
   patientInfoFormSchema,
   eventInfoFormSchema,
@@ -122,6 +141,7 @@ import {
   saveDeviceReportDraft,
   submitDeviceReport,
 } from '/@/api/adverse/device';
+import { saveDeviceConfigIfNotExists } from '/@/api/adverse/deviceConfig';
 
 const route = useRoute();
 const router = useRouter();
@@ -129,6 +149,9 @@ const { createMessage, createConfirm } = useMessage();
 
 // 状态变量
 const loading = ref(false);
+
+// 器械选择弹窗
+const [registerDeviceSelectModal, { openModal: openDeviceSelectModal }] = useModal();
 
 // 从路由获取参数
 const reportId = computed(() => route.query.id as string);
@@ -478,6 +501,9 @@ async function handleSubmit() {
 
         const formData = await getAllFormData();
 
+        // 自动保存器械到常用配置库（如果不存在）
+        await autoSaveDeviceConfig(formData);
+
         if (isEdit.value) {
           formData.id = reportId.value;
           await editDeviceReport(formData);
@@ -510,6 +536,62 @@ async function handleSubmit() {
  */
 function handleBack() {
   router.push('/adverse/device');
+}
+
+// ========== 器械选择功能 ==========
+
+/**
+ * 打开器械选择弹窗
+ */
+function handleSelectDevice() {
+  openDeviceSelectModal(true);
+}
+
+/**
+ * 处理选择的器械数据
+ * @param device 选中的器械信息
+ */
+function handleDeviceSelected(device: any) {
+  // 将选中的器械信息填充到表单
+  setDeviceInfoFields({
+    productName: device.productName,
+    tradeName: device.tradeName,
+    registrationNo: device.registrationNo,
+    manufacturerName: device.manufacturerName,
+    manufacturerAddress: device.manufacturerAddress,
+    manufacturerContact: device.manufacturerContact,
+    modelSpec: device.modelSpec,
+    productCode: device.productCode,
+    productBatch: device.productBatch,
+  });
+
+  createMessage.success('已填充器械信息');
+}
+
+/**
+ * 自动保存常用器械配置
+ * @param formData 表单数据
+ */
+async function autoSaveDeviceConfig(formData: any) {
+  // 如果有器械产品名称，则尝试保存到常用配置
+  if (formData.productName) {
+    try {
+      await saveDeviceConfigIfNotExists({
+        productName: formData.productName,
+        tradeName: formData.tradeName,
+        registrationNo: formData.registrationNo,
+        manufacturerName: formData.manufacturerName,
+        manufacturerAddress: formData.manufacturerAddress,
+        manufacturerContact: formData.manufacturerContact,
+        modelSpec: formData.modelSpec,
+        productCode: formData.productCode,
+        productBatch: formData.productBatch,
+      });
+    } catch (e) {
+      // 保存常用配置失败不影响主流程
+      console.warn('保存常用器械配置失败:', e);
+    }
+  }
 }
 </script>
 
@@ -558,5 +640,13 @@ function handleBack() {
 
 .mb-4 {
   margin-bottom: 16px;
+}
+
+// 卡片标题带操作按钮样式
+.card-title-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 </style>
