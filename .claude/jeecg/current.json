@@ -1,60 +1,72 @@
 {
   "project_id": "shijingshan",
-  "feature": "临床科室整改提交",
-  "prd": ".claude/jeecg/prds/临床科室整改提交.md",
-  "status": "completed",
-  "epic": {
-    "number": 53,
-    "url": "https://github.com/m19803261706/shijingshan/issues/53"
+  "feature": "医疗器械不良事件上报",
+  "prd": ".claude/jeecg/prds/医疗器械不良事件上报/prd.md",
+  "status": "prd_created",
+  "created_at": "2025-12-19",
+  "reference": {
+    "module": "药品不良反应上报",
+    "note": "1:1 复刻流程，仅表单字段不同"
   },
+  "module": {
+    "name": "jeecg-module-adverse-event",
+    "package": "org.jeecg.modules.adverse.device"
+  },
+  "tables": [
+    "device_adverse_report",
+    "device_adverse_flow",
+    "device_adverse_rectify"
+  ],
   "phases": [
     {
-      "name": "Phase 1: 后端开发",
-      "issues": [54],
-      "status": "completed"
+      "name": "Phase 1: 数据库设计",
+      "tasks": [
+        "创建 device_adverse_report 主表 (V1024)",
+        "创建 device_adverse_flow 流转表 (V1025)",
+        "创建 device_adverse_rectify 整改表 + 数据字典 (V1026)"
+      ],
+      "status": "pending"
     },
     {
-      "name": "Phase 2: 前端开发",
-      "issues": [55],
-      "status": "completed"
+      "name": "Phase 2: 后端实体开发",
+      "tasks": [
+        "创建 DeviceAdverseReport 实体、Mapper、Service",
+        "创建 DeviceAdverseFlow 实体、Mapper、Service",
+        "创建 DeviceAdverseRectify 实体、Mapper、Service"
+      ],
+      "status": "pending"
     },
     {
-      "name": "Phase 3: 权限配置",
-      "issues": [56],
-      "status": "completed"
+      "name": "Phase 3: 后端控制器开发",
+      "tasks": [
+        "创建 DeviceAdverseReportController",
+        "创建 DeviceAuditController",
+        "创建 DeviceProcessController",
+        "创建 DeviceClinicRectifyController"
+      ],
+      "status": "pending"
+    },
+    {
+      "name": "Phase 4: 前端开发",
+      "tasks": [
+        "创建医疗器械上报页面",
+        "创建临床科室审核页面",
+        "创建器械科处理页面",
+        "创建临床科室整改页面"
+      ],
+      "status": "pending"
+    },
+    {
+      "name": "Phase 5: 菜单权限配置",
+      "tasks": [
+        "创建菜单 SQL、按钮权限、角色配置"
+      ],
+      "status": "pending"
     }
   ],
-  "issues": [
-    {
-      "number": 54,
-      "title": "创建 ClinicRectifyController 控制器和 API",
-      "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "phase": 1
-    },
-    {
-      "number": 55,
-      "title": "创建临床科室整改前端页面",
-      "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [54],
-      "phase": 2
-    },
-    {
-      "number": 56,
-      "title": "创建临床科室整改菜单和权限",
-      "type": "jeecg-menu",
-      "status": "jeecg-done",
-      "depends_on": [55],
-      "phase": 3
-    }
-  ],
-  "execution_order": [54, 55, 56],
-  "created_at": "2025-12-19",
-  "completed_at": "2025-12-19",
   "previous_feature": {
-    "name": "药品科室处理",
-    "epic": 48,
+    "name": "临床科室整改提交",
+    "epic": 53,
     "status": "completed"
   }
 }
