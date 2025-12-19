@@ -12,6 +12,7 @@ import org.jeecg.modules.adverse.entity.DrugCommonConcomitant;
 import org.jeecg.modules.adverse.entity.DrugCommonSuspect;
 import org.jeecg.modules.adverse.mapper.DrugAdverseReportMapper;
 import org.jeecg.modules.adverse.service.IDrugAdverseConcomitantDrugService;
+import org.jeecg.modules.adverse.service.IDrugAdverseFlowService;
 import org.jeecg.modules.adverse.service.IDrugAdverseReportService;
 import org.jeecg.modules.adverse.service.IDrugAdverseSuspectDrugService;
 import org.jeecg.modules.adverse.service.IDrugCommonConcomitantService;
@@ -50,7 +51,14 @@ public class DrugAdverseReportServiceImpl extends ServiceImpl<DrugAdverseReportM
      */
     private static final String STATUS_DRAFT = "draft";
     private static final String STATUS_PENDING_AUDIT = "pending_audit";
+    private static final String STATUS_PENDING_PROCESS = "pending_process";
     private static final String STATUS_RETURNED = "returned";
+
+    /**
+     * 流转操作类型常量
+     */
+    private static final String ACTION_AUDIT_PASS = "audit_pass";
+    private static final String ACTION_AUDIT_REJECT = "audit_reject";
 
     @Autowired
     private IDrugAdverseSuspectDrugService suspectDrugService;
@@ -63,6 +71,9 @@ public class DrugAdverseReportServiceImpl extends ServiceImpl<DrugAdverseReportM
 
     @Autowired
     private IDrugCommonConcomitantService drugCommonConcomitantService;
+
+    @Autowired
+    private IDrugAdverseFlowService flowService;
 
     @Override
     public String generateReportCode() {
@@ -354,6 +365,93 @@ public class DrugAdverseReportServiceImpl extends ServiceImpl<DrugAdverseReportM
             log.warn("不良反应发生时间不能为空");
             return false;
         }
+        return true;
+    }
+
+    // ==================== 审核相关方法 ====================
+
+    @Override
+    public boolean canAudit(String id) {
+        DrugAdverseReport report = this.getById(id);
+        if (report == null) {
+            return false;
+        }
+        return STATUS_PENDING_AUDIT.equals(report.getStatus());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean auditPass(String id, String auditUserId, String auditUserName, String comment) {
+        // 1. 获取报告
+        DrugAdverseReport report = this.getById(id);
+        if (report == null) {
+            log.error("报告不存在，ID: {}", id);
+            return false;
+        }
+
+        // 2. 校验状态
+        String oldStatus = report.getStatus();
+        if (!STATUS_PENDING_AUDIT.equals(oldStatus)) {
+            log.error("报告状态不允许审核，当前状态: {}", oldStatus);
+            return false;
+        }
+
+        // 3. 更新报告状态和审核信息
+        Date now = new Date();
+        report.setStatus(STATUS_PENDING_PROCESS);
+        report.setAuditUserId(auditUserId);
+        report.setAuditUserName(auditUserName);
+        report.setAuditTime(now);
+        report.setAuditComment(comment);
+        report.setUpdateBy(auditUserName);
+        report.setUpdateTime(now);
+
+        this.updateById(report);
+
+        // 4. 记录流转历史
+        flowService.recordFlow(id, ACTION_AUDIT_PASS, oldStatus, STATUS_PENDING_PROCESS,
+                auditUserId, auditUserName, comment);
+
+        log.info("药品不良反应报告审核通过，ID: {}, 编号: {}, 审核人: {}",
+                id, report.getReportCode(), auditUserName);
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean auditReject(String id, String auditUserId, String auditUserName, String comment) {
+        // 1. 获取报告
+        DrugAdverseReport report = this.getById(id);
+        if (report == null) {
+            log.error("报告不存在，ID: {}", id);
+            return false;
+        }
+
+        // 2. 校验状态
+        String oldStatus = report.getStatus();
+        if (!STATUS_PENDING_AUDIT.equals(oldStatus)) {
+            log.error("报告状态不允许审核，当前状态: {}", oldStatus);
+            return false;
+        }
+
+        // 3. 更新报告状态和审核信息
+        Date now = new Date();
+        report.setStatus(STATUS_RETURNED);
+        report.setAuditUserId(auditUserId);
+        report.setAuditUserName(auditUserName);
+        report.setAuditTime(now);
+        report.setAuditComment(comment);
+        report.setUpdateBy(auditUserName);
+        report.setUpdateTime(now);
+
+        this.updateById(report);
+
+        // 4. 记录流转历史
+        flowService.recordFlow(id, ACTION_AUDIT_REJECT, oldStatus, STATUS_RETURNED,
+                auditUserId, auditUserName, comment);
+
+        log.info("药品不良反应报告审核退回，ID: {}, 编号: {}, 审核人: {}, 原因: {}",
+                id, report.getReportCode(), auditUserName, comment);
         return true;
     }
 }

@@ -16,7 +16,7 @@
     {
       "name": "Phase 2: 后端开发",
       "issues": [45],
-      "status": "pending"
+      "status": "done"
     },
     {
       "name": "Phase 3: 前端开发",
@@ -41,7 +41,7 @@
       "number": 45,
       "title": "创建药品不良反应审核 Controller 和 Service",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [44],
       "phase": 2
     },
@@ -49,7 +49,7 @@
       "number": 46,
       "title": "创建临床科室审核前端页面",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [45],
       "phase": 3
     },

@@ -138,4 +138,47 @@ public interface IDrugAdverseReportService extends IService<DrugAdverseReport> {
      * @return 并用药品列表
      */
     List<DrugAdverseConcomitantDrug> getConcomitantDrugsByReportId(String reportId);
+
+    // ==================== 审核相关方法 ====================
+
+    /**
+     * 判断报告是否可审核
+     * <p>
+     * 仅 pending_audit 状态的报告可审核
+     * </p>
+     *
+     * @param id 报告ID
+     * @return 是否可审核
+     */
+    boolean canAudit(String id);
+
+    /**
+     * 审核通过
+     * <p>
+     * 将报告状态从 pending_audit 改为 pending_process，
+     * 记录审核信息和流转历史
+     * </p>
+     *
+     * @param id           报告ID
+     * @param auditUserId  审核人ID
+     * @param auditUserName 审核人姓名
+     * @param comment      审核意见（选填）
+     * @return 是否成功
+     */
+    boolean auditPass(String id, String auditUserId, String auditUserName, String comment);
+
+    /**
+     * 审核退回
+     * <p>
+     * 将报告状态从 pending_audit 改为 returned，
+     * 记录退回原因和流转历史
+     * </p>
+     *
+     * @param id           报告ID
+     * @param auditUserId  审核人ID
+     * @param auditUserName 审核人姓名
+     * @param comment      退回原因（必填）
+     * @return 是否成功
+     */
+    boolean auditReject(String id, String auditUserId, String auditUserName, String comment);
 }
