@@ -339,6 +339,7 @@ public class BloodAdverseReport implements Serializable {
     /**
      * 创建人
      */
+    @Dict(dictTable = "sys_user", dicCode = "username", dicText = "realname")
     @Schema(description = "创建人")
     private String createBy;
 
