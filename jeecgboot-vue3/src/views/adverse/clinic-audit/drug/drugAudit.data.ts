@@ -33,6 +33,8 @@ export const drugReportStatusOptions = [
   { label: '待审核', value: 'pending_audit', color: 'processing' },
   { label: '已退回', value: 'returned', color: 'warning' },
   { label: '待处理', value: 'pending_process', color: 'processing' },
+  { label: '待整改', value: 'pending_rectify', color: 'orange' },
+  { label: '整改中', value: 'rectifying', color: 'cyan' },
   { label: '已结案', value: 'closed', color: 'success' },
 ];
 
@@ -40,8 +42,11 @@ export const drugReportStatusOptions = [
  * 已审核状态映射（仅用于已审核列表）
  */
 export const completedStatusOptions = [
-  { label: '已通过', value: 'pending_process', color: 'success' },
+  { label: '待处理', value: 'pending_process', color: 'processing' },
   { label: '已退回', value: 'returned', color: 'warning' },
+  { label: '待整改', value: 'pending_rectify', color: 'orange' },
+  { label: '整改中', value: 'rectifying', color: 'cyan' },
+  { label: '已结案', value: 'closed', color: 'success' },
 ];
 
 /**
