@@ -35,12 +35,12 @@
     {
       "name": "Phase 3: 后端控制器开发",
       "issues": [64, 65, 66, 67],
-      "status": "ready"
+      "status": "completed"
     },
     {
       "name": "Phase 4: 前端开发",
       "issues": [68, 69, 70, 71],
-      "status": "blocked"
+      "status": "ready"
     },
     {
       "name": "Phase 5: 菜单权限配置",
@@ -124,7 +124,7 @@
       "number": 67,
       "title": "创建 DeviceClinicRectifyController（临床科室整改）",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [63],
       "phase": 3
     },
@@ -156,7 +156,7 @@
       "number": 71,
       "title": "创建临床科室整改页面（器械）",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [67],
       "phase": 4
     },
