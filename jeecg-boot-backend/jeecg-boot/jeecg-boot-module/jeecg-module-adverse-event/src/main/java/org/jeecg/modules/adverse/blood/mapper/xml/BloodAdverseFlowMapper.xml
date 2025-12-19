@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.adverse.blood.mapper.BloodAdverseFlowMapper">
+
+    <!-- 根据报告ID查询流转记录列表 -->
+    <select id="selectByReportId" resultType="org.jeecg.modules.adverse.blood.entity.BloodAdverseFlow">
+        SELECT * FROM blood_adverse_flow
+        WHERE report_id = #{reportId}
+        ORDER BY create_time ASC
+    </select>
+
+</mapper>
