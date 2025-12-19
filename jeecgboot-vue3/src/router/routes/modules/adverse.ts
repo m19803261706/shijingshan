@@ -89,6 +89,16 @@ const adverse: AppRouteModule = {
         icon: 'ant-design:safety-certificate-outlined',
       },
     },
+    // ========== 药品科室处理（药剂科） ==========
+    {
+      path: 'drug-process',
+      name: 'AdverseDrugProcess',
+      component: () => import('/@/views/adverse/drug-process/index.vue'),
+      meta: {
+        title: '药品科室处理',
+        icon: 'ant-design:experiment-outlined',
+      },
+    },
     // ========== 事件处理 ==========
     {
       path: 'process',
