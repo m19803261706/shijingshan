@@ -63,21 +63,31 @@ const adverse: AppRouteModule = {
     {
       path: 'blood',
       name: 'AdverseBlood',
-      component: () => import('/@/views/adverse/blood/BloodReportList.vue'),
+      redirect: '/adverse/blood/report',
       meta: {
-        title: '输血使用不良事件',
+        title: '输血不良事件',
         icon: 'ant-design:heart-outlined',
       },
-    },
-    {
-      path: 'blood/form',
-      name: 'AdverseBloodForm',
-      component: () => import('/@/views/adverse/blood/BloodReportForm.vue'),
-      meta: {
-        title: '输血使用不良事件表单',
-        hideMenu: true,
-        currentActiveMenu: '/adverse/blood',
-      },
+      children: [
+        {
+          path: 'report',
+          name: 'AdverseBloodReport',
+          component: () => import('/@/views/adverse/blood/index.vue'),
+          meta: {
+            title: '我的报告',
+          },
+        },
+        {
+          path: 'form',
+          name: 'AdverseBloodForm',
+          component: () => import('/@/views/adverse/blood/BloodReportForm.vue'),
+          meta: {
+            title: '报告表单',
+            hideMenu: true,
+            currentActiveMenu: '/adverse/blood/report',
+          },
+        },
+      ],
     },
     // ========== 临床科室审核 ==========
     {
