@@ -1,72 +1,18 @@
 {
   "project_id": "shijingshan",
-  "feature": "临床科室审核",
-  "prd": ".claude/jeecg/prds/临床科室审核.md",
-  "status": "completed",
-  "epic": {
-    "number": 43,
-    "url": "https://github.com/m19803261706/shijingshan/issues/43"
-  },
-  "phases": [
-    {
-      "name": "Phase 1: 数据库设计",
-      "issues": [44],
-      "status": "done"
-    },
-    {
-      "name": "Phase 2: 后端开发",
-      "issues": [45],
-      "status": "done"
-    },
-    {
-      "name": "Phase 3: 前端开发",
-      "issues": [46],
-      "status": "done"
-    },
-    {
-      "name": "Phase 4: 权限配置",
-      "issues": [47],
-      "status": "done"
-    }
-  ],
-  "issues": [
-    {
-      "number": 44,
-      "title": "创建药品不良反应审核相关数据库对象",
-      "type": "jeecg-migration",
-      "status": "jeecg-done",
-      "phase": 1
-    },
-    {
-      "number": 45,
-      "title": "创建药品不良反应审核 Controller 和 Service",
-      "type": "jeecg-entity",
-      "status": "jeecg-done",
-      "depends_on": [44],
-      "phase": 2
-    },
-    {
-      "number": 46,
-      "title": "创建临床科室审核前端页面",
-      "type": "jeecg-frontend",
-      "status": "jeecg-done",
-      "depends_on": [45],
-      "phase": 3
-    },
-    {
-      "number": 47,
-      "title": "创建临床科室审核菜单和权限配置",
-      "type": "jeecg-menu",
-      "status": "jeecg-done",
-      "depends_on": [46],
-      "phase": 4
-    }
-  ],
-  "execution_order": [44, 45, 46, 47],
+  "feature": "药品科室处理",
+  "prd": ".claude/jeecg/prds/药品科室处理.md",
+  "status": "prd_created",
   "created_at": "2025-12-19",
+  "module": {
+    "name": "jeecg-module-adverse-event",
+    "package": "org.jeecg.modules.adverse"
+  },
+  "tables": ["drug_adverse_report", "drug_adverse_rectify", "drug_adverse_flow"],
+  "phases": [],
   "previous_feature": {
-    "name": "药品常用配置管理",
-    "epic": 32,
+    "name": "临床科室审核",
+    "epic": 43,
     "status": "completed"
   }
 }
