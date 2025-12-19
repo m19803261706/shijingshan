@@ -2,14 +2,68 @@
   "project_id": "shijingshan",
   "feature": "药品科室处理",
   "prd": ".claude/jeecg/prds/药品科室处理.md",
-  "status": "prd_created",
-  "created_at": "2025-12-19",
-  "module": {
-    "name": "jeecg-module-adverse-event",
-    "package": "org.jeecg.modules.adverse"
+  "status": "planned",
+  "epic": {
+    "number": 48,
+    "url": "https://github.com/m19803261706/shijingshan/issues/48"
   },
-  "tables": ["drug_adverse_report", "drug_adverse_rectify", "drug_adverse_flow"],
-  "phases": [],
+  "phases": [
+    {
+      "name": "Phase 1: 数据库设计",
+      "issues": [49],
+      "status": "ready"
+    },
+    {
+      "name": "Phase 2: 后端开发",
+      "issues": [50],
+      "status": "blocked"
+    },
+    {
+      "name": "Phase 3: 前端开发",
+      "issues": [51],
+      "status": "blocked"
+    },
+    {
+      "name": "Phase 4: 权限配置",
+      "issues": [52],
+      "status": "blocked"
+    }
+  ],
+  "issues": [
+    {
+      "number": 49,
+      "title": "创建药品科室处理数据库对象",
+      "type": "jeecg-migration",
+      "status": "jeecg-ready",
+      "phase": 1
+    },
+    {
+      "number": 50,
+      "title": "创建整改实体和处理 Controller",
+      "type": "jeecg-entity",
+      "status": "blocked",
+      "depends_on": [49],
+      "phase": 2
+    },
+    {
+      "number": 51,
+      "title": "创建药品科室处理前端页面",
+      "type": "jeecg-frontend",
+      "status": "blocked",
+      "depends_on": [50],
+      "phase": 3
+    },
+    {
+      "number": 52,
+      "title": "创建药品科室处理菜单和权限配置",
+      "type": "jeecg-menu",
+      "status": "blocked",
+      "depends_on": [51],
+      "phase": 4
+    }
+  ],
+  "execution_order": [49, 50, 51, 52],
+  "created_at": "2025-12-19",
   "previous_feature": {
     "name": "临床科室审核",
     "epic": 43,
