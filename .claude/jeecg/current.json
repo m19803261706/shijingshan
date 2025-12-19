@@ -16,12 +16,12 @@
     {
       "name": "Phase 2: 后端开发",
       "issues": [50],
-      "status": "ready"
+      "status": "completed"
     },
     {
       "name": "Phase 3: 前端开发",
       "issues": [51],
-      "status": "blocked"
+      "status": "ready"
     },
     {
       "name": "Phase 4: 权限配置",
@@ -41,7 +41,7 @@
       "number": 50,
       "title": "创建整改实体和处理 Controller",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [49],
       "phase": 2
     },
@@ -49,7 +49,7 @@
       "number": 51,
       "title": "创建药品科室处理前端页面",
       "type": "jeecg-frontend",
-      "status": "blocked",
+      "status": "jeecg-ready",
       "depends_on": [50],
       "phase": 3
     },
