@@ -21,7 +21,7 @@
     {
       "name": "Phase 3: 前端开发",
       "issues": [46],
-      "status": "pending"
+      "status": "done"
     },
     {
       "name": "Phase 4: 权限配置",
@@ -49,7 +49,7 @@
       "number": 46,
       "title": "创建临床科室审核前端页面",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [45],
       "phase": 3
     },
@@ -57,7 +57,7 @@
       "number": 47,
       "title": "创建临床科室审核菜单和权限配置",
       "type": "jeecg-menu",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [46],
       "phase": 4
     }
