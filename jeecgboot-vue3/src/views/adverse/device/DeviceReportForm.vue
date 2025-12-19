@@ -535,7 +535,7 @@ async function handleSubmit() {
  * 返回列表页
  */
 function handleBack() {
-  router.push('/adverse/device');
+  router.push('/adverse/device/report');
 }
 
 // ========== 器械选择功能 ==========
