@@ -92,6 +92,13 @@ function getActionLabel(action: string): string {
     resubmit: '重新提交',
     process: '处理',
     close: '结案',
+    // 药品科室处理相关
+    close_direct: '直接结案',
+    require_rectify: '要求整改',
+    submit_rectify: '提交整改',
+    confirm_rectify: '确认整改',
+    confirm_approve: '确认整改通过',
+    confirm_reject: '退回整改',
   };
   return map[action] || action;
 }
@@ -108,6 +115,13 @@ function getActionColor(action: string): string {
     resubmit: 'blue',
     process: 'green',
     close: 'gray',
+    // 药品科室处理相关
+    close_direct: 'gray',
+    require_rectify: 'orange',
+    submit_rectify: 'blue',
+    confirm_rectify: 'green',
+    confirm_approve: 'green',
+    confirm_reject: 'red',
   };
   return map[action] || 'blue';
 }
@@ -124,6 +138,13 @@ function getActionIcon(action: string) {
     resubmit: SyncOutlined,
     process: FileSearchOutlined,
     close: CheckCircleOutlined,
+    // 药品科室处理相关
+    close_direct: CheckCircleOutlined,
+    require_rectify: FormOutlined,
+    submit_rectify: SendOutlined,
+    confirm_rectify: CheckCircleOutlined,
+    confirm_approve: CheckCircleOutlined,
+    confirm_reject: CloseCircleOutlined,
   };
   return map[action] || FormOutlined;
 }
@@ -138,6 +159,9 @@ function getStatusLabel(status: string): string {
     returned: '已退回',
     pending_process: '待处理',
     closed: '已结案',
+    // 整改相关状态
+    pending_rectify: '待整改',
+    rectifying: '整改中',
   };
   return map[status] || status || '-';
 }
@@ -152,6 +176,9 @@ function getStatusColor(status: string): string {
     returned: 'warning',
     pending_process: 'processing',
     closed: 'success',
+    // 整改相关状态
+    pending_rectify: 'orange',
+    rectifying: 'cyan',
   };
   return map[status] || 'default';
 }
