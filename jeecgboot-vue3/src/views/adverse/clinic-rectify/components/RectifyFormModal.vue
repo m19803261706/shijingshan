@@ -37,7 +37,7 @@
           <div style="white-space: pre-wrap;">{{ rectifyData.requirement || '请根据药品不良反应情况进行整改' }}</div>
         </a-descriptions-item>
         <a-descriptions-item label="退回原因" :span="2" v-if="rectifyData.status === 'rejected'">
-          <a-alert type="warning" :message="rectifyData.rejectReason || '未填写退回原因'" show-icon />
+          <a-alert type="warning" :message="rectifyData.confirmComment || '未填写退回原因'" show-icon />
         </a-descriptions-item>
       </a-descriptions>
     </a-card>
