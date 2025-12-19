@@ -84,7 +84,7 @@
       "number": 62,
       "title": "创建 DeviceAdverseFlow 实体、Mapper、Service",
       "type": "jeecg-entity",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [59],
       "phase": 2
     },
@@ -108,7 +108,7 @@
       "number": 65,
       "title": "创建 DeviceAuditController（临床科室审核）",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [62],
       "phase": 3
     },
