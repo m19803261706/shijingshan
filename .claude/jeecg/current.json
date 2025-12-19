@@ -38,7 +38,7 @@
       "name": "Phase 3: 前端开发",
       "issues": [81, 82, 83, 84, 85, 86, 87, 88],
       "status": "in_progress",
-      "completed": 7
+      "completed": 8
     }
   ],
   "issues": [
@@ -161,15 +161,17 @@
       "number": 87,
       "title": "创建输血不良事件整改页面",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [86],
-      "phase": 3
+      "phase": 3,
+      "commit": "7a54a96",
+      "completed_at": "2025-12-20"
     },
     {
       "number": 88,
       "title": "配置输血不良事件路由",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [87],
       "phase": 3
     }
