@@ -123,7 +123,7 @@ import {
   reporterTypeOptions,
   evalResultOptions,
   deviceReportStatusOptions,
-} from '../../device/device.data';
+} from '../../../device/device.data';
 
 defineProps({
   title: {
