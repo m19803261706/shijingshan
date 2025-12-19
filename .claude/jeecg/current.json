@@ -38,7 +38,7 @@
       "name": "Phase 3: 前端开发",
       "issues": [81, 82, 83, 84, 85, 86, 87, 88],
       "status": "in_progress",
-      "completed": 1
+      "completed": 2
     }
   ],
   "issues": [
@@ -111,15 +111,17 @@
       "number": 82,
       "title": "创建输血不良事件数据配置文件 blood.data.ts",
       "type": "jeecg-frontend",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [81],
-      "phase": 3
+      "phase": 3,
+      "commit": "34a2c78",
+      "completed_at": "2025-12-19"
     },
     {
       "number": 83,
       "title": "创建输血不良事件上报表单页面",
       "type": "jeecg-frontend",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [82],
       "phase": 3
     },
