@@ -25,12 +25,12 @@
     {
       "name": "Phase 1: 数据库设计",
       "issues": [58, 59, 60],
-      "status": "ready"
+      "status": "completed"
     },
     {
       "name": "Phase 2: 后端实体开发",
       "issues": [61, 62, 63],
-      "status": "blocked"
+      "status": "ready"
     },
     {
       "name": "Phase 3: 后端控制器开发",
@@ -68,7 +68,7 @@
       "number": 60,
       "title": "创建 device_adverse_rectify 整改表 + 数据字典 (V1026)",
       "type": "jeecg-migration",
-      "status": "jeecg-ready",
+      "status": "jeecg-done",
       "depends_on": [59],
       "phase": 1
     },
@@ -92,7 +92,7 @@
       "number": 63,
       "title": "创建 DeviceAdverseRectify 实体、Mapper、Service",
       "type": "jeecg-entity",
-      "status": "jeecg-blocked",
+      "status": "jeecg-ready",
       "depends_on": [60],
       "phase": 2
     },
