@@ -144,14 +144,14 @@ public class DrugAuditController {
 
         // 构建查询条件
         LambdaQueryWrapper<DrugAdverseReport> queryWrapper = new LambdaQueryWrapper<>();
-        // 只查询已审核状态（通过或退回）
+        // 只查询当前用户审核过的报告（auditUserId = 当前用户）
+        queryWrapper.eq(DrugAdverseReport::getAuditUserId, loginUser.getId());
+        // 排除待审核状态（待审核的不算已审核）
+        queryWrapper.ne(DrugAdverseReport::getStatus, STATUS_PENDING_AUDIT);
+        // 如果指定了状态筛选
         if (oConvertUtils.isNotEmpty(status)) {
             queryWrapper.eq(DrugAdverseReport::getStatus, status);
-        } else {
-            queryWrapper.in(DrugAdverseReport::getStatus, STATUS_PENDING_PROCESS, STATUS_RETURNED);
         }
-        // 只查询当前用户所在科室的报告（作为审核人）
-        queryWrapper.eq(DrugAdverseReport::getAuditUserId, loginUser.getId());
         // 报告编号模糊查询
         if (oConvertUtils.isNotEmpty(reportNo)) {
             queryWrapper.like(DrugAdverseReport::getReportCode, reportNo);
