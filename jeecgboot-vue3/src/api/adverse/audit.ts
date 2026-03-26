@@ -11,11 +11,11 @@ import { defHttp } from '/@/utils/http/axios';
  */
 enum Api {
   // 待审核列表
-  pendingList = '/adverse/audit/pending',
+  pendingList = '/adverse/audit/pendingList',
   // 已审核列表
-  completedList = '/adverse/audit/completed',
+  completedList = '/adverse/audit/completedList',
   // 审核通过
-  approve = '/adverse/audit/approve',
+  approve = '/adverse/audit/pass',
   // 审核退回
   reject = '/adverse/audit/reject',
 }
