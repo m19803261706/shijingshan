@@ -11,11 +11,11 @@ import { defHttp } from '/@/utils/http/axios';
  */
 enum Api {
   // 待处理列表
-  pendingList = '/adverse/process/pending',
+  pendingList = '/adverse/process/pendingList',
   // 待确认列表（整改确认）
-  confirmList = '/adverse/process/confirm',
+  confirmList = '/adverse/process/pendingConfirmList',
   // 已结案列表
-  closedList = '/adverse/process/closed',
+  closedList = '/adverse/process/closedList',
   // 要求整改
   requireRectify = '/adverse/process/requireRectify',
   // 直接结案
