@@ -11,17 +11,17 @@ import { defHttp } from '/@/utils/http/axios';
  */
 enum Api {
   // 概览数据
-  overview = '/adverse/stat/overview',
+  overview = '/adverse/stat/dashboard',
   // 科室分布
-  deptDistribution = '/adverse/stat/deptDistribution',
+  deptDistribution = '/adverse/stat/byDepartment',
   // 分类分布
-  categoryDistribution = '/adverse/stat/categoryDistribution',
+  categoryDistribution = '/adverse/stat/byCategory',
   // 月度趋势
-  monthlyTrend = '/adverse/stat/monthlyTrend',
+  monthlyTrend = '/adverse/stat/trend',
   // 级别分布
-  levelDistribution = '/adverse/stat/levelDistribution',
+  levelDistribution = '/adverse/stat/byLevel',
   // 导出报表
-  exportReport = '/adverse/stat/exportReport',
+  exportReport = '/adverse/stat/export',
 }
 
 /**
