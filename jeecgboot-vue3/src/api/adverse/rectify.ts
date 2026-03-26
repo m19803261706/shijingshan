@@ -11,13 +11,13 @@ import { defHttp } from '/@/utils/http/axios';
  */
 enum Api {
   // 待整改列表
-  pendingList = '/adverse/rectify/pending',
+  pendingList = '/adverse/rectify/pendingList',
   // 整改详情
   detail = '/adverse/rectify/detail',
   // 整改历史
   history = '/adverse/rectify/history',
   // 保存草稿
-  saveDraft = '/adverse/rectify/saveDraft',
+  saveDraft = '/adverse/rectify/save',
   // 提交整改
   submit = '/adverse/rectify/submit',
 }
@@ -35,7 +35,7 @@ export const getPendingRectifyList = (params) => {
  * @param params { id: string } 整改记录ID
  */
 export const getRectifyDetail = (params) => {
-  return defHttp.get({ url: Api.detail, params });
+  return defHttp.get({ url: `${Api.detail}/${params.id}` });
 };
 
 /**
@@ -43,7 +43,7 @@ export const getRectifyDetail = (params) => {
  * @param params { eventId: string } 事件ID
  */
 export const getRectifyHistory = (params) => {
-  return defHttp.get({ url: Api.history, params });
+  return defHttp.get({ url: `${Api.history}/${params.eventId}` });
 };
 
 /**
